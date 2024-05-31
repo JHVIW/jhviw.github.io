@@ -6,6 +6,7 @@
     <title>Unmasking the Cheats</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="icon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">
@@ -17,13 +18,15 @@
             <h2>Understanding the CVE-2021-30481 Vulnerability</h2>
             <img src="./images/CVE.png" alt="CVE-2021-30481 Vulnerability" class="img-fluid mb-4">
             <p>CVE-2021-30481 is a significant security flaw within Steam’s Source engine, exploited through malicious game invitations to execute arbitrary code. The vulnerability stems from a buffer overflow in the handling of command-line parameters during the game’s startup. By manipulating these parameters, attackers can establish a remote console (RCON) connection and execute harmful payloads on the victim’s system.</p>
+            <p>In my attempts to replicate this vulnerability, I initially did not succeed. To gain a better understanding and find a way to reproduce it, I contacted Florian, the reporter of this CVE. He provided valuable assistance and suggested specific approaches to replicate the exploit.</p>
+            <p>Following his suggestions, I was able to gain deeper insights and discovered a new vulnerability, which is described later on this page. This new issue allows an attacker to crash a player's game when they connect to a malicious RCON server.</p>
             <h3>Valve's Countermeasures:</h3>
             <ul>
                 <li>Removing Vulnerable RCON Command Handlers: Valve eliminated the problematic handlers, thereby blocking the exploit’s core mechanism.</li>
                 <li>Using GetLaunchCommandLine: Transitioning to this safer alternative for handling startup parameters has reduced the risk of injection attacks.</li>
                 <li>User Warnings: For games still reliant on OS command lines, Valve now displays startup parameters, allowing users to spot and reject suspicious commands.</li>
             </ul>
-        </section>
+        </section>        
         <section class="mb-5">
             <h2>Wallhack Cheats: An Unseen Advantage</h2>
             <img src="./images/wallhack.png" alt="Wallhack Cheats" class="img-fluid mb-4">
@@ -100,7 +103,7 @@
             <h2>Discovering a New Vulnerability</h2>
             <video src="./images/discovery.mp4" controls class="img-fluid mb-4"></video>
             <p>During my research, I attempted to replicate the payload and discovered a new issue. Using my custom-made Python script, I was able to crash a player’s game when they connected to my server via RCON.</p>
-            <p>To achieve this, I wrote a Python script and utilized parts of the payload provided by Florian. This script acts as a malicious RCON server that, once a connection is established, sends a harmful payload to the client. The original intention was to exploit the CVE to open the calculator via Remote Code Execution (RCE). However, with the same payload, the user’s game now crashes. I am unsure why this happens and will investigate it further in the future.</p>
+            <p>To achieve this, I wrote a Python script and utilized parts of the payload provided by Florian, the person who reported this CVE. This script acts as a malicious RCON server that, once a connection is established, sends a harmful payload to the client. The original intention was to exploit the CVE to open the calculator via Remote Code Execution (RCE). However, with the same payload, the user’s game now crashes. I am unsure why this happens and will investigate it further in the future.</p>
             <h3>How the Python Script Works</h3>
             <ul>
                 <li><strong>Server Initialization:</strong> The script starts a TCP server that listens on a specific IP address and port number, set in the script’s configuration.</li>
