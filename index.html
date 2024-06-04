@@ -104,13 +104,6 @@
             <video src="./images/discovery.mp4" controls class="img-fluid mb-4"></video>
             <p>During my research, I attempted to replicate the payload and discovered a new issue. Using my custom-made Python script, I was able to crash a player’s game when they connected to my server via RCON.</p>
             <p>To achieve this, I wrote a Python script and utilized parts of the payload provided by Florian, the person who reported this CVE. This script acts as a malicious RCON server that, once a connection is established, sends a harmful payload to the client. The original intention was to exploit the CVE to open the calculator via Remote Code Execution (RCE). However, with the same payload, the user’s game now crashes. I am unsure why this happens and will investigate it further in the future.</p>
-            <h3>How the Python Script Works</h3>
-            <ul>
-                <li><strong>Server Initialization:</strong> The script starts a TCP server that listens on a specific IP address and port number, set in the script’s configuration.</li>
-                <li><strong>Receiving RCON Commands:</strong> The server waits for RCON commands from the client. Since the CS2 engine and RCON work in a way that the actual connection is only established when a command is received, the payload is only sent after the user sends an RCON command.</li>
-                <li><strong>Sending the Malicious Payload:</strong> Upon receiving a command, the server sends a specially crafted payload. This payload was originally meant to open the calculator on the client machine via Remote Code Execution. However, it now causes the game to crash.</li>
-                <li><strong>Logging and Debugging:</strong> The script includes extensive logging to follow each step of the process, from accepting connections to sending the payload and executing the exploit.</li>
-            </ul>
             <h3>Testing on the Latest Version of CS2</h3>
             <p>I first tested this script on the latest version of Counter-Strike 2. To my surprise, this payload causes the newest version of the game to crash. This shows that the exploit can still affect the latest game versions, although it does not achieve the desired Remote Code Execution.</p>
             <p>I am currently in the process of writing a detailed report on this discovery so that I can submit it to HackerOne for further analysis and possible remediation by the developers.</p>
