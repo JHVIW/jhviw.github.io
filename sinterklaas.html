@@ -5,6 +5,34 @@
     <meta charset="UTF-8">
     <title>Sinterklaas Quiz</title>
     <style>
+        .poem {
+            background: #FFD700;
+            border: 5px solid #8B0000;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 80%;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            font-size: 1.5rem;
+            color: #8B0000;
+            font-weight: bold;
+            animation: swing 3s infinite;
+        }
+
+        .poem-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            animation: fadeIn 1s;
+        }
+
         .poem-container {
             position: fixed;
             top: 0;
@@ -70,6 +98,16 @@
 
             to {
                 opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
             }
         }
 
@@ -502,6 +540,7 @@
         }
 
         .quiz-container {
+            display: none;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 20px;
@@ -614,15 +653,21 @@
             <div class="corner-decoration bottom-left"></div>
             <div class="corner-decoration bottom-right"></div>
             <div class="poem-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-                Sed do eiusmod tempor incididunt ut labore et dolore,<br>
-                Magna aliqua ut enim ad minim veniam quis nostrud,<br>
-                Exercitation ullamco laboris nisi ut aliquip ex ea.<br><br>
+                Rens maakt muziek, hij kookt als een baas,<br>
+                Zijn elektronische klanken zijn altijd van de maat.<br>
+                Alyssa schildert, en kent elke plant,<br>
+                Met oog voor natuur, als een ware savant.<br><br>
 
-                Commodo consequat duis aute irure dolor in reprehenderit,<br>
-                In voluptate velit esse cillum dolore eu fugiat nulla,<br>
-                Pariatur excepteur sint occaecat cupidatat non proident,<br>
-                Sunt in culpa qui officia deserunt mollit anim id est.
+                Jullie samen – een krachtig, mooi paar,<br>
+                Met liefde en talent, echt wonderbaar!<br>
+                Maar eerst wacht een kist, stevig op slot,<br>
+                Scan snel de code, en open 'm vlot.<br><br>
+
+                Veel geluk samen, dat wens ik daarbij,<br>
+                Geniet van elkaar – voor altijd zij aan zij!<br><br>
+
+                Met warme groet,<br>
+                Sinterklaas
             </div>
             <button class="start-button">Start de Quiz</button>
         </div>
@@ -721,14 +766,14 @@
                 correct: 1
             },
             {
-                question: "PLACEHOLDER",
-                options: ["A", "B", "C", "D"],
-                correct: 1
+                question: "Wat voor soort muziek produceert Rens graag?",
+                options: ["Hardcore", "Rock", "Electronic", "Dubstep"],
+                correct: 2
             },
             {
-                question: "PLACEHOLDER",
-                options: ["A", "B", "C", "D"],
-                correct: 1
+                question: "Wat kan Alyssa heel goed?",
+                options: ["Borduren", "Boksen", "Bakken", "Schilderen"],
+                correct: 3
             },
             {
                 question: "Wat is Rick's meest gebruikte app?",
@@ -785,7 +830,11 @@
 
             updateProgress();
         }
-
+        function showPoem() {
+            const poemOverlay = document.getElementById('poemOverlay');
+            poemOverlay.style.display = 'flex';
+            playSound('win'); // Vervang dit door je audio bestand
+        }
         function revealCodeDigit() {
             const digitToReveal = Math.floor((correctAnswers - 1) / 2);
             if (digitToReveal >= 0 && digitToReveal < 4) {
@@ -869,11 +918,27 @@
         }
 
         document.querySelector('.start-button').addEventListener('click', function () {
-            playSound('win'); // Assuming you have a 'start' sound
+            playSound('start'); // Assuming you have a 'start' sound
             document.querySelector('.poem-container').style.display = 'none';
             document.querySelector('.quiz-container').style.display = 'block';
             showQuestion();
         });
+
+        function startQuiz() {
+            const poemOverlay = document.getElementById('poemOverlay');
+            const quizContainer = document.getElementById('quizContainer');
+
+            // Fade-out animatie voor het gedicht
+            poemOverlay.style.animation = 'fadeOut 1s forwards';
+
+            // Wacht tot de fade-out animatie is afgelopen
+            setTimeout(() => {
+                poemOverlay.style.display = 'none'; // Verberg de overlay
+                quizContainer.style.display = 'block'; // Toon de quiz
+                quizContainer.style.animation = 'fadeIn 1s'; // Toon de quiz met fade-in
+                showQuestion(); // Start de quiz vragen
+            }, 1000); // Deze tijd moet overeenkomen met de duur van de fade-out
+        }
 
         // Hide quiz container initially
         document.querySelector('.quiz-container').style.display = 'none';
