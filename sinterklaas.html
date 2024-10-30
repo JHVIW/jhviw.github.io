@@ -792,7 +792,6 @@
         const progressText = document.querySelector('.progress-text');
         const codeDigits = document.querySelectorAll('.code-digit');
 
-        // Extra geluid effecten
         function playSound(type) {
             const audio = new Audio();
             switch (type) {
@@ -833,7 +832,7 @@
         function showPoem() {
             const poemOverlay = document.getElementById('poemOverlay');
             poemOverlay.style.display = 'flex';
-            playSound('win'); // Vervang dit door je audio bestand
+            playSound('win'); 
         }
         function revealCodeDigit() {
             const digitToReveal = Math.floor((correctAnswers - 1) / 2);
@@ -841,7 +840,6 @@
                 codeDigits[digitToReveal].textContent = code[digitToReveal];
                 codeDigits[digitToReveal].classList.add('revealed');
 
-                // Voeg extra animatie toe bij onthulling
                 codeDigits[digitToReveal].style.animation = 'bounce 0.5s ease';
                 setTimeout(() => {
                     codeDigits[digitToReveal].style.animation = '';
@@ -865,12 +863,12 @@
         }
 
         document.querySelectorAll('.present').forEach((present, index) => {
-            // Genereer een willekeurige horizontale positie
-            const randomPosition = Math.random() * 100; // Een waarde tussen 0 en 100%
+
+            const randomPosition = Math.random() * 100;
             present.style.left = `${randomPosition}vw`;
 
-            // Voeg een willekeurige animatievertraging toe
-            const randomDelay = Math.random() * 4; // Totale delay van 0 tot 4 seconden
+         
+            const randomDelay = Math.random() * 4;
             present.style.animationDelay = `${randomDelay}s`;
         });
 
@@ -879,10 +877,10 @@
             const question = questions[currentQuestion];
             const buttons = document.querySelectorAll('.option');
 
-            buttons.forEach(button => button.disabled = true); // Zet alle knoppen uit
+            buttons.forEach(button => button.disabled = true); 
 
             if (selectedIndex === question.correct) {
-                buttons[selectedIndex].classList.add('correct'); // Markeer de juiste knop
+                buttons[selectedIndex].classList.add('correct'); 
                 correctAnswers++;
                 playSound('correct');
 
@@ -893,18 +891,18 @@
                 setTimeout(() => {
                     currentQuestion++;
                     if (currentQuestion < questions.length) {
-                        showQuestion(); // Toon de volgende vraag
+                        showQuestion(); 
                     } else {
                         showCelebration();
                     }
                 }, 1000);
             } else {
-                buttons[selectedIndex].classList.add('incorrect'); // Markeer de onjuiste knop
+                buttons[selectedIndex].classList.add('incorrect'); 
                 playSound('incorrect');
                 setTimeout(() => {
                     buttons.forEach(button => {
-                        button.classList.remove('incorrect'); // Reset de onjuiste knop
-                        button.disabled = false; // Zet de knoppen weer aan
+                        button.classList.remove('incorrect'); 
+                        button.disabled = false; 
                     });
                 }, 1000);
             }
@@ -918,7 +916,7 @@
         }
 
         document.querySelector('.start-button').addEventListener('click', function () {
-            playSound('start'); // Assuming you have a 'start' sound
+            playSound('start'); 
             document.querySelector('.poem-container').style.display = 'none';
             document.querySelector('.quiz-container').style.display = 'block';
             showQuestion();
@@ -928,24 +926,20 @@
             const poemOverlay = document.getElementById('poemOverlay');
             const quizContainer = document.getElementById('quizContainer');
 
-            // Fade-out animatie voor het gedicht
             poemOverlay.style.animation = 'fadeOut 1s forwards';
 
-            // Wacht tot de fade-out animatie is afgelopen
             setTimeout(() => {
-                poemOverlay.style.display = 'none'; // Verberg de overlay
-                quizContainer.style.display = 'block'; // Toon de quiz
-                quizContainer.style.animation = 'fadeIn 1s'; // Toon de quiz met fade-in
-                showQuestion(); // Start de quiz vragen
-            }, 1000); // Deze tijd moet overeenkomen met de duur van de fade-out
+                poemOverlay.style.display = 'none';
+                quizContainer.style.display = 'block'; 
+                quizContainer.style.animation = 'fadeIn 1s'; 
+                showQuestion(); 
+            }, 1000); 
         }
 
-        // Hide quiz container initially
         document.querySelector('.quiz-container').style.display = 'none';
 
-        // Play sound when poem appears
         window.addEventListener('load', function () {
-            playSound('win'); // Assuming you have a 'poem' sound
+            playSound('win'); 
         });
 
     </script>
