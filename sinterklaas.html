@@ -707,10 +707,10 @@
             const question = questions[currentQuestion];
             const buttons = document.querySelectorAll('.option');
 
-            buttons.forEach(button => button.disabled = true);
+            buttons.forEach(button => button.disabled = true); // Zet alle knoppen uit
 
             if (selectedIndex === question.correct) {
-                buttons[selectedIndex].classList.add('correct');
+                buttons[selectedIndex].classList.add('correct'); // Markeer de juiste knop
                 correctAnswers++;
                 playSound('correct');
 
@@ -721,18 +721,18 @@
                 setTimeout(() => {
                     currentQuestion++;
                     if (currentQuestion < questions.length) {
-                        showQuestion();
+                        showQuestion(); // Toon de volgende vraag
                     } else {
                         showCelebration();
                     }
                 }, 1000);
             } else {
-                buttons[selectedIndex].classList.add('incorrect');
+                buttons[selectedIndex].classList.add('incorrect'); // Markeer de onjuiste knop
                 playSound('incorrect');
                 setTimeout(() => {
                     buttons.forEach(button => {
-                        button.classList.remove('incorrect');
-                        button.disabled = false;
+                        button.classList.remove('incorrect'); // Reset de onjuiste knop
+                        button.disabled = false; // Zet de knoppen weer aan
                     });
                 }, 1000);
             }
