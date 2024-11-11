@@ -68,6 +68,13 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
+        .poem-text p {
+            margin: 0;
+            padding: 0;
+            line-height: 1.4;
+            /* Stel een gewenst line-height in */
+        }
+
         .start-button {
             background: #8B0000;
             color: #FFD700;
@@ -286,6 +293,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            max-width: 100vw;
             overflow-x: hidden;
             position: relative;
         }
@@ -653,22 +661,28 @@
             <div class="corner-decoration bottom-left"></div>
             <div class="corner-decoration bottom-right"></div>
             <div class="poem-text">
-                Rens maakt muziek, hij kookt als een baas,<br>
-                Zijn elektronische klanken zijn altijd van de maat.<br>
-                Alyssa schildert, en kent elke plant,<br>
-                Met oog voor natuur, als een ware savant.<br><br>
+                <p>Rens maakt muziek, hij kookt als een baas,</p>
+                <p>Zijn elektronische klanken altijd in de haak.</p>
+                <p>Alyssa schildert, en weet elke plant,</p>
+                <p>Ze ziet precies hoe je ze herkent, heel charmant.</p><br>
 
-                Jullie samen – een krachtig, mooi paar,<br>
-                Met liefde en talent, echt wonderbaar!<br>
-                Maar eerst wacht een kist, stevig op slot,<br>
-                Scan snel de code, en open 'm vlot.<br><br>
+                <p>Eerst wacht een kist, stevig op slot,</p>
+                <p>Wat erin zit, dat blijft nog geheim, tot op het bot.</p>
+                <p>Het slot is dicht, de code moet je kraken,</p>
+                <p>Samen puzzelen, om het open te maken.</p><br>
 
-                Veel geluk samen, dat wens ik daarbij,<br>
-                Geniet van elkaar – voor altijd zij aan zij!<br><br>
+                <p>Als het lukt, dan gaat de kist open,</p>
+                <p>En zie je de schatten, waar jullie op hopen.</p>
+                <p>Een glimlach verschijnt, het geluk komt snel,</p>
+                <p>Alles wat je wilde, zit erin, dat is wel.</p><br>
 
-                Met warme groet,<br>
-                Sinterklaas
+                <p>Veel geluk samen, dat wens ik daarbij,</p>
+                <p>Geniet van elkaar – voor altijd zij aan zij!</p><br>
+
+                <p>Met warme groet,<br>Sinterklaas</p>
             </div>
+
+
             <button class="start-button">Start de Quiz</button>
         </div>
     </div>
@@ -719,11 +733,10 @@
         <div class="code-digit">*</div>
         <div class="code-digit">*</div>
         <div class="code-digit">*</div>
-        <div class="code-digit">*</div>
     </div>
 
     <div class="quiz-container">
-        <div class="progress-text">Vraag 1 van 8</div>
+        <div class="progress-text">Vraag 1 van 9</div>
         <div class="progress-bar">
             <div class="progress"></div>
         </div>
@@ -734,7 +747,7 @@
     <div class="celebration">
         <h2>Hoera! 🎉</h2>
         <p>Je hebt alle vragen goed beantwoord!</p>
-        <h3>De code is: 1234</h3>
+        <h3>De code is: 194</h3>
         <p>Sinterklaas is trots op je!</p>
     </div>
 
@@ -771,6 +784,11 @@
                 correct: 1
             },
             {
+                question: "Wat is Jacob het meest?",
+                options: ["Te laat", "Een boer", "Creatief"],
+                correct: 0
+            },
+            {
                 question: "Wat voor soort muziek produceert Rens graag?",
                 options: ["Hardcore", "Rock", "Electronic", "Dubstep"],
                 correct: 2
@@ -782,7 +800,7 @@
             }
         ];
 
-        const code = [1, 2, 3, 4];
+        const code = [1, 9, 4];
         let currentQuestion = 0;
         let correctAnswers = 0;
 
@@ -792,6 +810,7 @@
         const progressText = document.querySelector('.progress-text');
         const codeDigits = document.querySelectorAll('.code-digit');
 
+        // Extra geluid effecten
         function playSound(type) {
             const audio = new Audio();
             switch (type) {
@@ -832,14 +851,16 @@
         function showPoem() {
             const poemOverlay = document.getElementById('poemOverlay');
             poemOverlay.style.display = 'flex';
-            playSound('win'); 
+            playSound('win'); // Vervang dit door je audio bestand
         }
         function revealCodeDigit() {
-            const digitToReveal = Math.floor((correctAnswers - 1) / 2);
-            if (digitToReveal >= 0 && digitToReveal < 4) {
+            const digitToReveal = Math.floor((correctAnswers - 1) / 3);
+            if (digitToReveal >= 0 && digitToReveal < 3) {
                 codeDigits[digitToReveal].textContent = code[digitToReveal];
                 codeDigits[digitToReveal].classList.add('revealed');
+                playSound('correct');
 
+                // Voeg extra animatie toe bij onthulling
                 codeDigits[digitToReveal].style.animation = 'bounce 0.5s ease';
                 setTimeout(() => {
                     codeDigits[digitToReveal].style.animation = '';
@@ -863,12 +884,12 @@
         }
 
         document.querySelectorAll('.present').forEach((present, index) => {
-
-            const randomPosition = Math.random() * 100;
+            // Genereer een willekeurige horizontale positie
+            const randomPosition = Math.random() * 100; // Een waarde tussen 0 en 100%
             present.style.left = `${randomPosition}vw`;
 
-         
-            const randomDelay = Math.random() * 4;
+            // Voeg een willekeurige animatievertraging toe
+            const randomDelay = Math.random() * 4; // Totale delay van 0 tot 4 seconden
             present.style.animationDelay = `${randomDelay}s`;
         });
 
@@ -877,32 +898,31 @@
             const question = questions[currentQuestion];
             const buttons = document.querySelectorAll('.option');
 
-            buttons.forEach(button => button.disabled = true); 
+            buttons.forEach(button => button.disabled = true); // Zet alle knoppen uit
 
             if (selectedIndex === question.correct) {
-                buttons[selectedIndex].classList.add('correct'); 
+                buttons[selectedIndex].classList.add('correct'); // Markeer de juiste knop
                 correctAnswers++;
-                playSound('correct');
 
-                if (correctAnswers >= 2 && correctAnswers % 2 === 0) {
+                if (correctAnswers >= 3 && correctAnswers % 3 === 0) {
                     revealCodeDigit();
                 }
 
                 setTimeout(() => {
                     currentQuestion++;
                     if (currentQuestion < questions.length) {
-                        showQuestion(); 
+                        showQuestion(); // Toon de volgende vraag
                     } else {
                         showCelebration();
                     }
                 }, 1000);
             } else {
-                buttons[selectedIndex].classList.add('incorrect'); 
+                buttons[selectedIndex].classList.add('incorrect'); // Markeer de onjuiste knop
                 playSound('incorrect');
                 setTimeout(() => {
                     buttons.forEach(button => {
-                        button.classList.remove('incorrect'); 
-                        button.disabled = false; 
+                        button.classList.remove('incorrect'); // Reset de onjuiste knop
+                        button.disabled = false; // Zet de knoppen weer aan
                     });
                 }, 1000);
             }
@@ -916,7 +936,7 @@
         }
 
         document.querySelector('.start-button').addEventListener('click', function () {
-            playSound('start'); 
+            playSound('start'); // Assuming you have a 'start' sound
             document.querySelector('.poem-container').style.display = 'none';
             document.querySelector('.quiz-container').style.display = 'block';
             showQuestion();
@@ -926,20 +946,24 @@
             const poemOverlay = document.getElementById('poemOverlay');
             const quizContainer = document.getElementById('quizContainer');
 
+            // Fade-out animatie voor het gedicht
             poemOverlay.style.animation = 'fadeOut 1s forwards';
 
+            // Wacht tot de fade-out animatie is afgelopen
             setTimeout(() => {
-                poemOverlay.style.display = 'none';
-                quizContainer.style.display = 'block'; 
-                quizContainer.style.animation = 'fadeIn 1s'; 
-                showQuestion(); 
-            }, 1000); 
+                poemOverlay.style.display = 'none'; // Verberg de overlay
+                quizContainer.style.display = 'block'; // Toon de quiz
+                quizContainer.style.animation = 'fadeIn 1s'; // Toon de quiz met fade-in
+                showQuestion(); // Start de quiz vragen
+            }, 1000); // Deze tijd moet overeenkomen met de duur van de fade-out
         }
 
+        // Hide quiz container initially
         document.querySelector('.quiz-container').style.display = 'none';
 
+        // Play sound when poem appears
         window.addEventListener('load', function () {
-            playSound('win'); 
+            playSound('win'); // Assuming you have a 'poem' sound
         });
 
     </script>
