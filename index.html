@@ -1,131 +1,293 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unmasking the Cheats</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <title>OV Vertrektijden</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .delayed {
+            color: #e53e3e;
+        }
+
+        .cancelled {
+            text-decoration: line-through;
+            color: #718096;
+        }
+
+        .ns-yellow {
+            background-color: #FFC917;
+        }
+
+        /* Responsive table styles */
+        @media (max-width: 640px) {
+            .responsive-table {
+                display: block;
+            }
+
+            .responsive-table thead {
+                display: none;
+            }
+
+            .responsive-table tbody {
+                display: block;
+            }
+
+            .responsive-table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 0.5rem;
+                padding: 0.5rem;
+            }
+
+            .responsive-table td {
+                display: flex;
+                padding: 0.5rem !important;
+                border: none !important;
+                align-items: center;
+            }
+
+            .responsive-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 1rem;
+                min-width: 100px;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <header class="text-center my-5">
-            <h1>Unmasking the Cheats: A Deep Dive into Counter-Strike 2 Vulnerabilities</h1>
-            <p class="lead">In the competitive world of online gaming, fairness and integrity are paramount. Yet, the persistent issue of cheating continues to plague Counter-Strike 2. <br>My comprehensive research aims to dissect and combat the various cheats and vulnerabilities undermining this iconic game. Focusing on CVE-2021-30481 and wallhack cheats, this study provides an in-depth analysis of the mechanisms behind these exploits and proposes measures to mitigate their impact.</p>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-2 sm:p-4">
+        <header class="flex items-center justify-between mb-4 sm:mb-6 ns-yellow p-3 sm:p-4 rounded-lg shadow-lg">
+            <h1 class="text-lg sm:text-2xl font-bold text-blue-900">OV Vertrektijden</h1>
+            <div id="clock" class="text-base sm:text-xl font-mono text-blue-900"></div>
         </header>
-        <section class="mb-5">
-            <h2>Understanding the CVE-2021-30481 Vulnerability</h2>
-            <img src="./images/CVE.png" alt="CVE-2021-30481 Vulnerability" class="img-fluid mb-4">
-            <p>CVE-2021-30481 is a significant security flaw within Steam’s Source engine, exploited through malicious game invitations to execute arbitrary code. The vulnerability stems from a buffer overflow in the handling of command-line parameters during the game’s startup. By manipulating these parameters, attackers can establish a remote console (RCON) connection and execute harmful payloads on the victim’s system.</p>
-            <p>In my attempts to replicate this vulnerability, I initially did not succeed. To gain a better understanding and find a way to reproduce it, I contacted Florian, the reporter of this CVE. He provided valuable assistance and suggested specific approaches to replicate the exploit.</p>
-            <p>Following his suggestions, I was able to gain deeper insights and discovered a new vulnerability, which is described later on this page. This new issue allows an attacker to crash a player's game when they connect to a malicious RCON server.</p>
-            <h3>Valve's Countermeasures:</h3>
-            <ul>
-                <li>Removing Vulnerable RCON Command Handlers: Valve eliminated the problematic handlers, thereby blocking the exploit’s core mechanism.</li>
-                <li>Using GetLaunchCommandLine: Transitioning to this safer alternative for handling startup parameters has reduced the risk of injection attacks.</li>
-                <li>User Warnings: For games still reliant on OS command lines, Valve now displays startup parameters, allowing users to spot and reject suspicious commands.</li>
-            </ul>
-        </section>        
-        <section class="mb-5">
-            <h2>Wallhack Cheats: An Unseen Advantage</h2>
-            <img src="./images/wallhack.png" alt="Wallhack Cheats" class="img-fluid mb-4">
-            <p>Wallhacks are among the most notorious cheats in Counter-Strike 2, enabling players to see through walls and other obstacles, thus gaining an unfair advantage. My study involved both theoretical analysis and practical implementation of wallhacks to understand their workings and develop effective detection methods.</p>
-            <h3>Implementation of Wallhacks</h3>
-            <p>Wallhacks exploit various vulnerabilities in the game engine. They range from relatively simple methods like client-side manipulation—editing game files to make objects transparent—to more advanced techniques like memory manipulation. These advanced techniques involve directly altering the game’s memory to reveal player locations or manipulate in-game visualization processes, allowing players behind walls to be visible.</p>
-            <h3>Survey Insights:</h3>
-            <img src="./images/survey.png" alt="Survey Insights" class="img-fluid mb-4">
-            <ul>
-                <li>Prevalence: Players frequently encounter wallhackers, with estimates varying widely across different matches.</li>
-                <li>Detection: Common signs include unnatural behavior such as shooting through walls and suspiciously accurate pre-aiming.</li>
-                <li>Community Impact: Wallhacks significantly deteriorate the gaming experience, leading to frustration and increased toxicity.</li>
-            </ul>
-            <h3>Proposed Solutions:</h3>
-            <ul>
-                <li>Enhanced Anti-Cheat Systems: Implementing more robust systems akin to those used by Faceit or Valorant.</li>
-                <li>Community Involvement: Reviving community-driven initiatives like Overwatch to empower players in identifying and reporting cheaters.</li>
-            </ul>
-            <h3>Detection of Wallhacks</h3>
-            <p>Detecting wallhacks is complex and requires a layered approach. Systems like Valve’s Anti-Cheat (VAC) use methods such as file integrity checks, memory inspection, and heuristic analysis to identify cheats. These are supplemented by more advanced techniques like kernel-level monitoring, as employed by platforms like FACEIT and games like Valorant. These systems operate at the kernel level of the operating system, making them particularly effective in detecting unauthorized manipulations and monitoring suspicious system processes. However, kernel-level anti-cheat systems also raise significant privacy and security concerns. Due to their deep access to system resources, there are worries about the potential collection of personal data and the impact on system stability. This highlights the importance of transparency and strict regulations to protect user privacy while maintaining game integrity.</p>
-        </section>
-        <section class="mb-5">
-            <h2>Developing and Testing My Own Wallhacks</h2>
-            <img src="./images/wallhack_2.png" alt="Wallhack Cheats" class="img-fluid mb-4">
-            <p>To gain firsthand understanding of wallhack implementation and effectiveness of detection methods, I developed my own wallhack within a controlled environment. This practical approach provided valuable insights into the mechanics of such cheats.</p>
-            <h3>Development Process:</h3>
-            <ul>
-                <li><strong>Research:</strong> Extensive review of cheat development techniques through videos, code examples, and forums. This involved studying various methods and tools used in cheat development and understanding how they exploit vulnerabilities in the game engine.</li>
-                <li><strong>Tool Selection:</strong> Choosing the Swed64 library for its ability to read and write game memory, which is essential for cheat development. This library provides the necessary functions to access and manipulate game data in real-time.</li>
-                <li><strong>Implementation:</strong> Creating a proof of concept (PoC) that reads critical game data, such as player positions, and visualizes it using overlays. The PoC was developed in C# and utilized the Swed64 library to interact with the game's memory.</li>
-                <li><strong>Swed64 Library:</strong> The Swed64 library was used to facilitate memory access for reading player positions and other essential data. This library simplifies the process of reading and writing to the game’s memory, making it an ideal choice for developing cheats.</li>
-                <li><strong>Program.cs:</strong> The core of the PoC, responsible for reading game data and processing it for visualization. This script uses the Swed64 library to access game memory and retrieve necessary data for the wallhack.</li>
-                <li><strong>Renderer Class:</strong> Utilizes ImGui to create overlays, drawing boxes around players and connecting lines based on team color and enemy status. This class is crucial for visualizing the data read from the game memory.</li>
-            </ul>
-            <h3>Testing:</h3>
-            <ul>
-                <li><strong>Controlled Environment:</strong> Running the PoC in a controlled setting to observe how wallhacks function and test various detection methods. This involved creating a test environment where the wallhack could be safely executed without affecting actual gameplay.</li>
-                <li><strong>Findings:</strong> Gaining insights into how such cheats can bypass traditional detection and developing strategies to counter them. This included observing how the wallhack manipulated game data and identifying potential methods to detect and prevent such cheats.</li>
-                <li><strong>Adjustments and Troubleshooting:</strong> During testing, issues were encountered with the positioning of visual markers due to incorrect screen resolution settings. Adjustments were made to ensure the overlays accurately represented player positions, highlighting the importance of precise configuration in cheat development.</li>
-                <li><strong>Real-world Application:</strong> By testing the wallhack in a simulated environment, practical knowledge was gained on how cheats function in actual gameplay scenarios. This hands-on experience was invaluable for understanding the limitations and capabilities of wallhacks.</li>
-            </ul>
-        </section>        
-        <section class="mb-5">
-            <h2>Reverse Engineering Valve Anti-Cheat (VAC)</h2>
-            <img src="./images/reverse.png" alt="Reverse Engineering Valve Anti-Cheat" class="img-fluid mb-4">
-            <p>My reverse engineering of VAC provides critical insights into its operations and vulnerabilities. VAC employs various modules and techniques, such as monitoring system information and process handles, to detect cheats. However, it faces challenges from sophisticated methods like timing attacks and code injection.</p>
-            <h3>Reverse Engineering Process:</h3>
-            <p>The reverse engineering of Valve Anti-Cheat (VAC) involved several meticulous steps to understand its inner workings and identify vulnerabilities. Here is an in-depth look at the process:</p>
-            <h4>1. Setting Up the Environment</h4>
-            <p>To start, I set up a controlled environment using virtual machines to safely analyze VAC without risking my main system. This involved installing Steam and VAC-protected games on a virtual machine.</p>
-            <h4>2. Using IDA Free for Decompilation</h4>
-            <p>IDA Free, a powerful disassembler, was used to convert the binary code of VAC’s DLL files into a more readable assembly code. This step is crucial to understand the structure and functionality of VAC.</p>
-            <h4>3. Analyzing the Assembly Code</h4>
-            <p>By examining the assembly code, I identified key functions and routines used by VAC. This included functions responsible for system monitoring, memory inspection, and cheat detection.</p>
-            <h4>4. Identifying Key Modules</h4>
-            <p>Several modules within VAC were identified and analyzed:</p>
-            <ul>
-                <li><strong>SystemInfo:</strong> Collects basic system information such as processor architecture and OS version.</li>
-                <li><strong>ProcessHandleList:</strong> Inventories all running processes and their handles to detect unauthorized programs.</li>
-                <li><strong>VacProcessMonitor:</strong> Monitors file mappings created by the Steam service for suspicious activity.</li>
-            </ul>
-            <h4>5. Hook Detection Techniques</h4>
-            <p>VAC employs techniques to detect hooks in WinAPI functions like <code>NtReadVirtualMemory</code> and <code>NtQuerySystemInformation</code>. By comparing the initial bytes of these functions to expected values, VAC can identify unauthorized modifications.</p>
-            <h4>6. Encryption and Hashing</h4>
-            <p>VAC uses various encryption and hashing techniques such as MD5, ICE, CRC32, and XOR to protect the integrity of its data and make analysis more difficult for cheaters.</p>
-            <h3>Improvement Strategies:</h3>
-            <ul>
-                <li>Kernel-Level Anti-Cheat: Implementing deeper-level monitoring, despite concerns over privacy and system stability.</li>
-                <li>Client-Side Sandboxing: Isolating the game environment to prevent external manipulations.</li>
-                <li>Secure Multi-Party Computation (SMPC): Ensuring sensitive game data is securely encrypted and only accessible under strict conditions.</li>
-            </ul>
-        </section>
-        <section class="mb-5">
-            <h2>Discovering a New Vulnerability</h2>
-            <video src="./images/discovery.mp4" controls class="img-fluid mb-4"></video>
-            <p>During my research, I attempted to replicate the payload and discovered a new issue. Using my custom-made Python script, I was able to crash a player’s game when they connected to my server via RCON.</p>
-            <p>To achieve this, I wrote a Python script and utilized parts of the payload provided by Florian, the person who reported this CVE. This script acts as a malicious RCON server that, once a connection is established, sends a harmful payload to the client. The original intention was to exploit the CVE to open the calculator via Remote Code Execution (RCE). However, with the same payload, the user’s game now crashes. I am unsure why this happens and will investigate it further in the future.</p>
-            <h3>Testing on the Latest Version of CS2</h3>
-            <p>I first tested this script on the latest version of Counter-Strike 2. To my surprise, this payload causes the newest version of the game to crash. This shows that the exploit can still affect the latest game versions, although it does not achieve the desired Remote Code Execution.</p>
-            <p>I am currently in the process of writing a detailed report on this discovery so that I can submit it to HackerOne for further analysis and possible remediation by the developers.</p>
-        </section>        
-        <footer class="text-center py-4">
-            <h2>Conclusion</h2>
-            <p>My research delves into the various ways cheating undermines the fairness and integrity of Counter-Strike 2. By focusing on CVE-2021-30481 and wallhack cheats, the study reveals the methods cheaters use to exploit game vulnerabilities.</p>
-            <br>
-            <p>The analysis of CVE-2021-30481 shows how malicious actors can manipulate command-line parameters to execute arbitrary code, highlighting the need for strong security measures. Valve’s countermeasures, including removing vulnerable RCON command handlers and using safer alternatives for handling startup parameters, are crucial steps in mitigating these risks.</p>
-            <br>
-            <p>The exploration of wallhack cheats demonstrates their persistent and evolving nature. Wallhacks allow players to see through walls, providing an unfair advantage and deteriorating the gaming experience. The research offers insights into the mechanisms of wallhack cheats and proposes robust detection and prevention strategies.</p>
-            <br>
-            <p>My hands-on approach to developing his own wallhack provided valuable insights into how such cheats function and evade traditional detection methods. This practical experience, combined with survey data and community feedback, offers a comprehensive picture of the cheating landscape in Counter-Strike 2.</p>
-            <br>
-            <p>The reverse engineering of Valve Anti-Cheat (VAC) systems emphasizes the need for continual advancement in anti-cheat technologies. Despite VAC’s sophisticated modules for detecting cheats, the research identifies vulnerabilities and proposes enhancements such as kernel-level anti-cheat and client-side sandboxing to strengthen game security.</p>
-            <br>
-            <p>In conclusion, my research sheds light on the complex issue of cheating in Counter-Strike 2 and provides a roadmap for developers to enhance game integrity and fairness. Continued efforts in this domain, leveraging community engagement and advanced technical solutions, are essential to ensure a fair and enjoyable gaming experience for all players.</p>
-        </footer>
-        
+
+        <!-- Grid container for trains and buses -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+            <!-- Train Departures -->
+            <div>
+                <h2 class="text-lg sm:text-xl font-bold mb-2 sm:mb-4 text-blue-900">Treinen vanaf Station Tilburg
+                    Universiteit</h2>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full responsive-table">
+                            <thead class="bg-blue-900 text-white">
+                                <tr>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Tijd</th>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Bestemming</th>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Spoor</th>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Type</th>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="train-departures-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bus Departures -->
+            <div>
+                <h2 class="text-lg sm:text-xl font-bold mb-2 sm:mb-4 text-blue-900">Bussen vanaf Tilburg,
+                    Conservatoriumlaan</h2>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full responsive-table">
+                            <thead class="bg-blue-900 text-white">
+                                <tr>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Tijd</th>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Lijn</th>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Richting</th>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Vervoerder</th>
+                                    <th class="px-4 py-2 sm:px-6 sm:py-3 text-left">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bus-departures-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 text-right">
+            <p class="text-xs sm:text-sm text-gray-600">Laatste update: <span id="last-update"></span></p>
+        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+
+    <script>
+        // Globale variabelen voor synchronisatie
+        const DEFAULT_DEPARTURES = 9;
+        let numTrainDepartures = DEFAULT_DEPARTURES;
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').textContent =
+                now.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function formatTime(dateTimeStr) {
+            return new Date(dateTimeStr).toLocaleTimeString('nl-NL', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function formatDelayedTime(plannedTime, actualTime) {
+            const planned = new Date(plannedTime);
+            const actual = new Date(actualTime);
+            const delayMinutes = Math.floor((actual - planned) / 60000);
+
+            return `${formatTime(actual)} <small class="text-xs">+${delayMinutes}'</small>`;
+        }
+
+        async function fetchDepartures() {
+            await Promise.all([
+                fetchTrainDepartures(),
+                fetchBusDepartures()
+            ]);
+
+            document.getElementById('last-update').textContent =
+                new Date().toLocaleTimeString('nl-NL');
+        }
+
+        async function fetchTrainDepartures() {
+            try {
+                const response = await fetch('https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/arrivals?station=TBU', {
+                    headers: {
+                        'Ocp-Apim-Subscription-Key': 'e81b1ef0400449d6a124463525c0b782',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                const data = await response.json();
+                updateTrainDeparturesTable(data.payload.arrivals);
+            } catch (error) {
+                console.error('Error fetching train data:', error);
+            }
+        }
+
+        async function fetchBusDepartures() {
+            try {
+                const response = await fetch('https://api.allorigins.win/raw?url=http://v0.ovapi.nl/tpc/73000220');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                const stopData = data["73000220"];
+
+                if (!stopData || !stopData.Passes) {
+                    console.warn('No bus departure data available');
+                    updateBusDeparturesTable([]);
+                    return;
+                }
+
+                const departures = Object.values(stopData.Passes)
+                    .filter(pass => {
+                        const departureTime = new Date(pass.ExpectedDepartureTime);
+                        return departureTime > new Date();
+                    })
+                    .sort((a, b) => new Date(a.ExpectedDepartureTime) - new Date(b.ExpectedDepartureTime))
+                    .map(pass => {
+                        const targetTime = new Date(pass.TargetDepartureTime);
+                        const expectedTime = new Date(pass.ExpectedDepartureTime);
+                        const isDelayed = expectedTime > targetTime;
+                        const delayMinutes = isDelayed ?
+                            Math.round((expectedTime - targetTime) / 60000) : 0;
+
+                        return {
+                            time: expectedTime,
+                            targetTime: targetTime,
+                            line: pass.LinePublicNumber,
+                            direction: pass.DestinationName50,
+                            operator: pass.OperatorCode.replace('BRAVO:', ''),
+                            isDelayed: isDelayed,
+                            delayMinutes: delayMinutes
+                        };
+                    });
+
+                updateBusDeparturesTable(departures);
+            } catch (error) {
+                console.error('Error fetching bus data:', error);
+            }
+        }
+
+        function updateTrainDeparturesTable(arrivals) {
+            const tbody = document.getElementById('train-departures-table');
+            tbody.innerHTML = '';
+
+            numTrainDepartures = arrivals.length || DEFAULT_DEPARTURES;
+
+            arrivals.forEach(train => {
+                const row = document.createElement('tr');
+                row.className = 'border-b hover:bg-gray-50' +
+                    (train.cancelled ? ' cancelled' : '');
+
+                const plannedTime = formatTime(train.plannedDateTime);
+                const actualTime = formatTime(train.actualDateTime);
+                const isDelayed = plannedTime !== actualTime && !train.cancelled;
+
+                row.innerHTML = `
+                    <td class="${isDelayed ? 'delayed' : ''}" data-label="Tijd">
+                        ${isDelayed ? formatDelayedTime(train.plannedDateTime, train.actualDateTime) : plannedTime}
+                    </td>
+                    <td data-label="Bestemming">${train.origin}</td>
+                    <td data-label="Spoor" class="font-mono">${train.actualTrack}</td>
+                    <td data-label="Type">${train.product.shortCategoryName}</td>
+                    <td data-label="Status">
+                        ${train.cancelled ? '<span class="text-red-600">Geannuleerd</span>' :
+                        train.messages.length > 0 ? `<span class="text-yellow-600">${train.messages[0].message}</span>` :
+                            isDelayed ? '<span class="text-red-600">Vertraagd</span>' :
+                                '<span class="text-green-600">Op tijd</span>'}
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateBusDeparturesTable(busData) {
+            const tbody = document.getElementById('bus-departures-table');
+            tbody.innerHTML = '';
+
+            const departuresToShow = Math.min(busData.length, numTrainDepartures);
+            busData.slice(0, departuresToShow).forEach(bus => {
+                const row = document.createElement('tr');
+                row.className = 'border-b hover:bg-gray-50';
+
+                const targetTime = new Date(bus.targetTime);
+                const expectedTime = new Date(bus.time);
+                const isDelayed = bus.isDelayed;
+
+                row.innerHTML = `
+                    <td class="${isDelayed ? 'delayed' : ''}" data-label="Tijd">
+                        ${isDelayed ? formatDelayedTime(targetTime, expectedTime) : formatTime(expectedTime)}
+                    </td>
+                    <td data-label="Lijn">Lijn ${bus.line}</td>
+                    <td data-label="Richting">${bus.direction}</td>
+                    <td data-label="Vervoerder">${bus.operator}</td>
+                    <td data-label="Status">
+                        <span class="${isDelayed ? 'text-red-600' : 'text-green-600'}">
+                            ${isDelayed ? 'Vertraagd' : 'Op tijd'}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initialize
+        updateClock();
+        fetchDepartures();
+
+        // Update clock every second
+        setInterval(updateClock, 1000);
+
+        // Fetch new data every 30 seconds
+        setInterval(fetchDepartures, 30000);
+    </script>
 </body>
+
 </html>
