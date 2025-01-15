@@ -1,5 +1,4 @@
-name: Update Skinport Prices
-
+name: Update CS:GO Prices
 on:
   schedule:
     - cron: '0 0 * * *'  # Runs at 00:00 UTC every day
@@ -30,5 +29,5 @@ jobs:
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-          git add data/skinport-prices.json
-          git diff --staged --quiet || (git commit -m "Update Skinport prices" && git push)
+          git add data/skinport-prices.json data/csfloat-prices.json
+          git diff --staged --quiet || (git commit -m "Update CS:GO prices" && git push)
