@@ -1,12 +1,27 @@
 const fs = require('fs');
+const path = require('path');
+
 const params = new URLSearchParams({
     app_id: 730,
     currency: 'EUR',
     tradable: 0
 });
 
+const FILE_PATH = 'data/skinport-prices.json';
+
 (async () => {
     try {
+        // Zorg ervoor dat de data directory bestaat
+        const dataDir = path.dirname(FILE_PATH);
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
+
+        // Maak het bestand leeg (of creëer een leeg bestand als het nog niet bestaat)
+        await fs.promises.writeFile(FILE_PATH, '[]', 'utf8');
+        console.log('Bestaand bestand is leeggemaakt');
+
+        // Haal nieuwe data op
         const response = await fetch(`https://api.skinport.com/v1/items?${params}`, {
             method: 'GET',
             headers: {
@@ -16,7 +31,7 @@ const params = new URLSearchParams({
 
         const data = await response.json();
         
-        // Filter alleen de gewenste velden
+        // Filter de gewenste velden
         const filteredData = data.map(item => ({
             market_hash_name: item.market_hash_name,
             currency: item.currency,
@@ -24,12 +39,12 @@ const params = new URLSearchParams({
             item_page: item.item_page
         }));
 
-        // Write to data directory
-        await fs.promises.writeFile('data/skinport-prices.json', JSON.stringify(filteredData, null, 2), 'utf8');
+        // Schrijf de nieuwe data
+        await fs.promises.writeFile(FILE_PATH, JSON.stringify(filteredData, null, 2), 'utf8');
 
-        console.log('Price data has been updated successfully');
+        console.log('Nieuwe prijsdata is succesvol opgeslagen');
     } catch (error) {
-        console.error('An error occurred:', error);
+        console.error('Er is een fout opgetreden:', error);
         process.exit(1);
     }
 })();
