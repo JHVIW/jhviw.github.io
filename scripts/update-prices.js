@@ -38,7 +38,6 @@ const CSFLOAT_FILE_PATH = 'data/csfloat-prices.json';
             market_hash_name: item.market_hash_name,
             currency: 'USD',
             min_price: item.min_price,
-            item_page: item.item_page
         }));
 
         // CSFloat data transformeren en opslaan
@@ -46,7 +45,6 @@ const CSFLOAT_FILE_PATH = 'data/csfloat-prices.json';
             market_hash_name: item.market_hash_name,
             currency: 'USD',
             min_price: item.min_price / 100, // Delen door 100 zoals aangegeven
-            qty: item.qty
         }));
 
         // Schrijf beide bestanden
