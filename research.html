@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rick's Portfolio - Security Research</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portfolio_styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="skills.html">Skills & Expertise </a></li>
+            <li><a href="fhir.html">FHIR & Healthcare IT</a></li>
+            <li><a href="research.html">Security Research</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="research" class="section">
+        <div class="container">
+            <h2>Security Research</h2>
+            <div class="research-card">
+                <h2>Security Research: Counter-Strike 2 Vulnerabilities</h2>
+                <div class="ethical-notice">
+                    This research was conducted ethically in controlled environments for educational purposes only.
+                </div>
+
+                <details>
+                    <summary>CVE-2021-30481 Analysis</summary>
+                    <img src="./images/CVE.png" class="research-media" alt="CVE analysis">
+                    <p>Deep dive into Steam RCON vulnerabilities and remote code execution risks...</p>
+                    <video src="./images/discovery.mp4" class="research-media" controls></video>
+                </details>
+
+                <details>
+                    <summary>Anti-Cheat Reverse Engineering</summary>
+                    <img src="./images/reverse.png" class="research-media" alt="VAC analysis">
+                    <p>Technical breakdown of Valve's Anti-Cheat mechanisms and proposed improvements...</p>
+                </details>
+
+                <details>
+                    <summary>Wallhack Development & Detection</summary>
+                    <div class="tech-tags">
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">Memory Analysis</span>
+                        <span class="tech-tag">Swed64</span>
+                    </div>
+                    <img src="./images/wallhack_2.png" class="research-media" alt="Wallhack demo">
+                    <p>Proof-of-concept cheat development and detection methodology...</p>
+                </details>
+
+                <details>
+                    <summary>New Vulnerability Discovery</summary>
+                    <div class="vulnerability-content">
+                        <h3>Discovery and Reporting Process</h3>
+                        <p>During my research into Counter-Strike 2's security mechanisms, I discovered a new
+                            vulnerability that could crash the game client when connecting to a malicious RCON
+                            server. This vulnerability was found while attempting to replicate the CVE-2021-30481
+                            exploit.</p>
+
+                        <h4>Technical Details:</h4>
+                        <ul>
+                            <li><strong>Vulnerability Type:</strong> Remote Client Crash</li>
+                            <li><strong>Impact:</strong> Denial of Service (Game Client Crash)</li>
+                            <li><strong>Attack Vector:</strong> Malicious RCON Server</li>
+                            <li><strong>Affected Versions:</strong> All current CS2 versions</li>
+                        </ul>
+
+                        <h4>Discovery Process:</h4>
+                        <ol>
+                            <li>Developed Python-based RCON server simulation</li>
+                            <li>Analyzed game client responses to malformed packets</li>
+                            <li>Identified memory handling issues in client-server communication</li>
+                            <li>Verified crash consistency across multiple game versions</li>
+                        </ol>
+
+                        <h4>Responsible Disclosure:</h4>
+                        <p>Following the discovery, I responsibly reported this vulnerability through
+                            HackerOne's vulnerability disclosure program. The report included:</p>
+                        <ul>
+                            <li>Detailed technical description of the vulnerability</li>
+                            <li>Proof-of-concept code demonstrating the issue</li>
+                            <li>Suggested mitigation strategies</li>
+                            <li>Impact analysis and potential risks</li>
+                        </ul>
+
+                        <div class="hackerone-badge">
+                            <p>Report submitted and acknowledged by HackerOne's security team</p>
+                        </div>
+
+                        <h4>Current Status:</h4>
+                        <p>The vulnerability is currently under review by Valve's security team. I'm actively
+                            collaborating with them to ensure proper resolution while maintaining responsible
+                            disclosure practices.</p>
+
+                        <div class="ethical-notice">
+                            Note: Specific technical details have been withheld to prevent potential misuse
+                            while the vulnerability is being addressed.
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <script src="portfolio_script.js"></script>
+</body>
+
+</html>
