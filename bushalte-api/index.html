@@ -101,11 +101,11 @@
     
     <div id="api-docs">
         <h2>Documentatie</h2>
-        <p>Deze API laat je zoeken naar bushaltes op basis van (een deel van) de naam. De resultaten bevatten de quaycode, straat en plaatsnaam van overeenkomende haltes.</p>
+        <p>Deze API laat je zoeken naar bushaltes op basis van (een deel van) de plaatsnaam of straatnaam. De resultaten bevatten de quaycode, straat en plaatsnaam van overeenkomende haltes.</p>
         
         <h3>Gebruik</h3>
         <p>Gebruik de URL parameter <code>naam</code> om te zoeken naar een bushalte (minimaal 3 letters):</p>
-        <pre>https://jouw-gebruikersnaam.github.io/bushalte-api/?naam=flo</pre>
+        <pre>https://jouw-gebruikersnaam.github.io/bushalte-api/?naam=ass</pre>
         
         <h3>Parameters</h3>
         <table>
@@ -116,7 +116,7 @@
             </tr>
             <tr>
                 <td>naam</td>
-                <td>De (gedeeltelijke) naam van de bushalte (min. 3 letters)</td>
+                <td>Zoekterm voor plaats of straat (min. 3 letters)</td>
                 <td>Ja</td>
             </tr>
             <tr>
@@ -128,10 +128,10 @@
         
         <h3>Voorbeelden</h3>
         <div class="examples">
-            <a href="?naam=flo&format=html">Zoek 'flo' (HTML)</a>
-            <a href="?naam=lei&format=html">Zoek 'lei' (HTML)</a>
-            <a href="?naam=kap&format=html">Zoek 'kap' (HTML)</a>
-            <a href="?naam=hid&format=html">Zoek 'hid' (HTML)</a>
+            <a href="?naam=ass&format=html">Zoek 'ass' (Assen)</a>
+            <a href="?naam=hoo&format=html">Zoek 'hoo' (Hoofddorp)</a>
+            <a href="?naam=del&format=html">Zoek 'del' (Deltaweg)</a>
+            <a href="?naam=eer&format=html">Zoek 'eer' (Eersel)</a>
         </div>
         
         <h3>Response formaat (JSON)</h3>
@@ -141,7 +141,6 @@
   "count": 1,
   "results": [
     {
-      "name": "Naam van de halte",
       "quaycode": "NL:Q:12345678",
       "street": "Straatnaam",
       "town": "Plaatsnaam"
@@ -229,45 +228,28 @@
             const results = [];
             
             try {
-                const stopplaces = xmlDoc.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'stopplace');
+                const busStops = xmlDoc.getElementsByTagName('bus_stop');
                 
-                for (let i = 0; i < stopplaces.length; i++) {
-                    const stopplace = stopplaces[i];
+                for (let i = 0; i < busStops.length; i++) {
+                    const busStop = busStops[i];
                     
-                    const stopplaceNameElement = stopplace.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'stopplacename')[0];
-                    const publicNameElement = stopplaceNameElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'publicname')[0];
-                    const townElement = stopplaceNameElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'town')[0];
-                    const streetElement = stopplaceNameElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'street')[0];
+                    const quaycodeElement = busStop.getElementsByTagName('quaycode')[0];
+                    const townElement = busStop.getElementsByTagName('town')[0];
+                    const streetElement = busStop.getElementsByTagName('street')[0];
                     
-                    const publicName = publicNameElement ? publicNameElement.textContent : '';
+                    const quaycode = quaycodeElement ? quaycodeElement.textContent : '';
+                    const town = townElement ? townElement.textContent : '';
+                    const street = streetElement ? streetElement.textContent : '';
                     
-                    if (sanitizeString(publicName).includes(query)) {
-                        const quays = stopplace.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quay');
-                        
-                        for (let j = 0; j < quays.length; j++) {
-                            const quay = quays[j];
-                            const quaycodeElement = quay.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quaycode')[0];
-                            const quayNameDataElement = quay.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quaynamedata')[0];
-                            const quayNameElement = quayNameDataElement ? quayNameDataElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quayname')[0] : null;
-                            
-                            const quayLocationElement = quay.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quaylocationdata')[0];
-                            const quayTownElement = quayLocationElement ? quayLocationElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'town')[0] : null;
-                            const quayStreetElement = quayLocationElement ? quayLocationElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'street')[0] : null;
-                            
-                            const quayName = quayNameElement ? quayNameElement.textContent : publicName;
-                            const quayCode = quaycodeElement ? quaycodeElement.textContent : '';
-                            const town = quayTownElement ? quayTownElement.textContent : (townElement ? townElement.textContent : '');
-                            const street = quayStreetElement ? quayStreetElement.textContent : (streetElement ? streetElement.textContent : '');
-                            
-                            if (quayCode) {
-                                results.push({
-                                    name: quayName,
-                                    quaycode: quayCode,
-                                    street: street,
-                                    town: town
-                                });
-                            }
-                        }
+                    if (
+                        sanitizeString(town).includes(query) || 
+                        sanitizeString(street).includes(query)
+                    ) {
+                        results.push({
+                            quaycode: quaycode,
+                            street: street,
+                            town: town
+                        });
                     }
                 }
                 
@@ -288,14 +270,13 @@
             } else {
                 html += `<div class="result-count">Aantal resultaten: ${results.length}</div>`;
                 html += '<table>';
-                html += '<tr><th>Naam</th><th>Quaycode</th><th>Straat</th><th>Plaats</th></tr>';
+                html += '<tr><th>Quaycode</th><th>Straat</th><th>Plaats</th></tr>';
                 
                 results.forEach(result => {
                     html += `<tr>
-                        <td>${result.name}</td>
                         <td>${result.quaycode}</td>
-                        <td>${result.street || '-'}</td>
-                        <td>${result.town || '-'}</td>
+                        <td>${result.street === 'N/A' ? '-' : result.street}</td>
+                        <td>${result.town}</td>
                     </tr>`;
                 });
                 
