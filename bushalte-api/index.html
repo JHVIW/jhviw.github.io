@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bushalte API</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .response {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        #loading {
+            display: none;
+            color: #666;
+        }
+        #error {
+            color: #e74c3c;
+        }
+        .examples {
+            margin: 20px 0;
+        }
+        .examples a {
+            margin-right: 15px;
+        }
+        .result-count {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        #search-form {
+            margin: 20px 0;
+        }
+        #search-input {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #search-button {
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #search-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bushalte API</h1>
+    
+    <div id="loading">Bezig met laden van XML data...</div>
+    <div id="error"></div>
+    
+    <div id="search-form">
+        <input type="text" id="search-input" placeholder="Voer minimaal 3 letters in" minlength="3">
+        <button id="search-button">Zoeken</button>
+    </div>
+    
+    <div id="api-docs">
+        <h2>Documentatie</h2>
+        <p>Deze API laat je zoeken naar bushaltes op basis van (een deel van) de naam. De resultaten bevatten de quaycode, straat en plaatsnaam van overeenkomende haltes.</p>
+        
+        <h3>Gebruik</h3>
+        <p>Gebruik de URL parameter <code>naam</code> om te zoeken naar een bushalte (minimaal 3 letters):</p>
+        <pre>https://jouw-gebruikersnaam.github.io/bushalte-api/?naam=flo</pre>
+        
+        <h3>Parameters</h3>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Beschrijving</th>
+                <th>Verplicht</th>
+            </tr>
+            <tr>
+                <td>naam</td>
+                <td>De (gedeeltelijke) naam van de bushalte (min. 3 letters)</td>
+                <td>Ja</td>
+            </tr>
+            <tr>
+                <td>format</td>
+                <td>Gewenste responsformaat: 'json' (standaard) of 'html'</td>
+                <td>Nee</td>
+            </tr>
+        </table>
+        
+        <h3>Voorbeelden</h3>
+        <div class="examples">
+            <a href="?naam=flo&format=html">Zoek 'flo' (HTML)</a>
+            <a href="?naam=lei&format=html">Zoek 'lei' (HTML)</a>
+            <a href="?naam=kap&format=html">Zoek 'kap' (HTML)</a>
+            <a href="?naam=hid&format=html">Zoek 'hid' (HTML)</a>
+        </div>
+        
+        <h3>Response formaat (JSON)</h3>
+        <pre>{
+  "success": true,
+  "query": "zoekterm",
+  "count": 1,
+  "results": [
+    {
+      "name": "Naam van de halte",
+      "quaycode": "NL:Q:12345678",
+      "street": "Straatnaam",
+      "town": "Plaatsnaam"
+    }
+  ]
+}</pre>
+    </div>
+    
+    <div id="response" class="response"></div>
+
+    <script>
+        let xmlDoc = null;
+        const xmlUrl = 'bushaltes.xml';
+        
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        
+        function sanitizeString(str) {
+            return str ? str.trim().toLowerCase() : '';
+        }
+        
+        function showError(message) {
+            document.getElementById('error').textContent = message;
+            document.getElementById('loading').style.display = 'none';
+        }
+        
+        async function loadXmlData() {
+            document.getElementById('loading').style.display = 'block';
+            
+            try {
+                const response = await fetch(xmlUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                const xmlText = await response.text();
+                const parser = new DOMParser();
+                xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                
+                document.getElementById('loading').style.display = 'none';
+                
+                const searchQuery = getUrlParameter('naam');
+                if (searchQuery && searchQuery.length >= 3) {
+                    processSearch(searchQuery);
+                }
+            } catch (error) {
+                showError(`Fout bij het laden van XML data: ${error.message}`);
+                console.error('Error loading XML:', error);
+            }
+        }
+        
+        function processSearch(query) {
+            if (!xmlDoc) {
+                showError('XML data is nog niet geladen. Probeer het later opnieuw.');
+                return;
+            }
+            
+            if (query.length < 3) {
+                showError('Voer minimaal 3 tekens in om te zoeken.');
+                return;
+            }
+            
+            const format = getUrlParameter('format') || 'json';
+            const results = searchBushaltes(query);
+            
+            if (format.toLowerCase() === 'html') {
+                displayHtmlResults(query, results);
+            } else {
+                displayJsonResults(query, results);
+            }
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('naam', query);
+            urlParams.set('format', format);
+            const newUrl = window.location.pathname + '?' + urlParams.toString();
+            window.history.pushState({}, '', newUrl);
+        }
+        
+        function searchBushaltes(query) {
+            query = sanitizeString(query);
+            const results = [];
+            
+            try {
+                const stopplaces = xmlDoc.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'stopplace');
+                
+                for (let i = 0; i < stopplaces.length; i++) {
+                    const stopplace = stopplaces[i];
+                    
+                    const stopplaceNameElement = stopplace.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'stopplacename')[0];
+                    const publicNameElement = stopplaceNameElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'publicname')[0];
+                    const townElement = stopplaceNameElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'town')[0];
+                    const streetElement = stopplaceNameElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'street')[0];
+                    
+                    const publicName = publicNameElement ? publicNameElement.textContent : '';
+                    
+                    if (sanitizeString(publicName).includes(query)) {
+                        const quays = stopplace.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quay');
+                        
+                        for (let j = 0; j < quays.length; j++) {
+                            const quay = quays[j];
+                            const quaycodeElement = quay.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quaycode')[0];
+                            const quayNameDataElement = quay.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quaynamedata')[0];
+                            const quayNameElement = quayNameDataElement ? quayNameDataElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quayname')[0] : null;
+                            
+                            const quayLocationElement = quay.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'quaylocationdata')[0];
+                            const quayTownElement = quayLocationElement ? quayLocationElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'town')[0] : null;
+                            const quayStreetElement = quayLocationElement ? quayLocationElement.getElementsByTagNameNS('http://bison.connekt.nl/tmi8/chb/msg', 'street')[0] : null;
+                            
+                            const quayName = quayNameElement ? quayNameElement.textContent : publicName;
+                            const quayCode = quaycodeElement ? quaycodeElement.textContent : '';
+                            const town = quayTownElement ? quayTownElement.textContent : (townElement ? townElement.textContent : '');
+                            const street = quayStreetElement ? quayStreetElement.textContent : (streetElement ? streetElement.textContent : '');
+                            
+                            if (quayCode) {
+                                results.push({
+                                    name: quayName,
+                                    quaycode: quayCode,
+                                    street: street,
+                                    town: town
+                                });
+                            }
+                        }
+                    }
+                }
+                
+                return results;
+            } catch (error) {
+                console.error('Error searching XML:', error);
+                showError(`Fout bij het zoeken: ${error.message}`);
+                return [];
+            }
+        }
+        
+        function displayHtmlResults(query, results) {
+            const responseElement = document.getElementById('response');
+            let html = `<h2>Zoekresultaten voor "${query}"</h2>`;
+            
+            if (results.length === 0) {
+                html += '<p>Geen resultaten gevonden.</p>';
+            } else {
+                html += `<div class="result-count">Aantal resultaten: ${results.length}</div>`;
+                html += '<table>';
+                html += '<tr><th>Naam</th><th>Quaycode</th><th>Straat</th><th>Plaats</th></tr>';
+                
+                results.forEach(result => {
+                    html += `<tr>
+                        <td>${result.name}</td>
+                        <td>${result.quaycode}</td>
+                        <td>${result.street || '-'}</td>
+                        <td>${result.town || '-'}</td>
+                    </tr>`;
+                });
+                
+                html += '</table>';
+            }
+            
+            responseElement.innerHTML = html;
+        }
+        
+        function displayJsonResults(query, results) {
+            const responseElement = document.getElementById('response');
+            
+            const response = {
+                success: true,
+                query: query,
+                count: results.length,
+                results: results
+            };
+            
+            responseElement.innerHTML = `<h2>JSON Response</h2><pre>${JSON.stringify(response, null, 2)}</pre>`;
+            document.title = `Bushalte API - ${results.length} resultaten voor "${query}"`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadXmlData();
+            
+            document.getElementById('search-button').addEventListener('click', () => {
+                const searchInput = document.getElementById('search-input');
+                const query = searchInput.value.trim();
+                
+                if (query.length >= 3) {
+                    processSearch(query);
+                } else {
+                    showError('Voer minimaal 3 tekens in om te zoeken.');
+                }
+            });
+            
+            document.getElementById('search-input').addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    document.getElementById('search-button').click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
