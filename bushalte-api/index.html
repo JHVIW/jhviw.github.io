@@ -153,7 +153,7 @@
 
     <script>
         let xmlDoc = null;
-        const xmlUrl = 'bushaltes.xml';
+        const xmlUrl = 'https://raw.githubusercontent.com/JHVIW/jhviw.github.io/refs/heads/main/bushalte-api/bushaltes.xml';
         
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -208,12 +208,16 @@
             }
             
             const format = getUrlParameter('format') || 'json';
-            const results = searchBushaltes(query);
+            let results = searchBushaltes(query);
+            
+            // Limit to 5 results for short search terms
+            const isShortTerm = query.length <= 4;
+            const limitedResults = isShortTerm && results.length > 5 ? results.slice(0, 5) : results;
             
             if (format.toLowerCase() === 'html') {
-                displayHtmlResults(query, results);
+                displayHtmlResults(query, limitedResults, isShortTerm && results.length > 5);
             } else {
-                displayJsonResults(query, results);
+                displayJsonResults(query, limitedResults, isShortTerm && results.length > 5);
             }
             
             const urlParams = new URLSearchParams(window.location.search);
@@ -261,14 +265,14 @@
             }
         }
         
-        function displayHtmlResults(query, results) {
+        function displayHtmlResults(query, results, wasLimited) {
             const responseElement = document.getElementById('response');
             let html = `<h2>Zoekresultaten voor "${query}"</h2>`;
             
             if (results.length === 0) {
                 html += '<p>Geen resultaten gevonden.</p>';
             } else {
-                html += `<div class="result-count">Aantal resultaten: ${results.length}</div>`;
+                html += `<div class="result-count">Aantal resultaten: ${results.length}${wasLimited ? ' (gelimiteerd tot 5)' : ''}</div>`;
                 html += '<table>';
                 html += '<tr><th>Quaycode</th><th>Straat</th><th>Plaats</th></tr>';
                 
@@ -281,18 +285,23 @@
                 });
                 
                 html += '</table>';
+                
+                if (wasLimited) {
+                    html += '<p><i>Voer meer tekens in om alle resultaten te zien.</i></p>';
+                }
             }
             
             responseElement.innerHTML = html;
         }
         
-        function displayJsonResults(query, results) {
+        function displayJsonResults(query, results, wasLimited) {
             const responseElement = document.getElementById('response');
             
             const response = {
                 success: true,
                 query: query,
                 count: results.length,
+                limited: wasLimited ? true : false,
                 results: results
             };
             
