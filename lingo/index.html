@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lingo Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #83c0e9, #5a9bd5);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 5px;
+            width: 60%;
+        }
+        
+        .cell {
+            aspect-ratio: 1/1;
+            background-color: #3a75b0;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-panel {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .hint-display {
+            width: 100%;
+            height: 50px;
+            background-color: #3a75b0;
+            border-radius: 5px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .hint-btn {
+            width: 50px;
+            height: 50px;
+            background-color: #ffdb4d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #e74c3c;
+            width: 0%;
+            transition: width 1s linear;
+        }
+        
+        .progress-marker {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            position: relative;
+            top: -20px;
+            border: 2px solid #e74c3c;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        
+        .input-area {
+            width: 100%;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        #word-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            outline: none;
+            text-transform: uppercase;
+        }
+        
+        .submit-btn {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        
+        .submit-btn svg {
+            width: 30px;
+            height: 30px;
+            fill: #4CAF50;
+        }
+        
+        .correct {
+            background-color: #ff5722;
+        }
+        
+        .partial {
+            background-color: #ffdb4d;
+            color: #333;
+        }
+        
+        .wrong {
+            background-color: #3a75b0;
+        }
+        
+        .first-letter {
+            background-color: #ffdb4d;
+            color: #333;
+        }
+        
+        .pause-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pause-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #3a75b0;
+        }
+        
+        .score-display {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 80%;
+            text-align: center;
+        }
+        
+        .modal-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3a75b0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .game-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-board, .control-panel {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="score-display">Score: <span id="score">0</span></div>
+    
+    <div class="pause-btn" id="pause-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+        </svg>
+    </div>
+    
+    <div class="game-container">
+        <div class="game-board" id="game-board">
+            <!-- Board will be generated by JavaScript -->
+        </div>
+        
+        <div class="control-panel">
+            <div class="hint-display" id="hint-display">Start het spel!</div>
+            
+            <div class="hint-btn" id="hint-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-4h-2V7h2v8z"/>
+                </svg>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+                <div class="progress-marker" id="progress-marker">0</div>
+            </div>
+            
+            <div class="input-area">
+                <input type="text" id="word-input" maxlength="5" placeholder="Voer een woord in" autofocus>
+                <button class="submit-btn" id="submit-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="game-over-modal">
+        <div class="modal-content">
+            <h2>Game Over</h2>
+            <p id="game-over-message"></p>
+            <button class="modal-btn" id="restart-btn">Opnieuw spelen</button>
+        </div>
+    </div>
+    
+    <div class="modal" id="pause-modal">
+        <div class="modal-content">
+            <h2>Pauze</h2>
+            <p>Het spel is gepauzeerd.</p>
+            <button class="modal-btn" id="resume-btn">Doorgaan</button>
+        </div>
+    </div>
+    
+    <script>
+        const gameBoard = document.getElementById('game-board');
+        const wordInput = document.getElementById('word-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const hintDisplay = document.getElementById('hint-display');
+        const progressBar = document.getElementById('progress');
+        const progressMarker = document.getElementById('progress-marker');
+        const scoreDisplay = document.getElementById('score');
+        const pauseBtn = document.getElementById('pause-btn');
+        const gameOverModal = document.getElementById('game-over-modal');
+        const gameOverMessage = document.getElementById('game-over-message');
+        const restartBtn = document.getElementById('restart-btn');
+        const pauseModal = document.getElementById('pause-modal');
+        const resumeBtn = document.getElementById('resume-btn');
+        
+        let wordList = [];
+        let currentWord = '';
+        let currentRow = 0;
+        let score = 0;
+        let timer = null;
+        let timeLeft = 60; // 60 seconds per word
+        let isPaused = false;
+        
+        // Initialize the game board
+        function initializeBoard() {
+            gameBoard.innerHTML = '';
+            for (let i = 0; i < 5; i++) { // 5 rows
+                for (let j = 0; j < 5; j++) { // 5 columns (5-letter words)
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    gameBoard.appendChild(cell);
+                }
+            }
+        }
+        
+        // Fetch word list from GitHub
+        async function fetchWordList() {
+            try {
+                const response = await fetch('https://raw.githubusercontent.com/OpenTaal/opentaal-wordlist/refs/heads/master/wordlist.txt');
+                const text = await response.text();
+                
+                // Filter for 5-letter words without special characters
+                const words = text.split('\n').filter(word => {
+                    return word.length === 5 && /^[a-zA-Z]+$/.test(word);
+                });
+                
+                wordList = words;
+                startNewGame();
+            } catch (error) {
+                console.error('Error fetching word list:', error);
+                hintDisplay.textContent = "Kon woordenlijst niet laden!";
+            }
+        }
+        
+        // Select a random word
+        function selectRandomWord() {
+            const randomIndex = Math.floor(Math.random() * wordList.length);
+            return wordList[randomIndex].toUpperCase();
+        }
+        
+        // Start a new game
+        function startNewGame() {
+            initializeBoard();
+            currentWord = selectRandomWord();
+            currentRow = 0;
+            timeLeft = 60;
+            
+            // Show first letter as hint
+            const firstCell = document.querySelector('[data-row="0"][data-col="0"]');
+            firstCell.textContent = currentWord[0];
+            firstCell.classList.add('first-letter');
+            
+            hintDisplay.textContent = `Woord van 5 letters`;
+            
+            // Start timer
+            if (timer) clearInterval(timer);
+            timer = setInterval(updateTimer, 1000);
+            updateTimer();
+            
+            // Enable input
+            wordInput.disabled = false;
+            wordInput.value = '';
+            wordInput.focus();
+        }
+        
+        // Update timer
+        function updateTimer() {
+            if (isPaused) return;
+            
+            timeLeft--;
+            const percentage = (timeLeft / 60) * 100;
+            progressBar.style.width = `${percentage}%`;
+            progressMarker.textContent = timeLeft;
+            progressMarker.style.left = `${percentage}%`;
+            
+            if (timeLeft <= 0) {
+                gameOver(false);
+            }
+        }
+        
+        // Process guess
+        function processGuess() {
+            const guess = wordInput.value.toUpperCase();
+            
+            // Validate input
+            if (guess.length !== 5) {
+                hintDisplay.textContent = "Voer een woord van 5 letters in!";
+                return;
+            }
+            
+            if (!/^[A-Z]+$/.test(guess)) {
+                hintDisplay.textContent = "Alleen letters zijn toegestaan!";
+                return;
+            }
+            
+            // Check each letter
+            for (let i = 0; i < 5; i++) {
+                const cell = document.querySelector(`[data-row="${currentRow}"][data-col="${i}"]`);
+                cell.textContent = guess[i];
+                
+                if (i === 0 && currentRow === 0) {
+                    // First letter is already handled
+                    continue;
+                }
+                
+                if (guess[i] === currentWord[i]) {
+                    cell.classList.add('correct');
+                } else if (currentWord.includes(guess[i])) {
+                    cell.classList.add('partial');
+                } else {
+                    cell.classList.add('wrong');
+                }
+            }
+            
+            // Check if word is guessed correctly
+            if (guess === currentWord) {
+                score += 10 + timeLeft;
+                scoreDisplay.textContent = score;
+                gameOver(true);
+                return;
+            }
+            
+            // Move to next row
+            currentRow++;
+            
+            // Check if ran out of tries
+            if (currentRow >= 5) {
+                gameOver(false);
+                return;
+            }
+            
+            // Show first letter of next row
+            const firstCell = document.querySelector(`[data-row="${currentRow}"][data-col="0"]`);
+            firstCell.textContent = currentWord[0];
+            firstCell.classList.add('first-letter');
+            
+            // Clear input
+            wordInput.value = '';
+            wordInput.focus();
+        }
+        
+        // Game over
+        function gameOver(isWin) {
+            clearInterval(timer);
+            wordInput.disabled = true;
+            
+            if (isWin) {
+                gameOverMessage.textContent = `Gefeliciteerd! Je hebt het woord "${currentWord}" geraden. Je score is ${score}.`;
+            } else {
+                gameOverMessage.textContent = `Helaas! Het woord was "${currentWord}". Je score is ${score}.`;
+            }
+            
+            gameOverModal.style.display = 'flex';
+        }
+        
+        // Show hint
+        function showHint() {
+            // Count correctly placed letters
+            let correctCount = 0;
+            for (let i = 0; i < 5; i++) {
+                const cell = document.querySelector(`[data-row="${currentRow}"][data-col="${i}"]`);
+                if (cell.classList.contains('correct') || cell.classList.contains('first-letter')) {
+                    correctCount++;
+                }
+            }
+            
+            // If all letters are correct, no need for hint
+            if (correctCount >= 5) {
+                hintDisplay.textContent = "Je hebt alle letters al!";
+                return;
+            }
+            
+            // Find the next letter that is not revealed yet
+            for (let i = 0; i < 5; i++) {
+                const cell = document.querySelector(`[data-row="${currentRow}"][data-col="${i}"]`);
+                if (!cell.classList.contains('correct') && !cell.classList.contains('first-letter')) {
+                    cell.textContent = currentWord[i];
+                    cell.classList.add('correct');
+                    
+                    // Penalize for using hint
+                    score = Math.max(0, score - 5);
+                    scoreDisplay.textContent = score;
+                    
+                    return;
+                }
+            }
+        }
+        
+        // Pause game
+        function togglePause() {
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                clearInterval(timer);
+                pauseModal.style.display = 'flex';
+                wordInput.disabled = true;
+            } else {
+                timer = setInterval(updateTimer, 1000);
+                pauseModal.style.display = 'none';
+                wordInput.disabled = false;
+                wordInput.focus();
+            }
+        }
+        
+        // Event listeners
+        submitBtn.addEventListener('click', processGuess);
+        wordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') processGuess();
+        });
+        hintBtn.addEventListener('click', showHint);
+        pauseBtn.addEventListener('click', togglePause);
+        restartBtn.addEventListener('click', () => {
+            gameOverModal.style.display = 'none';
+            startNewGame();
+        });
+        resumeBtn.addEventListener('click', togglePause);
+        
+        // Start game
+        initializeBoard();
+        fetchWordList();
+    </script>
+</body>
+</html>
