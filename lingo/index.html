@@ -349,7 +349,7 @@
         // Fetch word list from GitHub
         async function fetchWordList() {
             try {
-                const response = await fetch('https://raw.githubusercontent.com/OpenTaal/opentaal-wordlist/refs/heads/master/wordlist.txt');
+                const response = await fetch('https://raw.githubusercontent.com/oprogramador/most-common-words-by-language/refs/heads/master/src/resources/dutch.txt');
                 const text = await response.text();
                 
                 // Filter for 5-letter words without special characters
@@ -423,6 +423,12 @@
             
             if (!/^[A-Z]+$/.test(guess)) {
                 hintDisplay.textContent = "Alleen letters zijn toegestaan!";
+                return;
+            }
+            
+            // Check if the word exists in the word list
+            if (!wordList.includes(guess.toLowerCase())) {
+                hintDisplay.textContent = "Dit woord staat niet in de woordenlijst!";
                 return;
             }
             
