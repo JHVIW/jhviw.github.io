@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Color Palette</title>
+    <title>Minecraft Color Palette & Pattern Generator</title>
     <style>
         :root {
             --primary-color: #27ae60;
@@ -38,6 +38,14 @@
             padding: 20px;
         }
         
+        .app-title {
+            color: var(--accent-color);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* Color picker styles */
         .color-picker-container {
             display: flex;
             align-items: center;
@@ -76,6 +84,16 @@
             font-size: 1rem;
         }
         
+        input[type="number"] {
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            border: none;
+            background-color: var(--background-light);
+            color: var(--text-light);
+            width: 80px;
+            font-size: 1rem;
+        }
+        
         .control-group {
             display: flex;
             align-items: center;
@@ -102,7 +120,7 @@
             padding-right: 35px;
         }
         
-        .find-btn {
+        .btn {
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -114,19 +132,41 @@
             min-width: 150px;
         }
         
-        .find-btn:hover {
+        .btn:hover {
             background-color: var(--primary-hover);
         }
         
-        .find-btn:disabled {
+        .btn:disabled {
             background-color: var(--background-light);
             cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background-color: var(--background-light);
+            color: var(--text-light);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--background-lighter);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: var(--background-dark);
+        }
+        
+        .btn-accent:hover {
+            background-color: #f4d03f;
         }
         
         .section-title {
             color: var(--accent-color);
             font-size: 1.8rem;
             margin-bottom: 20px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
         }
         
         .palette-display {
@@ -180,10 +220,15 @@
             align-items: center;
             transition: transform 0.2s;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
         
         .block-item:hover {
             transform: translateY(-3px);
+        }
+        
+        .block-item.selected {
+            border: 2px solid var(--accent-color);
         }
         
         .block-image {
@@ -198,6 +243,142 @@
             text-align: center;
             word-wrap: break-word;
             line-height: 1.3;
+        }
+        
+        .block-select-checkbox {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        /* Pattern generator styles */
+        .pattern-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            background-color: var(--background-medium);
+            padding: 20px;
+            border-radius: var(--border-radius);
+        }
+        
+        .selected-blocks-container {
+            background-color: var(--background-medium);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+        
+        .selected-blocks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .selected-block {
+            background-color: var(--background-light);
+            border-radius: var(--border-radius);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .selected-block img {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+        }
+        
+        .pattern-preview-wrapper {
+            background-color: var(--background-lighter);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .pattern-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .pattern-preview-header h3 {
+            margin: 0;
+        }
+        
+        .zoom-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .zoom-btn {
+            background-color: var(--background-light);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .pattern-grid-container {
+            display: flex;
+            justify-content: center;
+            overflow: auto;
+            max-width: 100%;
+        }
+        
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-size, 8), minmax(40px, 50px));
+            gap: 2px;
+        }
+        
+        .pattern-cell {
+            aspect-ratio: 1/1;
+            background-color: var(--background-light);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .pattern-cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+        }
+        
+        .pattern-generator {
+            display: none;
+            margin-top: 40px;
+            border-top: 1px solid var(--background-light);
+            padding-top: 40px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .help-text {
+            background-color: var(--background-light);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
         }
         
         .footer {
@@ -241,14 +422,12 @@
             display: none;
         }
         
-        hr {
-            border: none;
-            border-top: 1px solid var(--background-light);
-            margin: 30px 0;
-        }
-        
         /* Mobile optimizations */
         @media (max-width: 768px) {
+            .app-title {
+                font-size: 1.6rem;
+            }
+            
             .color-picker-container {
                 flex-direction: column;
                 align-items: stretch;
@@ -257,6 +436,7 @@
             .color-input-group {
                 width: 100%;
                 margin-bottom: 15px;
+                flex-wrap: wrap;
             }
             
             .control-group {
@@ -264,23 +444,48 @@
                 justify-content: space-between;
             }
             
-            .find-btn {
+            .btn {
                 width: 100%;
             }
             
             .blocks-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            
+            .block-item {
+                padding: 10px;
+            }
+            
+            .block-image {
+                width: 40px;
+                height: 40px;
             }
             
             .color-box {
                 width: 60px;
                 height: 60px;
             }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .pattern-grid {
+                grid-template-columns: repeat(var(--grid-size, 8), minmax(30px, 40px));
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
     <div class="app-container">
+        <h1 class="app-title">Minecraft Color Palette & Pattern Generator</h1>
+        
+        <!-- Color Picker Section -->
         <div class="color-picker-container">
             <div class="color-input-group">
                 <input type="color" id="color-picker" value="#ffffff">
@@ -294,18 +499,80 @@
                     </select>
                 </div>
             </div>
-            <button id="find-btn" class="find-btn">Find Blocks</button>
+            <button id="find-btn" class="btn">Find Blocks</button>
         </div>
         
+        <!-- Results Section -->
         <div id="results-container" class="results-container">
-            <h2 class="section-title">Your Color Palette</h2>
-            <div id="palette-display" class="palette-display">
-                <!-- Color palette items will be added here -->
+            <section class="section">
+                <h2 class="section-title">Your Color Palette</h2>
+                <div id="palette-display" class="palette-display">
+                    <!-- Color palette items will be added here -->
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Matching Minecraft Blocks</h2>
+                <div id="blocks-grid" class="blocks-grid">
+                    <!-- Block items will be added here -->
+                </div>
+            </section>
+            
+            <div class="action-buttons">
+                <button id="create-pattern-btn" class="btn btn-accent">Create Patterns With These Blocks</button>
+            </div>
+        </div>
+        
+        <!-- Pattern Generator Section (initially hidden) -->
+        <div id="pattern-generator" class="pattern-generator">
+            <h2 class="section-title">Create Patterns With Selected Blocks</h2>
+            
+            <div class="help-text">
+                Select pattern type and size to create beautiful block patterns for your Minecraft builds!
             </div>
             
-            <h2 class="section-title">Matching Minecraft Blocks</h2>
-            <div id="blocks-grid" class="blocks-grid">
-                <!-- Block items will be added here -->
+            <div class="pattern-controls">
+                <div class="control-group">
+                    <label for="pattern-type">Pattern Type:</label>
+                    <select id="pattern-type">
+                        <option value="checkerboard">Checkerboard</option>
+                        <option value="stripes">Stripes</option>
+                        <option value="random">Random</option>
+                        <option value="border">Border</option>
+                        <option value="diagonal">Diagonal</option>
+                        <option value="circles">Circles</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="grid-size">Grid Size:</label>
+                    <input type="number" id="grid-size" min="4" max="16" value="8">
+                </div>
+                
+                <button id="generate-pattern-btn" class="btn">Generate Pattern</button>
+            </div>
+            
+            <div class="selected-blocks-container">
+                <h3>Selected Blocks for Pattern</h3>
+                <div id="selected-blocks" class="selected-blocks">
+                    <!-- Selected blocks will appear here -->
+                </div>
+            </div>
+            
+            <div class="pattern-preview-wrapper">
+                <div class="pattern-preview-header">
+                    <h3>Pattern Preview</h3>
+                    <div class="zoom-buttons">
+                        <button class="zoom-btn" id="zoom-out">-</button>
+                        <button class="zoom-btn" id="zoom-in">+</button>
+                    </div>
+                </div>
+                
+                <div class="pattern-grid-container">
+                    <div id="pattern-grid" class="pattern-grid">
+                        <!-- Pattern cells will be generated here -->
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -323,7 +590,9 @@
         let allItems = [];
         let selectedItems = [];
         let palette = [];
+        let selectedPatternBlocks = []; // Blocks selected for pattern generation
         let dominantColors = new Map(); // Cache for dominant colors in items
+        let currentZoom = 1;
         const apiUrl = 'https://raw.githubusercontent.com/JHVIW/MineCatalog/main/minecraft-items.json';
         
         // Color catalog - organized by color groups for better matching
@@ -428,17 +697,72 @@
         const resultsContainer = document.getElementById('results-container');
         const paletteDisplay = document.getElementById('palette-display');
         const blocksGrid = document.getElementById('blocks-grid');
+        const createPatternBtn = document.getElementById('create-pattern-btn');
+        const patternGenerator = document.getElementById('pattern-generator');
         const loadingOverlay = document.getElementById('loading-overlay');
+        
+        // Pattern generator elements
+        const patternTypeSelect = document.getElementById('pattern-type');
+        const gridSizeInput = document.getElementById('grid-size');
+        const generatePatternBtn = document.getElementById('generate-pattern-btn');
+        const selectedBlocksContainer = document.getElementById('selected-blocks');
+        const patternGrid = document.getElementById('pattern-grid');
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
         
         // Initialize the app
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
             
-            // Event listeners
+            // Event listeners for color palette
             colorPicker.addEventListener('input', updateColorHex);
             colorHex.addEventListener('input', updateColorPicker);
             findBtn.addEventListener('click', findMatchingBlocks);
+            createPatternBtn.addEventListener('click', showPatternGenerator);
+            
+            // Event listeners for pattern generator
+            generatePatternBtn.addEventListener('click', generatePattern);
+            gridSizeInput.addEventListener('input', updateGridSize);
+            zoomInBtn.addEventListener('click', zoomIn);
+            zoomOutBtn.addEventListener('click', zoomOut);
+            patternTypeSelect.addEventListener('change', generatePattern);
         });
+        
+        // Update grid size when input changes
+        function updateGridSize() {
+            const size = parseInt(gridSizeInput.value);
+            
+            if (size >= 4 && size <= 16) {
+                patternGrid.style.setProperty('--grid-size', size);
+                generatePattern();
+            }
+        }
+        
+        // Zoom in pattern preview
+        function zoomIn() {
+            if (currentZoom < 2) {
+                currentZoom += 0.25;
+                updateZoom();
+            }
+        }
+        
+        // Zoom out pattern preview
+        function zoomOut() {
+            if (currentZoom > 0.5) {
+                currentZoom -= 0.25;
+                updateZoom();
+            }
+        }
+        
+        // Update zoom level for pattern cells
+        function updateZoom() {
+            const cells = document.querySelectorAll('.pattern-cell');
+            const isMobile = window.innerWidth <= 768;
+            const baseSize = isMobile ? 30 : 45;
+            const newSize = Math.round(baseSize * currentZoom);
+            
+            patternGrid.style.gridTemplateColumns = `repeat(var(--grid-size, 8), ${newSize}px)`;
+        }
         
         // Update hex input when color picker changes
         function updateColorHex() {
@@ -462,6 +786,39 @@
             }
         }
         
+        // Show pattern generator section and populate with selected blocks
+        function showPatternGenerator() {
+            // Clear any existing selected blocks
+            selectedPatternBlocks = [...selectedItems]; // Use the blocks we found from color matching
+            selectedBlocksContainer.innerHTML = '';
+            
+            // Display the selected blocks
+            if (selectedPatternBlocks.length > 0) {
+                selectedPatternBlocks.forEach(block => {
+                    const blockElement = document.createElement('div');
+                    blockElement.className = 'selected-block';
+                    blockElement.innerHTML = `
+                        <img src="${block.imgSrc}" alt="${block.displayName}">
+                        <span>${block.displayName}</span>
+                    `;
+                    selectedBlocksContainer.appendChild(blockElement);
+                });
+            } else {
+                const placeholderText = document.createElement('p');
+                placeholderText.textContent = 'No blocks selected. Find matching blocks first.';
+                selectedBlocksContainer.appendChild(placeholderText);
+            }
+            
+            // Show the pattern generator section
+            patternGenerator.style.display = 'block';
+            
+            // Generate an initial pattern
+            generatePattern();
+            
+            // Scroll to the pattern generator
+            patternGenerator.scrollIntoView({ behavior: 'smooth' });
+        }
+        
         // Load Minecraft items data
         async function loadData() {
             showLoading(true);
@@ -480,12 +837,174 @@
             }
         }
         
+        // Generate a pattern based on selected type and blocks
+        function generatePattern() {
+            // Check if we have selected blocks
+            if (selectedPatternBlocks.length === 0) {
+                alert('Please select matching blocks first.');
+                return;
+            }
+            
+            const patternType = patternTypeSelect.value;
+            const gridSize = parseInt(gridSizeInput.value);
+            
+            // Make sure grid size is valid
+            if (gridSize < 4 || gridSize > 16) {
+                alert('Grid size must be between 4 and 16.');
+                return;
+            }
+            
+            // Clear the pattern preview
+            patternGrid.innerHTML = '';
+            patternGrid.style.setProperty('--grid-size', gridSize);
+            
+            // Generate the pattern based on the selected type
+            switch (patternType) {
+                case 'checkerboard':
+                    generateCheckerboard(gridSize);
+                    break;
+                case 'stripes':
+                    generateStripes(gridSize);
+                    break;
+                case 'random':
+                    generateRandom(gridSize);
+                    break;
+                case 'border':
+                    generateBorder(gridSize);
+                    break;
+                case 'diagonal':
+                    generateDiagonal(gridSize);
+                    break;
+                case 'circles':
+                    generateCircles(gridSize);
+                    break;
+            }
+            
+            // Update the zoom
+            updateZoom();
+        }
+        
+        // Generate a checkerboard pattern
+        function generateCheckerboard(size) {
+            // Need at least 2 blocks for a checkerboard
+            const blocks = selectedPatternBlocks.length >= 2 
+                ? [selectedPatternBlocks[0], selectedPatternBlocks[1]] 
+                : [selectedPatternBlocks[0], selectedPatternBlocks[0]];
+            
+            for (let y = 0; y < size; y++) {
+                for (let x = 0; x < size; x++) {
+                    const isEven = (x + y) % 2 === 0;
+                    const block = isEven ? blocks[0] : blocks[1];
+                    createPatternCell(x, y, block);
+                }
+            }
+        }
+        
+        // Generate stripes pattern
+        function generateStripes(size) {
+            // Use all selected blocks in rotation
+            const blocks = selectedPatternBlocks;
+            const blockCount = blocks.length;
+            
+            for (let y = 0; y < size; y++) {
+                const blockIndex = y % blockCount;
+                for (let x = 0; x < size; x++) {
+                    createPatternCell(x, y, blocks[blockIndex]);
+                }
+            }
+        }
+        
+        // Generate random pattern
+        function generateRandom(size) {
+            const blocks = selectedPatternBlocks;
+            const blockCount = blocks.length;
+            
+            for (let y = 0; y < size; y++) {
+                for (let x = 0; x < size; x++) {
+                    const randomIndex = Math.floor(Math.random() * blockCount);
+                    createPatternCell(x, y, blocks[randomIndex]);
+                }
+            }
+        }
+        
+        // Generate border pattern
+        function generateBorder(size) {
+            // Need at least 2 blocks for border
+            const blocks = selectedPatternBlocks.length >= 2 
+                ? [selectedPatternBlocks[0], selectedPatternBlocks[1]] 
+                : [selectedPatternBlocks[0], selectedPatternBlocks[0]];
+            
+            const borderBlock = blocks[0];
+            const centerBlock = blocks[1];
+            
+            for (let y = 0; y < size; y++) {
+                for (let x = 0; x < size; x++) {
+                    // If it's on the edge, use border block
+                    const isBorder = x === 0 || x === size - 1 || y === 0 || y === size - 1;
+                    const block = isBorder ? borderBlock : centerBlock;
+                    createPatternCell(x, y, block);
+                }
+            }
+        }
+        
+        // Generate diagonal pattern
+        function generateDiagonal(size) {
+            const blocks = selectedPatternBlocks;
+            const blockCount = blocks.length;
+            
+            for (let y = 0; y < size; y++) {
+                for (let x = 0; x < size; x++) {
+                    // Calculate diagonal index
+                    const diagonalIndex = (x + y) % blockCount;
+                    createPatternCell(x, y, blocks[diagonalIndex]);
+                }
+            }
+        }
+        
+        // Generate circles pattern
+        function generateCircles(size) {
+            // Need at least 2 blocks for concentric circles
+            const blocks = selectedPatternBlocks.length >= 2 
+                ? selectedPatternBlocks 
+                : [selectedPatternBlocks[0], selectedPatternBlocks[0]];
+            
+            const center = size / 2;
+            
+            for (let y = 0; y < size; y++) {
+                for (let x = 0; x < size; x++) {
+                    // Calculate distance from center
+                    const distance = Math.sqrt(Math.pow(x - center + 0.5, 2) + Math.pow(y - center + 0.5, 2));
+                    const ring = Math.floor(distance);
+                    const blockIndex = ring % blocks.length;
+                    createPatternCell(x, y, blocks[blockIndex]);
+                }
+            }
+        }
+        
+        // Create a cell in the pattern grid
+        function createPatternCell(x, y, block) {
+            const cell = document.createElement('div');
+            cell.className = 'pattern-cell';
+            cell.title = block.displayName;
+            
+            const img = document.createElement('img');
+            img.src = block.imgSrc;
+            img.alt = block.displayName;
+            img.loading = "lazy"; // Add lazy loading for better performance
+            
+            cell.appendChild(img);
+            patternGrid.appendChild(cell);
+        }
+        
         // Find blocks that match the selected color
         async function findMatchingBlocks() {
             showLoading(true);
             
             const baseColor = colorPicker.value;
             const blockCount = parseInt(blockCountSelect.value);
+            
+            // Reset pattern generator
+            patternGenerator.style.display = 'none';
             
             // Generate monochromatic colors without duplicates
             palette = generateMonochromaticColors(baseColor);
@@ -784,7 +1303,7 @@
             } : { r: 0, g: 0, b: 0 };
         }
         
-        // Display the results
+        // Display the color palette results
         function displayResults() {
             // Clear result containers
             paletteDisplay.innerHTML = '';
@@ -848,6 +1367,7 @@
         function showLoading(show) {
             loadingOverlay.style.display = show ? 'flex' : 'none';
             findBtn.disabled = show;
+            generatePatternBtn.disabled = show;
         }
     </script>
 </body>
