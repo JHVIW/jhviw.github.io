@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thessaloniki Reisgids (6–12 augustus)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #1a5f9c;
+      --light-blue: #5d99c6;
+      --dark-blue: #084272;
+      --accent-blue: #7fb2de;
+      --white: #ffffff;
+      --off-white: #f9f9f7;
+      --light-grey: #e8e8e8;
+      --dark-grey: #333333;
+      --accent-gold: #d4b254;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      line-height: 1.6;
+      color: var(--dark-grey);
+      background-color: var(--off-white);
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d4d4d4' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 0h60v60H0V0zm30 30h30v30H30V30zM0 30h30v30H0V30z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      color: var(--primary-blue);
+    }
+    
+    h1 {
+      font-size: 2.75rem;
+      color: var(--white);
+    }
+    
+    h2 {
+      font-size: 2rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 10px;
+    }
+    
+    h2::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-blue), transparent);
+      bottom: 0;
+      left: 0;
+    }
+    
+    h3 {
+      font-size: 1.4rem;
+      color: var(--dark-blue);
+      margin-top: 1.5rem;
+      border-left: 3px solid var(--accent-blue);
+      padding-left: 10px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+      color: var(--white);
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      opacity: 0.9;
+      position: relative;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background-color: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-container {
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+    }
+    
+    .nav-container::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+    
+    .nav-link {
+      color: var(--dark-blue);
+      text-decoration: none;
+      padding: 1rem 1.2rem;
+      display: block;
+      white-space: nowrap;
+      font-weight: 600;
+      position: relative;
+      transition: color 0.3s;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary-blue);
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: 0;
+      left: 50%;
+      background-color: var(--primary-blue);
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 80%;
+      left: 10%;
+    }
+    
+    /* Main Content */
+    .main-content {
+      padding: 2rem 0;
+    }
+    
+    /* Section Styling */
+    section {
+      background-color: var(--white);
+      border-radius: 8px;
+      margin: 2rem 0;
+      padding: 2rem;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+    }
+    
+    /* Item List Styling */
+    .category {
+      margin-bottom: 2rem;
+    }
+    
+    .item-list {
+      list-style-type: none;
+    }
+    
+    .item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--light-grey);
+      display: flex;
+      align-items: baseline;
+    }
+    
+    .item:last-child {
+      border-bottom: none;
+    }
+    
+    .item-name {
+      font-weight: 600;
+      margin-right: 0.5rem;
+      color: var(--dark-blue);
+    }
+    
+    .item-desc {
+      color: #666;
+      font-size: 0.95rem;
+    }
+    
+    /* Greek Pattern */
+    .greek-pattern {
+      height: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='20' viewBox='0 0 80 20'%3E%3Cpath d='M0,10 h10 v-10 h10 v10 h10 v-10 h10 v10 h10 v-10 h10 v10 h10 v-10 h10 v10' stroke='%235d99c6' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: repeat-x;
+      margin: 1.5rem 0;
+      opacity: 0.6;
+    }
+    
+    /* Icon styling */
+    .icon {
+      margin-right: 8px;
+      color: var(--primary-blue);
+    }
+    
+    /* Back to top button */
+    .back-to-top {
+      display: inline-block;
+      background-color: var(--primary-blue);
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 30px;
+      margin-top: 2rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .back-to-top:hover {
+      background-color: var(--dark-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+    }
+    
+    /* Olive Branch Decoration */
+    .olive-decoration {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 100px;
+      height: 50px;
+      opacity: 0.1;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 50'%3E%3Cpath d='M10,25 C30,15 70,35 90,25 M20,20 C30,15 50,25 60,20 M20,30 C30,35 50,25 60,30' stroke='%234f7942' fill='none' stroke-width='2'/%3E%3Ccircle cx='15' cy='18' r='2' fill='%234f7942'/%3E%3Ccircle cx='25' cy='15' r='2' fill='%234f7942'/%3E%3Ccircle cx='35' cy='20' r='2' fill='%234f7942'/%3E%3Ccircle cx='45' cy='15' r='2' fill='%234f7942'/%3E%3Ccircle cx='55' cy='20' r='2' fill='%234f7942'/%3E%3Ccircle cx='65' cy='15' r='2' fill='%234f7942'/%3E%3Ccircle cx='15' cy='32' r='2' fill='%234f7942'/%3E%3Ccircle cx='25' cy='35' r='2' fill='%234f7942'/%3E%3Ccircle cx='35' cy='30' r='2' fill='%234f7942'/%3E%3Ccircle cx='45' cy='35' r='2' fill='%234f7942'/%3E%3Ccircle cx='55' cy='30' r='2' fill='%234f7942'/%3E%3Ccircle cx='65' cy='35' r='2' fill='%234f7942'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.7rem;
+      }
+      
+      h3 {
+        font-size: 1.2rem;
+      }
+      
+      .subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .hero {
+        padding: 3rem 0;
+      }
+      
+      section {
+        padding: 1.5rem;
+      }
+      
+      .olive-decoration {
+        width: 70px;
+        height: 35px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+      
+      .hero {
+        padding: 2rem 0;
+      }
+      
+      section {
+        padding: 1.2rem;
+        margin: 1rem 0;
+      }
+      
+      .nav-link {
+        padding: 0.8rem 1rem;
+      }
+      
+      .olive-decoration {
+        width: 50px;
+        height: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <header class="hero" id="top">
+    <div class="container">
+      <h1>Thessaloniki Reisgids</h1>
+      <p class="subtitle">6–12 augustus</p>
+    </div>
+  </header>
+  
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#eten-drinken" class="nav-link">🍽️ Eten & Drinken</a>
+      <a href="#uitjes" class="nav-link">🏛️ Uitjes & Bezienswaardigheden</a>
+      <a href="#shoppen" class="nav-link">🛍️ Shoppen</a>
+      <a href="#apartment" class="nav-link">🏠 Apartment Buurt</a>
+      <a href="#extras" class="nav-link">✨ Extra's</a>
+    </div>
+  </nav>
+  
+  <div class="container main-content">
+    <!-- Food & Drink Section -->
+    <section id="eten-drinken">
+      <h2>🍽️ Eten & Drinken</h2>
+      <div class="greek-pattern"></div>
+      
+      <div class="category">
+        <h3>🥐 Ontbijt / Koffie</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Bougatsa Giannis</span> – 
+            <span class="item-desc">traditionele bougatsa (zoet/hartig)</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Estrella</span> – 
+            <span class="item-desc">hippe brunchplek (famous for "bougatsan")</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Blé</span> – 
+            <span class="item-desc">luxe bakkerij met goede koffie</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Plaisir</span> – 
+            <span class="item-desc">Griekse keten met veel keuze</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="category">
+        <h3>🥙 Lunch / Snackbars</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Mpoukia Mpoukia</span> – 
+            <span class="item-desc">snelle gyros en pita's</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Street Foodie</span> – 
+            <span class="item-desc">burgers en wraps</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Kalamaki Factory</span> – 
+            <span class="item-desc">spiesjes, pita's en salades</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Modiano Food Hall</span> – 
+            <span class="item-desc">kleine eettentjes in marktomgeving</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="category">
+        <h3>🍲 Diner (goedkoop en goed)</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Palati</span> – 
+            <span class="item-desc">sfeervol, live muziek, betaalbaar</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Rouga</span> – 
+            <span class="item-desc">klassiek en gezellig, uitgebreide kaart</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Full tou Meze</span> – 
+            <span class="item-desc">veel kleine gerechtjes om te delen</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Diagonios</span> – 
+            <span class="item-desc">grill met grote porties vlees</span>
+          </li>
+          <li class="item">
+            <span class="item-name">To Elliniko</span> – 
+            <span class="item-desc">populair bij locals, traditioneel</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Tiganies & Sxares</span> – 
+            <span class="item-desc">simpel, goed geprijsd, veel locals</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="category">
+        <h3>🥂 Drankje / Bar</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Skyline Bar</span> – 
+            <span class="item-desc">ronddraaiend uitzichtcafé</span>
+          </li>
+          <li class="item">
+            <span class="item-name">La Doze Bar</span> – 
+            <span class="item-desc">cocktails in Ladadika</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Shark</span> – 
+            <span class="item-desc">fancy bar aan het water (Nea Paralia)</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Beer Fabrica</span> – 
+            <span class="item-desc">craft beer centraal in de stad</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="olive-decoration"></div>
+    </section>
+    
+    <!-- Outings & Sightseeing Section -->
+    <section id="uitjes">
+      <h2>🏛️ Uitjes & Bezienswaardigheden</h2>
+      <div class="greek-pattern"></div>
+      
+      <div class="category">
+        <h3>🏺 Historisch / Cultureel</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Witte Toren</span> – 
+            <span class="item-desc">bekendste monument, mooi uitzicht</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Museum voor Byzantijnse Cultuur</span> – 
+            <span class="item-desc">goed overzicht van de stadsgeschiedenis</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Archeologisch Museum Thessaloniki</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Rotunda & Galeriusboog (Kamara)</span> – 
+            <span class="item-desc">Romeins erfgoed</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Agios Dimitrios-basiliek</span> – 
+            <span class="item-desc">indrukwekkende kerk</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Heptapyrgion & Trigonion Toren (Ano Poli)</span> – 
+            <span class="item-desc">top voor zonsondergang</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="category">
+        <h3>🏖️ Strand / Water</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Perea Beach</span> – 
+            <span class="item-desc">OV bereikbaar per ferry of bus</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Agia Triada</span> – 
+            <span class="item-desc">rustig alternatief strand</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Nea Paralia</span> – 
+            <span class="item-desc">boulevard met zitbanken, fietsverhuur en parken</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Boottocht (Arabella, Klio, etc.)</span> – 
+            <span class="item-desc">rondvaarten met drankjes aan boord</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="category">
+        <h3>🌿 Natuur / Relaxen</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Waterfront Park (bij Nea Paralia)</span> – 
+            <span class="item-desc">ideaal voor chillen of picknick</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Seich Sou Bos</span> – 
+            <span class="item-desc">natuurgebied net buiten de stad, bereikbaar met OV</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Park van Nea Elvetia</span> – 
+            <span class="item-desc">schaduw en rust in het zuiden</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="olive-decoration"></div>
+    </section>
+    
+    <!-- Shopping Section -->
+    <section id="shoppen">
+      <h2>🛍️ Shoppen & Winkelen</h2>
+      <div class="greek-pattern"></div>
+      
+      <div class="category">
+        <h3>👗 Winkelstraten (centraal)</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Tsimiski Street</span> – 
+            <span class="item-desc">grote merken (Zara, H&M, Mango, etc.)</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Mitropoleos Street</span> – 
+            <span class="item-desc">lokale boetieks en chiquere winkels</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Egnatia Street</span> – 
+            <span class="item-desc">budgetwinkels, elektronicazaken</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="category">
+        <h3>🏬 Winkelcentra</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Mediterranean Cosmos</span> – 
+            <span class="item-desc">groot, modern shoppingcenter (bus 45 of 78)</span>
+          </li>
+          <li class="item">
+            <span class="item-name">One Salonica Outlet Mall</span> – 
+            <span class="item-desc">outlet met merkartikelen tegen korting</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Public Store (Tsimiski)</span> – 
+            <span class="item-desc">boeken, gadgets, muziek</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="category">
+        <h3>🧺 Markten</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Modiano Markt</span> – 
+            <span class="item-desc">overdekte voedsel- en delicatessenmarkt</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Kapani Markt</span> – 
+            <span class="item-desc">oudste openluchtmarkt van Thessaloniki</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Louloudadika (bloemenmarkt)</span> – 
+            <span class="item-desc">klein maar sfeervol</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="olive-decoration"></div>
+    </section>
+    
+    <!-- Neighborhood Section -->
+    <section id="apartment">
+      <h2>🏠 In de Buurt van Stefanou Tatti 3 Apartment</h2>
+      <div class="greek-pattern"></div>
+      
+      <div class="category">
+        <h3>🛒 Supermarkten</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Masoutis</span> – 
+            <span class="item-desc">3 min lopen, ruime supermarkt</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Sklavenitis</span> – 
+            <span class="item-desc">grotere supermarkt iets verderop (8 min)</span>
+          </li>
+          <li class="item">
+            <span class="item-name">AB Vassilopoulos</span> – 
+            <span class="item-desc">ook in de buurt met prima aanbod</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="category">
+        <h3>🍷 Drankhandels</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Cava Idea</span> – 
+            <span class="item-desc">grote keuze aan Griekse wijnen en sterke drank</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Seirios Wine Cellar</span> – 
+            <span class="item-desc">speciaalzaak in lokale wijn en ouzo</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="category">
+        <h3>🍔 Snackbars / Fastfood</h3>
+        <ul class="item-list">
+          <li class="item">
+            <span class="item-name">Goody's Burger House</span> – 
+            <span class="item-desc">Griekse McDonald's</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Grill Bros</span> – 
+            <span class="item-desc">snelle pita's en burgers</span>
+          </li>
+          <li class="item">
+            <span class="item-name">Pizza Please</span> – 
+            <span class="item-desc">goede slice-pizza's tot laat open</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="olive-decoration"></div>
+    </section>
+    
+    <!-- Extras Section -->
+    <section id="extras">
+      <h2>✨ Extra's & Leuke Opties</h2>
+      <div class="greek-pattern"></div>
+      
+      <ul class="item-list">
+        <li class="item">
+          <span class="item-name">Thessaloniki Concert Hall</span> – 
+          <span class="item-desc">avondvoorstellingen, klassiek & jazz</span>
+        </li>
+        <li class="item">
+          <span class="item-name">NTNG Theater</span> – 
+          <span class="item-desc">toneel en cultuur (Grieks, met sfeer)</span>
+        </li>
+        <li class="item">
+          <span class="item-name">Cinema Olympion</span> – 
+          <span class="item-desc">klassieke bioscoop op Aristotelesplein</span>
+        </li>
+        <li class="item">
+          <span class="item-name">Fiets huren bij Nea Paralia</span> – 
+          <span class="item-desc">voor een relaxte rit langs de zee</span>
+        </li>
+        <li class="item">
+          <span class="item-name">Sunset spot</span> – 
+          <span class="item-desc">Ano Poli of Trigoniontoren</span>
+        </li>
+      </ul>
+      
+      <div class="olive-decoration"></div>
+    </section>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <a href="#top" class="back-to-top">Terug naar boven ↑</a>
+    </div>
+  </div>
+</body>
+</html>
