@@ -274,6 +274,46 @@
                 border-radius: 50%;
                 margin-right: 6px;
             }
+                    #buildings-table th,
+        #buildings-table td {
+            padding: 10px 8px; /* Iets meer padding */
+            border-bottom: 1px solid #eee; /* Lijn tussen rijen */
+            vertical-align: top; /* Uitlijning bovenaan voor lange adressen */
+        }
+
+        #buildings-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9; /* Zebra-strepen voor leesbaarheid */
+        }
+
+        #buildings-table tbody tr:hover {
+            background-color: #f1f1f1; /* Highlight bij hover */
+        }
+
+        #buildings-table th {
+            font-weight: 500; /* Iets dikkere header tekst */
+            background-color: var(--background-color); /* Lichte achtergrond voor header */
+            position: sticky; /* Maak header sticky bij scrollen */
+            top: 0; /* Plak bovenaan de scroll container */
+        }
+
+        #buildings-table td:last-child { /* Centreer de link kolom */
+            text-align: center;
+        }
+
+        #buildings-table a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        #buildings-table a:hover {
+            text-decoration: underline;
+        }
+
+        /* Zorg dat de card-content scrollbaar is */
+        #address-list-section .card-content {
+            overflow-y: auto; /* Maakt verticaal scrollen mogelijk */
+            position: relative; /* Nodig voor sticky header */
+        }
         </style>
     </head>
     <body>
@@ -388,9 +428,49 @@
                 </div>
             </div>
             
-            <footer>
-                <p>Limburg Verdozing Dashboard - Gemaakt op 16-04-2025</p>
-            </footer>
+                   <!-- ========= NIEUWE SECTIE: GEBOUWENLIJST ========= -->
+        <div id="address-list-section" class="visualization-card" style="margin-top: 30px;">
+            <div class="card-header" style="flex-direction: column; align-items: stretch;">
+                <div>
+                    <h3 class="card-title">Volledige Gebouwenlijst</h3>
+                    <p class="card-subtitle">Zoek en sorteer alle gebouwen in de dataset.</p>
+                </div>
+                <div style="display: flex; gap: 20px; margin-top: 15px; flex-wrap: wrap;">
+                    <input type="text" id="search-input" placeholder="Zoek op adres, gemeente, jaar..." style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; flex-grow: 1; min-width: 250px;">
+                    <select id="sort-select" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                        <option value="adres-asc">Sorteer op Adres (A-Z)</option>
+                        <option value="adres-desc">Sorteer op Adres (Z-A)</option>
+                        <option value="bouwjaar-asc">Sorteer op Bouwjaar (Oud-Nieuw)</option>
+                        <option value="bouwjaar-desc">Sorteer op Bouwjaar (Nieuw-Oud)</option>
+                        <option value="oppervlakte-asc">Sorteer op Oppervlakte (Klein-Groot)</option>
+                        <option value="oppervlakte-desc">Sorteer op Oppervlakte (Groot-Klein)</option>
+                        <option value="gemeente-asc">Sorteer op Gemeente (A-Z)</option>
+                        <option value="gemeente-desc">Sorteer op Gemeente (Z-A)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-content" style="min-height: 400px; max-height: 600px; overflow-y: auto;">
+                <table id="buildings-table" style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <thead>
+                        <tr style="text-align: left; border-bottom: 2px solid var(--primary-color);">
+                            <th style="padding: 10px 8px;">Adres</th>
+                            <th style="padding: 10px 8px;">Bouwjaar</th>
+                            <th style="padding: 10px 8px;">Oppervlakte (m²)</th>
+                            <th style="padding: 10px 8px;">Gemeente</th>
+                            <th style="padding: 10px 8px; text-align: center;">Google Maps</th>
+                        </tr>
+                    </thead>
+                    <tbody id="buildings-table-body">
+                        <!-- Rijen worden hier door JavaScript ingevoegd -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- ========= EINDE NIEUWE SECTIE ========= -->
+
+        <footer>
+            <p>Limburg Verdozing Dashboard - Gemaakt op 16-04-2025</p>
+        </footer>
         </div>
         
         <script>
@@ -743,6 +823,93 @@
                 
                 
             }
+
+                        // ========= START CODE VOOR GEBOUWENLIJST =========
+
+            const searchInput = document.getElementById('search-input');
+            const sortSelect = document.getElementById('sort-select');
+            const tableBody = document.getElementById('buildings-table-body');
+            let currentBuildings = [...data.buildings]; // Maak een kopie om te sorteren/filteren
+
+            // Functie om de tabel te renderen
+            function renderTable(buildingsToRender) {
+                tableBody.innerHTML = ''; // Maak de tabel leeg
+
+                if (buildingsToRender.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: var(--text-light);">Geen gebouwen gevonden die voldoen aan de zoekcriteria.</td></tr>';
+                    return;
+                }
+
+                buildingsToRender.forEach(building => {
+                    const row = document.createElement('tr');
+
+                    // Maak Google Maps URL
+                    const encodedAdres = encodeURIComponent(building.adres);
+                    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAdres}`;
+
+                    // Formatteer oppervlakte
+                    const formattedOppervlakte = building.oppervlakte ? building.oppervlakte.toLocaleString('nl-NL') : 'N/A';
+
+                    row.innerHTML = `
+                        <td>${building.adres || 'N/A'}</td>
+                        <td>${building.bouwjaar || 'N/A'}</td>
+                        <td>${formattedOppervlakte}</td>
+                        <td>${building.gemeente || 'N/A'}</td>
+                        <td><a href="${googleMapsUrl}" target="_blank" title="Bekijk op Google Maps">Bekijk</a></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Functie om de lijst te filteren en sorteren
+            function updateTable() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const sortValue = sortSelect.value;
+
+                // 1. Filteren
+                let filteredBuildings = data.buildings.filter(building => {
+                    const address = (building.adres || '').toLowerCase();
+                    const gemeente = (building.gemeente || '').toLowerCase();
+                    const year = (building.bouwjaar || '').toString();
+                    return address.includes(searchTerm) || gemeente.includes(searchTerm) || year.includes(searchTerm);
+                });
+
+                // 2. Sorteren
+                const [sortField, sortDirection] = sortValue.split('-');
+                const direction = sortDirection === 'asc' ? 1 : -1;
+
+                filteredBuildings.sort((a, b) => {
+                    let valA = a[sortField];
+                    let valB = b[sortField];
+
+                    // Behandel numerieke en string velden verschillend
+                    if (sortField === 'bouwjaar' || sortField === 'oppervlakte') {
+                        valA = Number(valA) || 0; // Zet null/undefined/NaN om naar 0 voor sorteren
+                        valB = Number(valB) || 0;
+                        return (valA - valB) * direction;
+                    } else {
+                        // String sorteren (adres, gemeente)
+                        valA = (valA || '').toLowerCase(); // Zet null/undefined om naar lege string
+                        valB = (valB || '').toLowerCase();
+                        return valA.localeCompare(valB) * direction;
+                    }
+                });
+
+                currentBuildings = filteredBuildings; // Update de huidige weergave
+                renderTable(currentBuildings);
+            }
+
+            // Event listeners
+            searchInput.addEventListener('input', updateTable);
+            sortSelect.addEventListener('change', updateTable);
+
+            // Initialiseer de tabel bij het laden van de pagina
+            // Zorg ervoor dat dit binnen de DOMContentLoaded listener staat of direct erna
+            // Als je de code aan het einde van de body plaatst, is de DOM meestal al klaar.
+            // Roep updateTable aan ipv renderTable om meteen de default sortering toe te passen.
+            updateTable();
+
+            // ========= EINDE CODE VOOR GEBOUWENLIJST =========
             
             // Initialiseer de visualisaties wanneer de pagina is geladen
             document.addEventListener('DOMContentLoaded', function() {
