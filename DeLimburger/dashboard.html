@@ -513,13 +513,23 @@
             
             
             // Functie om de kaart te initialiseren
+                       // Functie om de kaart te initialiseren
             function initMap() {
-                const map = L.map('map').setView([data.buildings[0].lat, data.buildings[0].lon], 9);
-                
+                // Controleer of er gebouwen zijn om het centrum van de kaart te bepalen
+                let mapCenter = [51.22, 5.99]; // Standaardcentrum (ongeveer midden Limburg)
+                let mapZoom = 9;
+                if (data.buildings && data.buildings.length > 0) {
+                    // Neem de locatie van het eerste gebouw als centrum
+                    // Idealiter bereken je het gemiddelde of gebruik je bounds, maar dit is eenvoudiger
+                    mapCenter = [data.buildings[0].lat, data.buildings[0].lon];
+                }
+
+                const map = L.map('map').setView(mapCenter, mapZoom);
+
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
+                    attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
-                
+
                 // Voeg gebouwen toe aan de kaart
                 data.buildings.forEach(building => {
                     const marker = L.circleMarker(
@@ -527,56 +537,74 @@
                         {
                             radius: 6,
                             fillColor: building.color,
-                            color: 'white',
-                            weight: 1.5,
+                            color: 'white', // Randkleur van de cirkel
+                            weight: 1.5,    // Dikte van de rand
                             opacity: 1,
-                            fillOpacity: 0.8
+                            fillOpacity: 0.8 // Hoe dekkend de vulling is
                         }
                     );
-                    
+
+                    // --- NIEUW: Maak Google Maps URL ---
+                    const encodedAdres = encodeURIComponent(building.adres);
+                    const googleMapsUrl = `https://www.google.com/maps/search/${encodedAdres}`;
+                    // --- EINDE NIEUW ---
+
+                    // --- AANGEPAST: Popup content met klikbaar adres ---
                     const popupContent = `
                         <div style="min-width: 200px;">
-                            <h3 style="margin: 0 0 5px 0; font-size: 14px;">${building.adres}</h3>
-                            <div style="font-size: 12px;">
-                                <p><strong>Bouwjaar:</strong> ${building.bouwjaar}</p>
-                                <p><strong>Gemeente:</strong> ${building.gemeente}</p>
-                                <p><strong>Gebruiksdoel:</strong> ${building.gebruiksdoel}</p>
-                                <p><strong>Oppervlakte:</strong> ${building.oppervlakte} m²</p>
+                            <h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600;">
+                                <a href="${googleMapsUrl}" target="_blank" title="Bekijk op Google Maps" style="text-decoration: underline; color: var(--secondary-color); cursor: pointer;">
+                                    ${building.adres}
+                                </a>
+                            </h3>
+                            <div style="font-size: 12px; line-height: 1.5;">
+                                <p style="margin: 2px 0;"><strong>Bouwjaar:</strong> ${building.bouwjaar}</p>
+                                <p style="margin: 2px 0;"><strong>Gemeente:</strong> ${building.gemeente}</p>
+                                <p style="margin: 2px 0;"><strong>Gebruiksdoel:</strong> ${building.gebruiksdoel}</p>
+                                <p style="margin: 2px 0;"><strong>Oppervlakte:</strong> ${building.oppervlakte.toLocaleString('nl-NL')} m²</p>
                             </div>
                         </div>
                     `;
-                    
+                    // --- EINDE AANGEPAST ---
+
                     marker.bindPopup(popupContent);
+
+                    // Tooltip blijft hetzelfde (verschijnt bij hoveren)
                     marker.bindTooltip(building.adres);
+
                     marker.addTo(map);
                 });
-                
+
                 // Maak een legenda voor de jaren
                 const yearLegendDiv = document.getElementById('year-legend');
                 const yearColors = data.year_colors;
                 const years = Object.keys(yearColors).sort((a, b) => parseInt(a) - parseInt(b));
-                
+
                 // Voeg enkele uitgekozen jaren toe aan de legenda (om de legenda niet te groot te maken)
                 const selectedYears = [];
-                const yearStep = Math.max(1, Math.floor(years.length / 5));
+                const yearStep = Math.max(1, Math.floor(years.length / 6)); // Iets meer stappen
                 for (let i = 0; i < years.length; i += yearStep) {
                     selectedYears.push(years[i]);
                 }
+                // Zorg dat het laatste jaar er altijd bij staat
                 if (years.length > 0 && !selectedYears.includes(years[years.length - 1])) {
                     selectedYears.push(years[years.length - 1]);
                 }
-                
+
                 selectedYears.forEach(year => {
                     const item = document.createElement('div');
                     item.className = 'legend-item';
-                    
+
                     const colorDiv = document.createElement('div');
                     colorDiv.className = 'legend-color';
                     colorDiv.style.backgroundColor = yearColors[year];
-                    
+
                     const label = document.createElement('span');
-                    label.textContent = year;
-                    
+                    // Maak de legenda labels duidelijker (bv. 1960s)
+                    const decadeStart = parseInt(year);
+                    const decadeEnd = decadeStart + 9;
+                    label.textContent = `${decadeStart}-${decadeEnd}`; // Of houd het bijv. bij '1960' als je dat prefereert
+
                     item.appendChild(colorDiv);
                     item.appendChild(label);
                     yearLegendDiv.appendChild(item);
