@@ -529,10 +529,12 @@
                 center=[data.buildings[0].lat,data.buildings[0].lon];
             }
             const map=L.map('map').setView(center,zoom);
-            osmb=new OSMBuildings({
-                baseURL:'https://data.osmbuildings.org/0.2/rkc8s9l9/tile/{z}/{x}/{y}.json',
-                minZoom:12,maxZoom:20
-            }).addTo(map);
+           osmb = new OSMBuildings(map, {
+              baseURL: 'https://data.osmbuildings.org/0.2/rkc8s9l9/tile/{z}/{x}/{y}.json',
+              minZoom: 12,
+              maxZoom: 20
+            });
+            osmb.addTo(map);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
             data.buildings.forEach(b=>{
                 const marker=L.circleMarker([b.lat,b.lon],{radius:6,fillColor:b.color,color:'#fff',weight:1.5,opacity:1,fillOpacity:0.8});
