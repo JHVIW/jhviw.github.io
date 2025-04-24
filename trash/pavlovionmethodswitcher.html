@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Infographic: WOCC-methoden tegen Witcher 3-verslaving</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --secondary: #f5a623;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --muted: #777777;
+            --bar-bg: #e0e0e0;
+            --bar-fill: #4a90e2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: var(--light-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: .5rem 0 0;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        nav {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #ddd;
+        }
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: .5rem 1rem;
+            list-style: none;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 .5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: .3rem;
+        }
+
+        section h2::after {
+            content: '';
+            width: 50px;
+            height: 4px;
+            background: var(--secondary);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .card,
+        .box {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        ul {
+            padding-left: 1.2rem;
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: .5rem;
+            color: var(--primary);
+        }
+
+        .bar-container {
+            background: var(--bar-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: .75rem;
+        }
+
+        .bar {
+            height: 20px;
+            background: var(--bar-fill);
+            transition: width .6s ease;
+        }
+
+        .bar-label {
+            font-size: .9rem;
+            margin-bottom: .2rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        footer {
+            text-align: center;
+            font-size: .9rem;
+            color: var(--muted);
+            padding: 1.5rem 0;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>WOCC-methoden tegen Witcher 3-verslaving</h1>
+        <p>Diepgaande infographic &amp; Nederlandstalige samenvatting</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#inleiding">Inleiding</a></li>
+            <li><a href="#theorie">Theorie</a></li>
+            <li><a href="#methode">Methode</a></li>
+            <li><a href="#stimuli">Stimuli</a></li>
+            <li><a href="#resultaten">Resultaten</a></li>
+            <li><a href="#discussie">Discussie</a></li>
+            <li><a href="#conclusie">Conclusie</a></li>
+            <li><a href="#referenties">Referenties</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Abstract -->
+        <section id="abstract">
+            <h2>📜 Abstract</h2>
+            <div class="box">
+                <p>Dr. Tiffany Love onderzoekt operante conditioneringsmethoden (WOCC) om de obsessieve speeltijd
+                    van haar partner bij <em>The Witcher 3: Wild Hunt</em> te verminderen. Door positieve prikkels
+                    (zowel belonend als geruststellend) en negatieve prikkels (irritatie, frustratie) te combineren,
+                    is het doel de game-verslaving af te remmen en de focus op de hoofdlijn te vergroten. Conclusie:
+                    positieve stimuli geven de meest consistente en voorspelbare reductie in speltijd; negatieve stimuli
+                    zijn onbetrouwbaar en soms contraproductief.</p>
+            </div>
+        </section>
+
+        <!-- Inleiding -->
+        <section id="inleiding">
+            <h2>🧐 Inleiding</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Probleemstelling</h3>
+                    <ul>
+                        <li>Jaarlijkse winterse spel-marathon: 10e playthrough</li>
+                        <li>Gemiddeld 330 uur per seizoen aan Witcher 3 (meta-analyse)</li>
+                        <li>Verstoorde relatie en gemiste quality time</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Hypothesen</h3>
+                    <ol>
+                        <li>Positieve beloningen (reinforcement) verkorten speltijd.</li>
+                        <li>Negatieve prikkels (punishment) verminderen spelstart-frequentie.</li>
+                        <li>Combinatie van beide leidt tot optimale gedragsmodificatie.</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Theoretisch kader -->
+        <section id="theorie">
+            <h2>📚 Theoretisch Kader</h2>
+            <div class="box">
+                <h3>Operante Conditionering</h3>
+                <p>Gebaseerd op Skinner’s modellen: gedragsverandering door systematische toepassing van
+                    beloningen en straffen. Vier principes:</p>
+                <ul>
+                    <li><strong>Positieve versterking</strong> (reward): toevoegen van aangename prikkel na gewenst
+                        gedrag.</li>
+                    <li><strong>Negatieve versterking</strong> (removal): wegnemen van onaangename prikkel na gewenst
+                        gedrag.</li>
+                    <li><strong>Positieve bestraffing</strong> (punishment): toevoegen van onaangename prikkel na
+                        ongewenst gedrag.</li>
+                    <li><strong>Negatieve bestraffing</strong> (time-out): wegnemen van aangename prikkel na ongewenst
+                        gedrag.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Methode -->
+        <section id="methode">
+            <h2>🛠 Onderzoeksmethode</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Opzet</h3>
+                    <ul>
+                        <li>Single subject design: n = 1 (Chad Broman)</li>
+                        <li>25–50 trials per stimulus</li>
+                        <li>Registratie: <em>spelerspoelen</em> → tijd in uren voor / na trigger</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Metingen</h3>
+                    <ul>
+                        <li>Speltijd (uren) per sessie</li>
+                        <li>Pleasure-Pain Index (HBDTA / MG dB)</li>
+                        <li>Vergelijking met baseline uit meta-analyse [1]</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stimuli -->
+        <section id="stimuli">
+            <h2>🎯 Stimuli</h2>
+            <div class="grid-2">
+                <!-- Positieve -->
+                <div class="box">
+                    <h3>👍 Positieve Stimuli</h3>
+                    <div class="card">
+                        <div class="icon">🍬</div>
+                        <h4>Salt Water Taffy</h4>
+                        <p><em>Beloning</em>: Zoete traktatie direct na pauze. Hypothese: associatie game-pauze →
+                            beloning → snellere terugkomst.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🧥</div>
+                        <h4>Trui uittrekken</h4>
+                        <p><em>Visuele cue</em>: Plotselinge afleiding bij start bijquest. Hypothese: focusverschuiving
+                            naar omgeving.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🕯️</div>
+                        <h4>Blauwe/geurige kaars</h4>
+                        <p><em>Odor cues</em>: Herinnering aan moederomgeving → geruststelling → keuze hoofdlijn.</p>
+                    </div>
+                </div>
+                <!-- Negatieve -->
+                <div class="box">
+                    <h3>👎 Negatieve Stimuli</h3>
+                    <div class="card">
+                        <div class="icon">📞</div>
+                        <h4>Luide telefoongesprekken</h4>
+                        <p><em>Punishment</em>: Ongewenste achtergrondruis tijdens gameplay → verminderde spelervaring.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">📱</div>
+                        <h4>Instagram-scrolling</h4>
+                        <p><em>Punishment</em>: Jaloersmakende foto’s zichtbaar naast beeldscherm → frustratie.</p>
+                    </div>
+                    <div class="card">
+                        <div class="icon">🎶</div>
+                        <h4>Mambo No. 5</h4>
+                        <p><em>Punishment</em>: Irriterende muziek blijft spelen tijdens Gwent → afschrikken langdurig
+                            kaartspel.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resultaten -->
+        <section id="resultaten">
+            <h2>📈 Resultaten</h2>
+            <div class="box">
+                <h3>Gemiddelde tijdsreductie (in uren)</h3>
+                <!-- Bar chart -->
+                <div class="bar-label"><span>Trui uittrekken</span><span>–12 u</span></div>
+                <div class="bar-container">
+                    <div class="bar" style="width:60%;"></div>
+                </div>
+
+                <div class="bar-label"><span>Salt Water Taffy</span><span>–9 u</span></div>
+                <div class="bar-container">
+                    <div class="bar" style="width:45%;"></div>
+                </div>
+
+                <div class="bar-label"><span>Blauwe kaars</span><span>–7 u</span></div>
+                <div class="bar-container">
+                    <div class="bar" style="width:35%;"></div>
+                </div>
+
+                <div class="bar-label"><span>Luide gesprekken</span><span>–4 u*</span></div>
+                <div class="bar-container">
+                    <div class="bar" style="width:20%;"></div>
+                </div>
+
+                <div class="bar-label"><span>Instagram-scrolling</span><span>–1 u*</span></div>
+                <div class="bar-container">
+                    <div class="bar" style="width:5%;"></div>
+                </div>
+
+                <div class="bar-label"><span>Mambo No. 5</span><span>–6 u avg<br><small>(+ soms ↗ door
+                            frustratie)</small></span></div>
+                <div class="bar-container">
+                    <div class="bar" style="width:30%;"></div>
+                </div>
+
+                <p style="font-size:.9rem; color: var(--muted); margin-top:1rem;">
+                    * Hoge variantie: soms geen effect of zelfs toename door herstarts.
+                </p>
+            </div>
+        </section>
+
+        <!-- Discussie -->
+        <section id="discussie">
+            <h2>💬 Discussie</h2>
+            <div class="box">
+                <p>Uit de resultaten blijkt dat <strong>positieve stimuli</strong> – vooral visuele en gustatoire cues –
+                    het meest betrouwbaar werken. Ze creëren een duidelijke associatie <em>pauze =&gt; beloning</em>,
+                    wat gedragsverschuiving bevordert. <strong>Negatieve stimuli</strong> leiden tot onvoorspelbare
+                    emoties:
+                    irritatie kan soms tot snellere afkoppeling leiden, maar kan net zo goed frustratie-herstarts
+                    veroorzaken.</p>
+                <p>Beperkingen: enkelvoudig onderzoek (n = 1), korte duur (3 weken), subjectief pleasure-pain metingen.
+                    Toch geven de trends richting voor bredere toepassing van positieve conditionering bij
+                    gedragsverslavingen.</p>
+            </div>
+        </section>
+
+        <!-- Conclusie -->
+        <section id="conclusie">
+            <h2>🏁 Conclusie &amp; Aanbevelingen</h2>
+            <div class="box">
+                <ul>
+                    <li><strong>Positieve stimuli</strong> (trui uittrekken, taffy, kaars) sterk aanbevolen voor snelle
+                        gedragsverandering.</li>
+                    <li><strong>Negatieve stimuli</strong> met voorzichtigheid gebruiken; monitor variantie en
+                        bijwerkingen.</li>
+                    <li>Combineer beide benaderingen: beloning om gewenst gedrag te versterken, mild ongemak om
+                        ongewenst gedrag te ontmoedigen.</li>
+                    <li>Voer een follow-up uit na 3-6 maanden om duurzaamheid van gedragsverandering te toetsen.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Referenties -->
+        <section id="referenties">
+            <h2>📑 Referenties</h2>
+            <div class="box">
+                <ol>
+                    <li>Love, T. (2021). A Meta Analysis of My Boyfriend’s Obsessive Witcher 3 Playing. Self-Published.
+                    </li>
+                    <li>Skinner, B. F. (1953). Science and Human Behavior. Macmillan.</li>
+                    <li>Love, T. (2021). Operant Conditioning Methods to get Chad to do the Dishes. Self-Published.</li>
+                    <li>Love, T. (2020). Pavlovian Methods to get my Boyfriend to Stop Playing The Witcher 3.
+                        Self-Published.</li>
+                    <li>CIA FOIA. (2004). Mambo No. 5 As an Enhanced Interrogation Technique.</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2025 — Gebaseerd op dr. Tiffany Love, Cranberry-Lemon University
+    </footer>
+
+</body>
+
+</html>
