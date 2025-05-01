@@ -66,18 +66,14 @@ pie title  Top level languages (manual sampling)
 
 ## 🚀 Highlight projects
 
-| Project | Tech / TL;DR | 📎 Links |
-|---------|--------------|---------|
-| **Secret Santa Bot** | Discord + Steam automation, 2FA trade offers | [Repo](https://github.com/JHVIW/Secret-Santa-Bot) |
-| **CS2 External ESP (POC)** | C++ overlay, WinAPI + GDI+, memory scanning | [Repo](https://github.com/JHVIW/CS2-External-ESP) |
-| **OV Vertrektijden** | Live Dutch departures via NS API & OVAPI | [Repo](https://github.com/JHVIW/OV-Vertrektijden) |
-| **FHIR $lastn endpoint** | High‑throughput lab results API, NEN 7513 logs | *Private* |
-| **BP1 browser phish** | Academic research into browser credential theft | [`BP1/`](BP1) |
-| **bushalte-api** | Simple REST proxy for OV stop info | [`bushalte-api/`](bushalte-api) |
-
-> *Each sub‑project follows its own README & licence where applicable.*
-
----
+| Project | Tech / TL;DR | Live | 📎 Links |
+|---------|--------------|------|---------|
+| **Secret Santa Bot** | Discord + Steam automation, 2FA trade offers | — | [Repo](https://github.com/JHVIW/Secret-Santa-Bot) |
+| **CS2 External ESP (POC)** | C++ overlay, WinAPI + GDI+, memory scanning | — | [Repo](https://github.com/JHVIW/CS2-External-ESP) |
+| **OV Vertrektijden** | Live Dutch departures via NS API & OVAPI | <https://jhviw.github.io/OV-Vertrektijden/> | [Repo](https://github.com/JHVIW/OV-Vertrektijden) |
+| **FHIR $lastn endpoint** | High‑throughput lab results API, NEN 7513 logs | — | *Private* |
+| **BP1 browser phish** | Academic research into browser credential theft | <https://jhviw.github.io/BP1/> | [`BP1/`](BP1) |
+| **bushalte-api** | Simple REST proxy for OV stop info | <https://jhviw.github.io/bushalte-api/> | [`bushalte-api/`](bushalte-api) |
 
 ## 🛠️ Skills & toolbox
 
@@ -146,7 +142,8 @@ Workflow definition: [`/.github/workflows/update-prices.yml`](.github/workflows/
 ## 🤝 Contributing
 
 1. **Fork** ➜ **branch** ➜ PR (conventional commits preferred).  
-2. Bug reports / feature requests → GitHub Issues.
+2. Please follow `.editorconfig` (if present) & the [C# style‑guide](STYLEGUIDE.md) used across back‑end code.  
+3. Bug reports / feature requests → GitHub Issues.
 
 ---
 
