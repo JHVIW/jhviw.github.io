@@ -70,7 +70,7 @@ pie title  Top level languages (manual sampling)
 |---------|--------------|------|---------|
 | **Secret Santa Bot** | Discord + Steam automation, 2FA trade offers | — | [Repo](https://github.com/JHVIW/Secret-Santa-Bot) |
 | **CS2 External ESP (POC)** | C++ overlay, WinAPI + GDI+, memory scanning | — | [Repo](https://github.com/JHVIW/CS2-External-ESP) |
-| **OV Vertrektijden** | Live Dutch departures via NS API & OVAPI | <https://jhviw.github.io/OV-Vertrektijden/> | [Repo](https://github.com/JHVIW/OV-Vertrektijden) |
+| **OV Vertrektijden** | Live Dutch departures via NS API & OVAPI | <https://jhviw.github.io/OV-Vertrektijden/index.html> | [Repo](https://github.com/JHVIW/OV-Vertrektijden) |
 | **FHIR $lastn endpoint** | High‑throughput lab results API, NEN 7513 logs | — | *Private* |
 | **BP1 browser phish** | Academic research into browser credential theft | <https://jhviw.github.io/BP1/> | [`BP1/`](BP1) |
 | **bushalte-api** | Simple REST proxy for OV stop info | <https://jhviw.github.io/bushalte-api/> | [`bushalte-api/`](bushalte-api) |
