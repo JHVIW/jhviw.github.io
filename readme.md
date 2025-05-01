@@ -146,8 +146,7 @@ Workflow definition: [`/.github/workflows/update-prices.yml`](.github/workflows/
 ## 🤝 Contributing
 
 1. **Fork** ➜ **branch** ➜ PR (conventional commits preferred).  
-2. Please follow `.editorconfig` (if present) & the [C# style‑guide](STYLEGUIDE.md) used across back‑end code.  
-3. Bug reports / feature requests → GitHub Issues.
+2. Bug reports / feature requests → GitHub Issues.
 
 ---
 
