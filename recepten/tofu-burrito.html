@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tofu-Burrito Recept</title>
+    <style>
+        /* Basis styling */
+        :root {
+            --primary-color: #e67e22;
+            --secondary-color: #2ecc71;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --section-bg: #fff;
+            --border-color: #ddd;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/800/400') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        /* Navigatie */
+        .nav-container {
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .nav::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-item {
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+        .nav-item.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            font-weight: bold;
+        }
+        /* Content secties */
+        .content-section {
+            display: none;
+            background-color: var(--section-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .content-section.active {
+            display: block;
+        }
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        /* Tabellen */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.02);
+        }
+        tr:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        /* Lijsten */
+        ul, ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        /* Checkbox styling voor boodschappenlijst */
+        .shopping-checkbox {
+            margin-right: 10px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .shopping-item.checked {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .checkbox-cell {
+            width: 40px;
+            text-align: center;
+        }
+        /* Ingrediënten checklist */
+        .ingredient-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .ingredient-checkbox {
+            margin-right: 0.5rem;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .ingredient-text {
+            transition: all 0.3s ease;
+        }
+        .ingredient-text.checked {
+            text-decoration: line-through;
+            color: #999;
+        }
+        /* Receptstappen styling */
+        .step-container {
+            background-color: rgba(46, 204, 113, 0.05);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .step-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        /* Timer feature */
+        .timer-container {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            background-color: #f1f1f1;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        .timer-input {
+            width: 60px;
+            margin-right: 10px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .timer-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .timer-button:hover {
+            background-color: #d35400;
+        }
+        .timer-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        /* Print & Portie buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        .action-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .action-button:hover {
+            background-color: #d35400;
+            transform: translateY(-2px);
+        }
+        .action-button svg {
+            width: 20px;
+            height: 20px;
+        }
+        /* Portie berekening */
+        .portion-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: rgba(46, 204, 113, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .portion-label {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .portion-input {
+            width: 60px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        /* Progress indicator */
+        .progress-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .progress-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .progress-bar {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav {
+                justify-content: flex-start;
+            }
+            table {
+                font-size: 0.9rem;
+            }
+            th, td {
+                padding: 8px;
+            }
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--text-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode {
+            --bg-color: #222;
+            --section-bg: #333;
+            --text-color: #f5f5f5;
+            --border-color: #444;
+        }
+        
+        body.dark-mode .nav-container {
+            background-color: #333;
+        }
+        
+        body.dark-mode tr:nth-child(even) {
+            background-color: rgba(255,255,255,0.05);
+        }
+        
+        body.dark-mode tr:hover {
+            background-color: rgba(255,255,255,0.08);
+        }
+
+        /* Categorie headers */
+        .category-header {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tofu-Burrito Recept</h1>
+        <p>Gezonde, eiwitrijke burrito's boordevol smaak</p>
+    </header>
+    
+    <div class="nav-container">
+        <ul class="nav">
+            <li class="nav-item active" data-target="boodschappen">Boodschappen</li>
+            <li class="nav-item" data-target="stap1-3">Stap 1-3: Basis</li>
+            <li class="nav-item" data-target="stap4">Stap 4: Tofu</li>
+            <li class="nav-item" data-target="stap5-6">Stap 5-6: Groente</li>
+            <li class="nav-item" data-target="stap7">Stap 7: Bewaren</li>
+            <li class="nav-item" data-target="voeding">Voedingswaarden</li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <div class="action-buttons">
+            <button class="action-button" id="print-button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                </svg>
+                Recept afdrukken
+            </button>
+            
+            <div class="portion-control">
+                <span class="portion-label">Aantal burrito's:</span>
+                <input type="number" id="portion-input" class="portion-input" value="14" min="1" max="50">
+                <button class="action-button" id="calculate-button">Herberekenen</button>
+            </div>
+        </div>
+        
+        <!-- BOODSCHAPPEN SECTIE -->
+        <section id="boodschappen" class="content-section active">
+            <h2 class="section-title">Boodschappenlijst (voor 14 tofu-burrito's van ±700 kcal)</h2>
+            
+            <div class="category-header">Eiwitten & vulling</div>
+            <table class="shopping-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Hoeveelheid</th>
+                        <th>Richtprijs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Tofu (stevig, naturel)</td>
+                        <td>1.4 kg (4 blokken à 350g)</td>
+                        <td>± €7.80</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Eieren (M, optioneel)</td>
+                        <td>1 doos (10 stuks)</td>
+                        <td>± €1.59</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Zwarte bonen (blik)</td>
+                        <td>2 blikken 400 g</td>
+                        <td>± €1.98</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Maïs (blik)</td>
+                        <td>2 blikken 340 g</td>
+                        <td>± €2.38</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="category-header">Koolhydraten & wraps</div>
+            <table class="shopping-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Hoeveelheid</th>
+                        <th>Richtprijs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Zilvervliesrijst</td>
+                        <td>1 kg (gebruik 300 g)</td>
+                        <td>± €1.49</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Tortilla wraps (middel)</td>
+                        <td>2 pakken (16 wraps, gebruik 14)</td>
+                        <td>± €2.78</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="category-header">Groente</div>
+            <table class="shopping-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Hoeveelheid</th>
+                        <th>Richtprijs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Rode paprika</td>
+                        <td>3 stuks</td>
+                        <td>± €2.85</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Rode uien</td>
+                        <td>1 net (500 g)</td>
+                        <td>± €0.95</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="category-header">Sauzen & extra's</div>
+            <table class="shopping-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Hoeveelheid</th>
+                        <th>Richtprijs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Magere Griekse yoghurt (0%)</td>
+                        <td>1 bak (500 g)</td>
+                        <td>± €1.39</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Sojasaus</td>
+                        <td>4 el</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Rijstazijn of citroensap</td>
+                        <td>2 el</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Tomatenpuree</td>
+                        <td>1 el</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Gerookt paprikapoeder</td>
+                        <td>2 tl</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Komijn</td>
+                        <td>3 tl</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Knoflookpoeder</td>
+                        <td>2 tl</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Uienpoeder</td>
+                        <td>1 tl</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Ahornsiroop of honing</td>
+                        <td>1 tl</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-cell"><input type="checkbox" class="shopping-checkbox"></td>
+                        <td class="shopping-item">Cayenne of chilivlokken (optioneel)</td>
+                        <td>½-1 tl</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="category-header">Totale kosten</div>
+            <p><strong>Totale richtprijs:</strong> ± €26 – €28 (je houdt wat rijst, eieren en yoghurt over)</p>
+        </section>
+        
+        <!-- STAP 1-3 SECTIE -->
+        <section id="stap1-3" class="content-section">
+            <h2 class="section-title">Stap 1 t/m 3: Basis voorbereiden</h2>
+            
+            <div class="step-container">
+                <div class="step-title">Stap 1: Rijst koken</div>
+                <ul>
+                    <li>300 g droge zilvervliesrijst</li>
+                    <li>Spoel goed af</li>
+                    <li>Kook in ruim water (25–30 min)</li>
+                    <li>Giet af, laat volledig afkoelen</li>
+                    <li>Nodig: ±800 g gekookte rijst (±60 g per burrito)</li>
+                </ul>
+                
+                <div class="timer-container">
+                    <input type="number" class="timer-input" value="30" min="1">
+                    <button class="timer-button" id="start-timer-1">Start Timer</button>
+                    <div class="timer-display" id="timer-display-1">00:30:00</div>
+                </div>
+            </div>
+            
+            <div class="step-container">
+                <div class="step-title">Stap 2: Yoghurtsaus maken</div>
+                <p>Meng in een kom:</p>
+                <ul>
+                    <li>200 g magere Griekse yoghurt</li>
+                    <li>1 tl knoflookpoeder</li>
+                    <li>½ tl komijn</li>
+                    <li>½ tl zout</li>
+                    <li>Sap van ½ limoen (optioneel)</li>
+                </ul>
+                <p>Roer goed en zet afgedekt in de koelkast.</p>
+            </div>
+            
+            <div class="step-container">
+                <div class="step-title">Stap 3: Eieren koken (optioneel)</div>
+                <ul>
+                    <li>Kook 7 eieren hard (10 min)</li>
+                    <li>Pel ze, laat afkoelen, snijd in stukjes</li>
+                    <li>Gebruik ½ ei per burrito (±35 kcal per stuk)</li>
+                </ul>
+                
+                <div class="timer-container">
+                    <input type="number" class="timer-input" value="10" min="1">
+                    <button class="timer-button" id="start-timer-2">Start Timer</button>
+                    <div class="timer-display" id="timer-display-2">00:10:00</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- STAP 4 SECTIE -->
+        <section id="stap4" class="content-section">
+            <h2 class="section-title">Stap 4: Tofu shredden, bakken & marineren</h2>
+            
+            <div class="step-container">
+                <div class="step-title">Tofu voorbereiden</div>
+                <ol>
+                    <li>Neem 1.4 kg stevige tofu</li>
+                    <li>Pers goed uit (keukenpapier en pan)</li>
+                    <li>Rasp grof of verkruimel met handen tot 'shreds'</li>
+                </ol>
+            </div>
+            
+            <div class="step-container">
+                <div class="step-title">Droog bakken</div>
+                <ul>
+                    <li>Verhit een grote pan (zonder of met heel weinig olie)</li>
+                    <li>Bak de tofu-shreds in porties ±10–15 min</li>
+                    <li>Laat licht krokant en droog worden</li>
+                    <li>Regelmatig omscheppen</li>
+                </ul>
+                
+                <div class="timer-container">
+                    <input type="number" class="timer-input" value="15" min="1">
+                    <button class="timer-button" id="start-timer-3">Start Timer</button>
+                    <div class="timer-display" id="timer-display-3">00:15:00</div>
+                </div>
+            </div>
+            
+            <div class="step-container">
+                <div class="step-title">Marinade toevoegen (pas na het bakken)</div>
+                
+                <h4>Ingrediënten marinade:</h4>
+                <ul>
+                    <li>4 el sojasaus</li>
+                    <li>2 el rijstazijn of citroensap</li>
+                    <li>1 el tomatenpuree</li>
+                    <li>2 tl gerookt paprikapoeder</li>
+                    <li>2 tl komijn</li>
+                    <li>1 tl knoflookpoeder</li>
+                    <li>1 tl uienpoeder</li>
+                    <li>1 tl ahornsiroop of honing</li>
+                    <li>½–1 tl cayenne of chilivlokken (optioneel)</li>
+                    <li>(eventueel 1 el water om te verdunnen)</li>
+                </ul>
+                
+                <h4>Bereiding:</h4>
+                <ul>
+                    <li>Voeg marinade toe aan de gebakken tofu</li>
+                    <li>Bak nog 2–3 min tot goed gemengd en gekarameliseerd</li>
+                </ul>
+                
+                <div class="timer-container">
+                    <input type="number" class="timer-input" value="3" min="1">
+                    <button class="timer-button" id="start-timer-4">Start Timer</button>
+                    <div class="timer-display" id="timer-display-4">00:03:00</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- STAP 5-6 SECTIE -->
+        <section id="stap5-6" class="content-section">
+            <h2 class="section-title">Stap 5 t/m 6: Groente + samenstellen</h2>
+            
+            <div class="step-container">
+                <div class="step-title">Stap 5: Groentemix maken</div>
+                <ul>
+                    <li>Snijd 3 rode paprika's + 2 rode uien in blokjes</li>
+                    <li>Fruit ui met beetje olie of water</li>
+                    <li>Voeg paprika toe, bak 5–6 min</li>
+                    <li>Voeg bonen + maïs toe, kort mee verwarmen</li>
+                    <li>Meng dit met de gemarineerde tofu</li>
+                </ul>
+                
+                <div class="timer-container">
+                    <input type="number" class="timer-input" value="6" min="1">
+                    <button class="timer-button" id="start-timer-5">Start Timer</button>
+                    <div class="timer-display" id="timer-display-5">00:06:00</div>
+                </div>
+            </div>
+            
+            <div class="step-container">
+                <div class="step-title">Stap 6: Burrito's samenstellen (14 stuks)</div>
+                
+                <h4>Per burrito:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ingrediënt</th>
+                            <th>Hoeveelheid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Wrap</td>
+                            <td>1 stuks</td>
+                        </tr>
+                        <tr>
+                            <td>Gekookte rijst</td>
+                            <td>± 60 g</td>
+                        </tr>
+                        <tr>
+                            <td>Tofu/groente/bonenmengsel</td>
+                            <td>± 120–130 g</td>
+                        </tr>
+                        <tr>
+                            <td>Hardgekookt ei (optioneel)</td>
+                            <td>½ ei</td>
+                        </tr>
+                        <tr>
+                            <td>Yoghurtsaus</td>
+                            <td>1 el (±15 g)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p><strong>Totale vulling:</strong> ±230–250 g per stuk</p>
+            </div>
+        </section>
+        
+        <!-- STAP 7 SECTIE -->
+        <section id="stap7" class="content-section">
+            <h2 class="section-title">Stap 7: Bewaren & opwarmen</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Opslag</th>
+                        <th>Instructie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Koelkast</td>
+                        <td>Max 3 dagen, luchtdicht verpakt</td>
+                    </tr>
+                    <tr>
+                        <td>Vriezer</td>
+                        <td>Tot 2 maanden, individueel verpakt</td>
+                    </tr>
+                    <tr>
+                        <td>Opwarmen</td>
+                        <td>Magnetron (2–3 min) of tosti/grillpan</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p class="tip"><strong>Tip:</strong> vries burrito's apart in aluminiumfolie of bakpapier met naamlabel.</p>
+        </section>
+        
+        <!-- VOEDING SECTIE -->
+        <section id="voeding" class="content-section">
+            <h2 class="section-title">Voedingswaarden (per burrito)</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nutriënt</th>
+                        <th>Hoeveelheid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Kcal</td>
+                        <td>±700</td>
+                    </tr>
+                    <tr>
+                        <td>Eiwit</td>
+                        <td>±35–38 g</td>
+                    </tr>
+                    <tr>
+                        <td>Koolhydraten</td>
+                        <td>±65 g</td>
+                    </tr>
+                    <tr>
+                        <td>Vet</td>
+                        <td>±22 g</td>
+                    </tr>
+                    <tr>
+                        <td>Vezels</td>
+                        <td>±7–8 g</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p>Deze waarden zijn inclusief ½ ei en 15 g yoghurtsaus per burrito.</p>
+            <p>Wil je volledig vegan? Vervang ei door extra bonen en de yoghurt door een plantaardig alternatief (bijv. Alpro ongezoet).</p>
+        </section>
+        
+        <div class="progress-container">
+            <div class="progress-title">Voortgang recept</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="dark-mode-toggle" id="dark-mode-toggle">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+    </button>
+    
+    <script>
+        // Navigatie tussen secties
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const target = item.getAttribute('data-target');
+                
+                // Verwijder active class van alle nav items en secties
+                document.querySelectorAll('.nav-item').forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Voeg active class toe aan het geklikte item en bijbehorende sectie
+                item.classList.add('active');
+                document.getElementById(target).classList.add('active');
+                
+                // Update voortgang
+                updateProgress();
+            });
+        });
+        
+        // Checkbox functionaliteit voor boodschappenlijst
+        document.querySelectorAll('.shopping-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const row = e.target.closest('tr');
+                const item = row.querySelector('.shopping-item');
+                
+                if (e.target.checked) {
+                    item.classList.add('checked');
+                } else {
+                    item.classList.remove('checked');
+                }
+                
+                // Sla status op in localStorage
+                saveShoppingListState();
+            });
+        });
+        
+        // Opslaan van boodschappenlijst status
+        function saveShoppingListState() {
+            const items = [];
+            document.querySelectorAll('.shopping-checkbox').forEach((checkbox, index) => {
+                items.push({
+                    index,
+                    checked: checkbox.checked
+                });
+            });
+            localStorage.setItem('shopping-list-state', JSON.stringify(items));
+        }
+        
+        // Laden van boodschappenlijst status
+        function loadShoppingListState() {
+            const savedState = localStorage.getItem('shopping-list-state');
+            if (savedState) {
+                const items = JSON.parse(savedState);
+                const checkboxes = document.querySelectorAll('.shopping-checkbox');
+                
+                items.forEach(item => {
+                    if (checkboxes[item.index]) {
+                        checkboxes[item.index].checked = item.checked;
+                        
+                        if (item.checked) {
+                            const row = checkboxes[item.index].closest('tr');
+                            const textElement = row.querySelector('.shopping-item');
+                            textElement.classList.add('checked');
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Timer functionaliteit
+        function setupTimers() {
+            document.querySelectorAll('.timer-button').forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    const inputElement = button.closest('.timer-container').querySelector('.timer-input');
+                    const displayElement = button.closest('.timer-container').querySelector('.timer-display');
+                    const minutes = parseInt(inputElement.value);
+                    
+                    if (isNaN(minutes) || minutes <= 0) return;
+                    
+                    let totalSeconds = minutes * 60;
+                    displayElement.textContent = formatTime(totalSeconds);
+                    
+                    // Stop vorige timers
+                    if (window['timer' + index]) {
+                        clearInterval(window['timer' + index]);
+                    }
+                    
+                    // Start nieuwe timer
+                    button.textContent = 'Pauze';
+                    button.dataset.status = 'running';
+                    
+                    window['timer' + index] = setInterval(() => {
+                        totalSeconds--;
+                        displayElement.textContent = formatTime(totalSeconds);
+                        
+                        if (totalSeconds <= 0) {
+                            clearInterval(window['timer' + index]);
+                            button.textContent = 'Start Timer';
+                            button.dataset.status = 'stopped';
+                            
+                            // Notificatie
+                            if (Notification.permission === 'granted') {
+                                new Notification('Timer voltooid!', {
+                                    body: `Je ${minutes} minuten timer is klaar.`
+                                });
+                            }
+                            
+                            // Geluid afspelen
+                            const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLXrM7tiwTw0Wl+38+8d9GwFAlezr458nAFCq4sorrVAOPrvNY0J2YRhNt+bNX0EbBZP/4Fs0DRCy//q2XBEBwfrrjzwMEbH/9J07CxC0//GZNQ4Stv/vjzMPE7T/8o40DROz//KNNQ0Tsv/0jDQNE7P/9IszDRO0//OJMA0Ttf/yhzAOE7b/8ocwDRK2//OIMw4Rtf/zhzMPEbX/84U0DxC1//SENBAQtP/1gzQQELX/9IIzERC2//WDMxAP9//1hDUPDvf/9oY2Dgz3//eINw0L+P/2iToJCPn/94w7CAf6//iPPgUE+v/6k0MBAf7//ppLAP7//p5RAf3//ptTAvr/+JlXA/j/9JlcBPf/8JphBvb/7JxlCPP/6Z5pCvL/5KBvDPH/4KF0EvL/26R5GfP/16eCHvL/06yGJPL/z7CLKvL/zLWRMPP/ybmWNvT/xrycPPX/wMCiQvb/vMSnSPf/uMmtT/j/tM2zVvn/sNG4XPr/rNS+Yvv/qdjDaPz/ptvIbv3/o97Nc/7/oeLSef//n+XXf///nOrchP//mu7fiP//mfHjjf//mPTmkf//lvfpl///lvrsmv//lfzun///lP3xov//lv7zo///l/30pP//l/72pt//mP33p+3/mf74qfv/mf75qv//mvv6rf//nPn7r///nvf9sf//oPT+s///ovL/tv//pO///Lj//6bp/P26//+n5Pr+vP//qd74/r7//6vY9v/B//+t0fL+w///r8ru/sb//7HF6v7I//+zvOb+yv//tbXi/s3//7et3v7P//+6pdj+0v//vJ3U/tX//76Wz/7Y//+/j8v+2///wYnG/t3//8ODwv7g///FfL7+4v//x3W5/uX//8litP7o///LW7D+6v//zVSs/u3//85Np/7v///QRqP+8v//0EGf/vT//9E7m/73///SOJf++f//0jOS/vz//9Mwjv7+///TLYH+/v//1Sl7/v///9Ujdv7////WH3H+////1hpt/v///9cWaf7////XEmX+////2A5h/v///9gKXf7////ZCFr+////2QRW/v///9oAU/7////bAE/+////2wBL/v///9wASP7////dAET+////3QBB/v///94APv7////fADv+////3wA3/v///+AAM/7////gADD+////4QAt/v///+IAKP7////iACV+////4wAi/v///+QAHv7////kABv+////5AAY/v///+UAFf7////mABL+////5gAP/v///+cAC/7////nABj+////6AAV/v///+gAEv7////pAA/+////6QAM/v///+oACP7////qAAX+////6wAC/v///+sAAP7////sAQb+////7QIN/v///+4DFP7////uBBv+////7wUi/v///+8GKf7////wBy/+////8Qc2/v///+8IQ/7////uCVD+////7Qpf/v///+wMbv7////rDX3+////6g6N/v///+kPnv7////oEK7+////5xG//v///+YS0P7////lE+H+////5BTx/v///+MV//7////iFv/+////4Rf//v///+AY//7////fGf/+////3hr//v///90a//7////cG//+////2xz//v///9od//7////ZHv/+////2B///v///9cg//7////WIf/+////1SL//v///9Qj//7////tKGL+////5Slw/v///9wqgP7////UK5j+////zCu2/v///8Mr0v7////aLuf+////2i/5/v///9owC/7////ZMYL9////2DKl/P///9czyvv////VNPH5////1DYa+P///9M3RPb////SOHDz////0DnA8P///847G+7////LPYO4////yEAHrP///8VCWJ/////gRbST/////Ufo/f////5JM/z/////Sk/7/////kuD+f////9M0ff/////Th32/////1AI9P////9ROvL/////Umvw/////1Oe7v////9U0uz/////Vi/q/////1dn6P////9Ymer/////WdXo/////1sQ5/////9cS+X/////XYXk/////17B4v////9f/OH/////</audio>
+                            audio.play();
+                        }
+                    }, 1000);
+                });
+            });
+        }
+        
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // Bereken de voortgang
+        function updateProgress() {
+            const sections = document.querySelectorAll('.nav-item');
+            const activeIndex = [...sections].findIndex(section => section.classList.contains('active'));
+            
+            if (activeIndex !== -1) {
+                const progress = (activeIndex / (sections.length - 1)) * 100;
+                document.getElementById('progress-fill').style.width = `${progress}%`;
+            }
+        }
+        
+        // Print functionaliteit
+        document.getElementById('print-button').addEventListener('click', () => {
+            window.print();
+        });
+        
+        // Dark mode toggle
+        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('dark-mode', document.body.classList.contains('dark-mode'));
+        });
+        
+        // Laad dark mode voorkeur
+        if (localStorage.getItem('dark-mode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        // Portie berekening
+        document.getElementById('calculate-button').addEventListener('click', () => {
+            const portionInput = document.getElementById('portion-input');
+            const newPortionCount = parseInt(portionInput.value);
+            
+            if (isNaN(newPortionCount) || newPortionCount <= 0) {
+                alert('Voer een geldig aantal burrito\'s in');
+                return;
+            }
+            
+            const originalPortionCount = 14;
+            const ratio = newPortionCount / originalPortionCount;
+            
+            // Function to update text in format: number + unit
+            function updateQuantity(text, ratio) {
+                return text.replace(/(\d+(\.\d+)?)\s*([a-zA-Z]+|stuk(s)?|g|kg|el|tl|min)/g, (match, number, decimal, unit) => {
+                    const newValue = (parseFloat(number) * ratio).toFixed(1).replace(/\.0$/, '');
+                    return `${newValue} ${unit}`;
+                });
+            }
+            
+            // Update alle hoeveelheden
+            document.querySelectorAll('td:nth-child(3)').forEach(cell => {
+                if (!cell.textContent.includes('Richtprijs')) {
+                    const originalText = cell.getAttribute('data-original') || cell.textContent;
+                    
+                    // Sla de originele tekst op als het nog niet bestaat
+                    if (!cell.getAttribute('data-original')) {
+                        cell.setAttribute('data-original', originalText);
+                    }
+                    
+                    cell.textContent = updateQuantity(originalText, ratio);
+                }
+            });
+            
+            // Update titel van boodschappenlijst
+            const title = document.querySelector('#boodschappen .section-title');
+            title.textContent = `Boodschappenlijst (voor ${newPortionCount} tofu-burrito's van ±700 kcal)`;
+        });
+        
+        // Initialisatie
+        document.addEventListener('DOMContentLoaded', () => {
+            loadShoppingListState();
+            setupTimers();
+            updateProgress();
+            
+            // Vraag toestemming voor notificaties
+            if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                Notification.requestPermission();
+            }
+        });
+    </script>
+</body>
+</html>
