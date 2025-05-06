@@ -4,16 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tofu-Burrito Recept</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <style>
-        /* Basis styling */
+        /* Basis instellingen & variabelen */
         :root {
-            --primary-color: #e67e22;
-            --secondary-color: #2ecc71;
-            --text-color: #333;
-            --bg-color: #f9f9f9;
-            --section-bg: #fff;
-            --border-color: #ddd;
+            --primary: #1e8458;
+            --primary-light: #e7f7f0;
+            --primary-dark: #146241;
+            --accent: #ff7043;
+            --accent-light: #ffab91;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #212529;
+            --text-light: #6c757d;
+            --border: #e9ecef;
+            --success: #28a745;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --radius: 12px;
+            --header-height: 220px;
+            --nav-height: 60px;
         }
+
+        /* Dark mode kleurenschema */
+        .dark-mode {
+            --primary: #2a9d65;
+            --primary-light: #153e2d;
+            --primary-dark: #62cca1;
+            --accent: #ff7043;
+            --accent-light: #a34628;
+            --bg: #121212;
+            --card: #1e1e1e;
+            --text: #e9ecef;
+            --text-light: #adb5bd;
+            --border: #333333;
+            --success: #1f8034;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Reset & basis styling */
         * {
             margin: 0;
             padding: 0;
@@ -21,1091 +50,1200 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
+
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             font-size: 16px;
-            padding-bottom: 100px; /* Meer ruimte onderin voor mobiel */
+            padding-bottom: 100px;
+            transition: var(--transition);
         }
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 1.5rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+        /* Typografie */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.5rem; }
+        h3 { font-size: 1.2rem; }
+        h4 { font-size: 1rem; }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Header styling */
+        .recipe-header {
+            height: var(--header-height);
             position: relative;
             overflow: hidden;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 1.5rem 1.5rem;
         }
-        header::before {
+
+        .recipe-header::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: #e67e22;
-            opacity: 0.2;
-            z-index: 0;
-        }
-        header h1 {
-            font-size: 2rem;
-            position: relative;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(30, 132, 88, 0.8) 0%, var(--primary) 100%);
             z-index: 1;
+        }
+
+        .recipe-header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.8) 100%);
+            z-index: 2;
+        }
+
+        .recipe-header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 20% 30%, var(--primary-light) 0%, transparent 20%),
+                             radial-gradient(circle at 75% 10%, var(--primary-light) 0%, transparent 15%),
+                             radial-gradient(circle at 40% 70%, var(--primary-light) 0%, transparent 25%),
+                             radial-gradient(circle at 80% 80%, var(--primary-light) 0%, transparent 15%);
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .recipe-header-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .recipe-title {
+            color: white;
+            font-size: 2.2rem;
+            font-weight: 800;
             margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-        header p {
+
+        .recipe-description {
+            color: rgba(255, 255, 255, 0.9);
             font-size: 1.1rem;
-            position: relative;
-            z-index: 1;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            max-width: 600px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 1rem;
+
+        .recipe-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
         }
+
+        .recipe-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .recipe-meta-icon {
+            width: 24px;
+            height: 24px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* Navigatie */
         .nav-container {
-            background-color: white;
+            background-color: var(--card);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            width: 100%;
+            box-shadow: var(--shadow);
+            height: var(--nav-height);
+            transition: var(--transition);
         }
+
         .nav {
             display: flex;
-            justify-content: flex-start;
-            list-style: none;
-            padding: 0;
+            height: 100%;
             overflow-x: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
             -webkit-overflow-scrolling: touch;
         }
+
         .nav::-webkit-scrollbar {
             display: none;
         }
+
         .nav-item {
-            padding: 1rem 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            border-bottom: 3px solid transparent;
-            position: relative;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        .nav-item:hover {
-            color: var(--primary-color);
-        }
-        .nav-item.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-            font-weight: bold;
-        }
-        /* Content secties */
-        .content-section {
-            display: none;
-            background-color: var(--section-bg);
-            padding: 1.25rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            margin-bottom: 1.5rem;
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .content-section.active {
-            display: block;
-        }
-        .section-title {
-            color: var(--primary-color);
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--border-color);
-            font-size: 1.4rem;
-        }
-        /* Tabellen voor mobiel */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            font-size: 0.95rem;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-        th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: bold;
-        }
-        tr:nth-child(even) {
-            background-color: rgba(0,0,0,0.02);
-        }
-        tr:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-        /* Lijsten */
-        ul, ol {
-            padding-left: 1.25rem;
-            margin: 0.75rem 0;
-        }
-        li {
-            margin-bottom: 0.6rem;
-        }
-        /* Extra grote checkbox styling voor touchscreens */
-        .shopping-checkbox {
-            margin-right: 10px;
-            transform: scale(1.5);
-            cursor: pointer;
-            width: 20px;
-            height: 20px;
-            appearance: none;
-            -webkit-appearance: none;
-            background-color: white;
-            border: 2px solid var(--primary-color);
-            border-radius: 4px;
-            position: relative;
-        }
-        .shopping-checkbox:checked {
-            background-color: var(--primary-color);
-        }
-        .shopping-checkbox:checked::after {
-            content: "✓";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 14px;
-        }
-        .shopping-item.checked {
-            text-decoration: line-through;
-            color: #999;
-        }
-        .checkbox-cell {
-            width: 50px;
-            padding-left: 5px;
-            text-align: center;
-            vertical-align: middle;
-        }
-        /* Mobile-friendly ingrediënten checklist */
-        .ingredient-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.6rem;
-        }
-        .ingredient-checkbox {
-            margin-right: 0.5rem;
-            transform: scale(1.5);
-            cursor: pointer;
-            width: 20px;
-            height: 20px;
-        }
-        .ingredient-text {
-            transition: all 0.3s ease;
-        }
-        .ingredient-text.checked {
-            text-decoration: line-through;
-            color: #999;
-        }
-        /* Receptstappen styling */
-        .step-container {
-            background-color: rgba(46, 204, 113, 0.05);
-            border-left: 4px solid var(--secondary-color);
-            padding: 0.9rem;
-            margin: 1rem 0;
-            border-radius: 0 4px 4px 0;
-        }
-        .step-title {
-            font-weight: bold;
-            color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        /* Timer feature voor mobiel */
-        .timer-container {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            margin: 1rem 0;
-            background-color: #f1f1f1;
-            padding: 0.8rem;
-            border-radius: 8px;
-            gap: 10px;
-        }
-        .timer-input {
-            width: 60px;
-            height: 44px;
-            padding: 5px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            text-align: center;
-        }
-        .timer-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-right: 10px;
-            font-size: 1rem;
-            font-weight: bold;
-            height: 44px;
-            min-width: 100px;
-        }
-        .timer-button:hover {
-            background-color: #d35400;
-        }
-        .timer-display {
-            font-size: 1.2rem;
-            font-weight: bold;
-            background: #fff;
-            padding: 8px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            flex-grow: 1;
-            text-align: center;
-        }
-        /* Print & Portie buttons voor mobiel */
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-        .action-button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 15px;
-            border-radius: 8px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            height: 50px;
-        }
-        .action-button:hover {
-            background-color: #d35400;
-        }
-        .action-button:active {
-            transform: translateY(2px);
-        }
-        .action-button svg {
-            width: 20px;
-            height: 20px;
-        }
-        /* Portie berekening voor mobiel */
-        .portion-control {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            background-color: rgba(46, 204, 113, 0.1);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-        .portion-input-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .portion-label {
-            font-weight: bold;
+            flex: 1;
+            padding: 0 1rem;
             white-space: nowrap;
-            font-size: 1rem;
-        }
-        .portion-input {
-            width: 70px;
-            height: 44px;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-        /* Progress indicator voor mobiel */
-        .progress-container {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .progress-title {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-        .progress-bar {
-            height: 10px;
-            background-color: #eee;
-            border-radius: 10px;
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background-color: var(--primary-color);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        /* Responsive table voor smalle schermen */
-        @media (max-width: 480px) {
-            .responsive-table {
-                display: block;
-                width: 100%;
-            }
-            
-            .responsive-table thead {
-                display: none;
-            }
-            
-            .responsive-table tbody {
-                display: block;
-                width: 100%;
-            }
-            
-            .responsive-table tr {
-                display: flex;
-                flex-wrap: wrap;
-                margin-bottom: 10px;
-                border: 1px solid var(--border-color);
-                border-radius: 8px;
-                overflow: hidden;
-            }
-            
-            .responsive-table td {
-                display: flex;
-                width: 100%;
-                padding: 12px;
-                border-bottom: 1px solid var(--border-color);
-            }
-            
-            .responsive-table td:last-child {
-                border-bottom: none;
-            }
-            
-            .responsive-table td.checkbox-cell {
-                width: 50px;
-                border-right: 1px solid var(--border-color);
-            }
-            
-            .responsive-table td.product-cell {
-                flex-grow: 1;
-                width: calc(100% - 50px);
-            }
-            
-            .responsive-table td:before {
-                content: attr(data-label);
-                font-weight: bold;
-                width: 120px;
-                min-width: 120px;
-            }
-            
-            .category-header {
-                position: sticky;
-                top: 44px;
-                background: var(--bg-color);
-                z-index: 10;
-                padding: 10px 0;
-            }
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            color: var(--text-light);
+            min-width: fit-content;
         }
 
-        /* Dark mode toggle voor mobiel */
-        .dark-mode-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--text-color);
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary);
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item.active::after {
+            transform: scaleX(1);
+        }
+
+        /* Container en secties */
+        .container {
+            padding: 1.5rem;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .card-title i {
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        /* Ingredient styling */
+        .category-header {
+            font-weight: 600;
+            color: var(--primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            margin: 1.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ingredient-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .ingredient-item {
+            display: flex;
+            background-color: var(--card);
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .ingredient-checkbox {
+            margin-right: 1rem;
+            flex-shrink: 0;
+            appearance: none;
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--primary);
+            border-radius: 6px;
+            background-color: transparent;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .ingredient-checkbox:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .ingredient-checkbox:checked::after {
+            content: "✓";
+            position: absolute;
             color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
+            font-size: 14px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ingredient-content {
+            flex-grow: 1;
+        }
+
+        .ingredient-name {
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .ingredient-amount {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .ingredient-item.checked .ingredient-name,
+        .ingredient-item.checked .ingredient-amount {
+            text-decoration: line-through;
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        /* Stappen styling */
+        .step-list {
+            counter-reset: step-counter;
+        }
+
+        .step-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-left: 3rem;
+            counter-increment: step-counter;
+        }
+
+        .step-item::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--primary-light);
+            color: var(--primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
-        
-        /* Dark mode styles */
-        body.dark-mode {
-            --bg-color: #222;
-            --section-bg: #333;
-            --text-color: #f5f5f5;
-            --border-color: #444;
-        }
-        
-        body.dark-mode .nav-container {
-            background-color: #333;
-        }
-        
-        body.dark-mode .timer-container,
-        body.dark-mode .timer-display {
-            background-color: #444;
-        }
-        
-        body.dark-mode tr:nth-child(even) {
-            background-color: rgba(255,255,255,0.05);
-        }
-        
-        body.dark-mode tr:hover {
-            background-color: rgba(255,255,255,0.08);
+            font-weight: 700;
         }
 
-        /* Categorie headers */
-        .category-header {
-            margin-top: 1.5rem;
+        .step-title {
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.3rem;
-            font-size: 1.1rem;
+            color: var(--primary);
         }
-        
-        /* Boodschappenlijst specifieke styling voor mobiel */
-        .shopping-table-mobile {
-            border-collapse: separate;
-            border-spacing: 0 8px;
-            width: 100%;
+
+        .step-content {
+            color: var(--text);
         }
-        
-        .shopping-item-row {
+
+        /* Timer styling */
+        .timer-container {
             display: flex;
-            background: #fff;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            background-color: var(--primary-light);
+            padding: 0.75rem;
+            border-radius: var(--radius);
+        }
+
+        .timer-input {
+            width: 60px;
+            height: 40px;
+            border: 1px solid var(--border);
             border-radius: 8px;
-            margin-bottom: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+            font-size: 1rem;
+            background-color: var(--card);
+            color: var(--text);
         }
-        
-        body.dark-mode .shopping-item-row {
-            background: #444;
+
+        .timer-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            height: 40px;
+            min-width: 100px;
         }
-        
-        .checkbox-cell-mobile {
-            width: 50px;
+
+        .timer-button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .timer-display {
+            flex-grow: 1;
+            text-align: center;
+            font-weight: 600;
+            background-color: var(--card);
+            padding: 0.5rem;
+            border-radius: 8px;
+            color: var(--text);
+        }
+
+        /* Toggle styling */
+        .toggle-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .toggle-button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 5px;
-            border-right: 1px solid #eee;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
         }
-        
-        .info-cell-mobile {
+
+        .toggle-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .toggle-button i {
+            font-size: 1.25rem;
+        }
+
+        /* Portie calculator */
+        .portion-control {
+            background-color: var(--primary-light);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin: 1rem 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .portion-input-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .portion-label {
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--primary);
+        }
+
+        .portion-input {
+            width: 70px;
+            height: 40px;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1rem;
+            background-color: var(--card);
+            color: var(--text);
+        }
+
+        .portion-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
             flex-grow: 1;
-            padding: 10px;
+            height: 40px;
         }
-        
-        .product-name {
-            font-weight: 500;
-            margin-bottom: 2px;
+
+        .portion-button:hover {
+            background-color: var(--primary-dark);
         }
-        
-        .product-details {
+
+        /* Progress bar */
+        .progress-container {
+            position: relative;
+            height: 6px;
+            background-color: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-stats {
             display: flex;
             justify-content: space-between;
-            color: #777;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
         }
-        
-        body.dark-mode .product-details {
-            color: #aaa;
+
+        /* Voedingswaarden styling */
+        .nutrition-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
         }
-        
-        /* Fix voor touchscreen op iOS */
-        input[type="checkbox"] {
-            height: 25px;
-            width: 25px;
+
+        .nutrition-item:last-child {
+            border-bottom: none;
+        }
+
+        .nutrition-name {
+            font-weight: 500;
+        }
+
+        .nutrition-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Tips styling */
+        .tip-container {
+            background-color: var(--primary-light);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .tip-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .tip-content {
+            flex-grow: 1;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        /* Responsiveness */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 768px;
+                margin: 0 auto;
+            }
+
+            .recipe-header {
+                height: 280px;
+            }
+
+            .recipe-title {
+                font-size: 2.5rem;
+            }
+
+            .card {
+                padding: 2rem;
+            }
+
+            .ingredient-list {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        @media print {
+            .nav-container,
+            .toggle-container,
+            .portion-control {
+                display: none;
+            }
+
+            .content-section {
+                display: block;
+                page-break-after: always;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            body {
+                background-color: white;
+                color: black;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Tofu-Burrito Recept</h1>
-        <p>Gezonde, eiwitrijke burrito's boordevol smaak</p>
-    </header>
-    
-    <div class="nav-container">
-        <ul class="nav">
-            <li class="nav-item active" data-target="boodschappen">Boodschappen</li>
-            <li class="nav-item" data-target="stap1-3">Stap 1-3</li>
-            <li class="nav-item" data-target="stap4">Stap 4: Tofu</li>
-            <li class="nav-item" data-target="stap5-6">Stap 5-6</li>
-            <li class="nav-item" data-target="stap7">Bewaren</li>
-            <li class="nav-item" data-target="voeding">Voeding</li>
-        </ul>
-    </div>
-    
-    <div class="container">
-        <div class="action-buttons">
-            <button class="action-button" id="print-button">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-                </svg>
-                Recept afdrukken
-            </button>
-            
-            <div class="portion-control">
-                <div class="portion-input-container">
-                    <span class="portion-label">Aantal burrito's:</span>
-                    <input type="number" id="portion-input" class="portion-input" value="14" min="1" max="50">
+    <header class="recipe-header">
+        <div class="recipe-header-pattern"></div>
+        <div class="recipe-header-content">
+            <h1 class="recipe-title">Tofu-Burrito's</h1>
+            <p class="recipe-description">Gezonde, eiwitrijke burrito's boordevol smaak – perfect om voor te bereiden en in te vriezen voor drukke dagen.</p>
+            <div class="recipe-meta">
+                <div class="recipe-meta-item">
+                    <div class="recipe-meta-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <span>Porties: 14 burrito's</span>
                 </div>
-                <button class="action-button" id="calculate-button">Herberekenen</button>
+                <div class="recipe-meta-item">
+                    <div class="recipe-meta-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <span>Tijd: 60 minuten</span>
+                </div>
+                <div class="recipe-meta-item">
+                    <div class="recipe-meta-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <span>700 kcal per stuk</span>
+                </div>
             </div>
         </div>
-        
+    </header>
+
+    <div class="nav-container">
+        <ul class="nav">
+            <li class="nav-item active" data-target="boodschappen">
+                <i class="fas fa-shopping-basket"></i>&nbsp;Boodschappen
+            </li>
+            <li class="nav-item" data-target="stap1-3">
+                <i class="fas fa-mortar-pestle"></i>&nbsp;Basis
+            </li>
+            <li class="nav-item" data-target="stap4">
+                <i class="fas fa-seedling"></i>&nbsp;Tofu
+            </li>
+            <li class="nav-item" data-target="stap5-6">
+                <i class="fas fa-pepper-hot"></i>&nbsp;Groente
+            </li>
+            <li class="nav-item" data-target="stap7">
+                <i class="fas fa-snowflake"></i>&nbsp;Bewaren
+            </li>
+            <li class="nav-item" data-target="voeding">
+                <i class="fas fa-heartbeat"></i>&nbsp;Voeding
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="portion-control">
+            <div class="portion-input-container">
+                <span class="portion-label">Aantal burrito's:</span>
+                <input type="number" id="portion-input" class="portion-input" value="14" min="1" max="50">
+            </div>
+            <button class="portion-button" id="calculate-button">
+                <i class="fas fa-calculator"></i>&nbsp;Herberekenen
+            </button>
+        </div>
+
         <!-- BOODSCHAPPEN SECTIE -->
         <section id="boodschappen" class="content-section active">
-            <h2 class="section-title">Boodschappenlijst</h2>
-            <p>Voor 14 tofu-burrito's van ±700 kcal</p>
-            
-            <div class="category-header">Eiwitten & vulling</div>
-            <div class="shopping-list-mobile">
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-shopping-basket"></i>Boodschappenlijst
+                </h2>
+                <p>Voor 14 tofu-burrito's van ±700 kcal</p>
+
+                <div class="category-header">
+                    <i class="fas fa-drumstick-bite"></i>Eiwitten & vulling
+                </div>
+                <div class="ingredient-list">
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Tofu (stevig, naturel)</div>
+                            <div class="ingredient-amount">1.4 kg (4 blokken à 350g)</div>
+                        </div>
                     </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Tofu (stevig, naturel)</div>
-                        <div class="product-details">
-                            <span>1.4 kg (4 blokken à 350g)</span>
-                            <span>± €7.80</span>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Eieren (M, optioneel)</div>
+                            <div class="ingredient-amount">1 doos (10 stuks)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Zwarte bonen (blik)</div>
+                            <div class="ingredient-amount">2 blikken 400 g</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Maïs (blik)</div>
+                            <div class="ingredient-amount">2 blikken 340 g</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
+                <div class="category-header">
+                    <i class="fas fa-bread-slice"></i>Koolhydraten & wraps
+                </div>
+                <div class="ingredient-list">
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Zilvervliesrijst</div>
+                            <div class="ingredient-amount">1 kg (gebruik 300 g)</div>
+                        </div>
                     </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Eieren (M, optioneel)</div>
-                        <div class="product-details">
-                            <span>1 doos (10 stuks)</span>
-                            <span>± €1.59</span>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Tortilla wraps (middel)</div>
+                            <div class="ingredient-amount">2 pakken (16 wraps, gebruik 14)</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
+                <div class="category-header">
+                    <i class="fas fa-carrot"></i>Groente
+                </div>
+                <div class="ingredient-list">
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Rode paprika</div>
+                            <div class="ingredient-amount">3 stuks</div>
+                        </div>
                     </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Zwarte bonen (blik)</div>
-                        <div class="product-details">
-                            <span>2 blikken 400 g</span>
-                            <span>± €1.98</span>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Rode uien</div>
+                            <div class="ingredient-amount">1 net (500 g)</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
+                <div class="category-header">
+                    <i class="fas fa-flask"></i>Sauzen & kruiden
+                </div>
+                <div class="ingredient-list">
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Magere Griekse yoghurt (0%)</div>
+                            <div class="ingredient-amount">1 bak (500 g)</div>
+                        </div>
                     </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Maïs (blik)</div>
-                        <div class="product-details">
-                            <span>2 blikken 340 g</span>
-                            <span>± €2.38</span>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Sojasaus</div>
+                            <div class="ingredient-amount">4 el</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Rijstazijn of citroensap</div>
+                            <div class="ingredient-amount">2 el</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Tomatenpuree</div>
+                            <div class="ingredient-amount">1 el</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Gerookt paprikapoeder</div>
+                            <div class="ingredient-amount">2 tl</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Komijn</div>
+                            <div class="ingredient-amount">3 tl</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Knoflookpoeder</div>
+                            <div class="ingredient-amount">2 tl</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Uienpoeder</div>
+                            <div class="ingredient-amount">1 tl</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Ahornsiroop of honing</div>
+                            <div class="ingredient-amount">1 tl</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <input type="checkbox" class="ingredient-checkbox">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Cayenne of chilivlokken (optioneel)</div>
+                            <div class="ingredient-amount">½-1 tl</div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="category-header">Koolhydraten & wraps</div>
-            <div class="shopping-list-mobile">
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Zilvervliesrijst</div>
-                        <div class="product-details">
-                            <span>1 kg (gebruik 300 g)</span>
-                            <span>± €1.49</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Tortilla wraps (middel)</div>
-                        <div class="product-details">
-                            <span>2 pakken (16 wraps, gebruik 14)</span>
-                            <span>± €2.78</span>
-                        </div>
-                    </div>
-                </div>
+
+            <div class="progress-container">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
             </div>
-            
-            <div class="category-header">Groente</div>
-            <div class="shopping-list-mobile">
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Rode paprika</div>
-                        <div class="product-details">
-                            <span>3 stuks</span>
-                            <span>± €2.85</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Rode uien</div>
-                        <div class="product-details">
-                            <span>1 net (500 g)</span>
-                            <span>± €0.95</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="progress-stats">
+                <div class="progress-start">Start</div>
+                <div class="progress-end">Klaar!</div>
             </div>
-            
-            <div class="category-header">Sauzen & extra's</div>
-            <div class="shopping-list-mobile">
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Magere Griekse yoghurt (0%)</div>
-                        <div class="product-details">
-                            <span>1 bak (500 g)</span>
-                            <span>± €1.39</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Sojasaus</div>
-                        <div class="product-details">
-                            <span>4 el</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Rijstazijn of citroensap</div>
-                        <div class="product-details">
-                            <span>2 el</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Tomatenpuree</div>
-                        <div class="product-details">
-                            <span>1 el</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Gerookt paprikapoeder</div>
-                        <div class="product-details">
-                            <span>2 tl</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Komijn</div>
-                        <div class="product-details">
-                            <span>3 tl</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Knoflookpoeder</div>
-                        <div class="product-details">
-                            <span>2 tl</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Uienpoeder</div>
-                        <div class="product-details">
-                            <span>1 tl</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Ahornsiroop of honing</div>
-                        <div class="product-details">
-                            <span>1 tl</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="shopping-item-row">
-                    <div class="checkbox-cell-mobile">
-                        <input type="checkbox" class="shopping-checkbox">
-                    </div>
-                    <div class="info-cell-mobile">
-                        <div class="product-name">Cayenne of chilivlokken (optioneel)</div>
-                        <div class="product-details">
-                            <span>½-1 tl</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="category-header">Totale kosten</div>
-            <p><strong>Totale richtprijs:</strong> ± €26 – €28</p>
-            <p class="small-text">(je houdt wat rijst, eieren en yoghurt over)</p>
         </section>
         
         <!-- STAP 1-3 SECTIE -->
         <section id="stap1-3" class="content-section">
-            <h2 class="section-title">Stap 1 t/m 3: Basis</h2>
-            
-            <div class="step-container">
-                <div class="step-title">Stap 1: Rijst koken</div>
-                <ul>
-                    <li>300 g droge zilvervliesrijst</li>
-                    <li>Spoel goed af</li>
-                    <li>Kook in ruim water (25–30 min)</li>
-                    <li>Giet af, laat volledig afkoelen</li>
-                    <li>Nodig: ±800 g gekookte rijst (±60 g per burrito)</li>
-                </ul>
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-mortar-pestle"></i>Stap 1 t/m 3: Basis voorbereiden
+                </h2>
                 
-                <div class="timer-container">
-                    <input type="number" class="timer-input" value="30" min="1">
-                    <button class="timer-button" id="start-timer-1">Start Timer</button>
-                    <div class="timer-display" id="timer-display-1">00:30:00</div>
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="step-title">Rijst koken</div>
+                        <div class="step-content">
+                            <ul>
+                                <li>300 g droge zilvervliesrijst</li>
+                                <li>Spoel goed af</li>
+                                <li>Kook in ruim water (25–30 min)</li>
+                                <li>Giet af, laat volledig afkoelen</li>
+                                <li>Nodig: ±800 g gekookte rijst (±60 g per burrito)</li>
+                            </ul>
+                            
+                            <div class="timer-container">
+                                <input type="number" class="timer-input" value="30" min="1">
+                                <button class="timer-button" id="start-timer-1">Start Timer</button>
+                                <div class="timer-display" id="timer-display-1">00:30:00</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-title">Yoghurtsaus maken</div>
+                        <div class="step-content">
+                            <p>Meng in een kom:</p>
+                            <ul>
+                                <li>200 g magere Griekse yoghurt</li>
+                                <li>1 tl knoflookpoeder</li>
+                                <li>½ tl komijn</li>
+                                <li>½ tl zout</li>
+                                <li>Sap van ½ limoen (optioneel)</li>
+                            </ul>
+                            <p>Roer goed en zet afgedekt in de koelkast.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-title">Eieren koken (optioneel)</div>
+                        <div class="step-content">
+                            <ul>
+                                <li>Kook 7 eieren hard (10 min)</li>
+                                <li>Pel ze, laat afkoelen, snijd in stukjes</li>
+                                <li>Gebruik ½ ei per burrito (±35 kcal per stuk)</li>
+                            </ul>
+                            
+                            <div class="timer-container">
+                                <input type="number" class="timer-input" value="10" min="1">
+                                <button class="timer-button" id="start-timer-2">Start Timer</button>
+                                <div class="timer-display" id="timer-display-2">00:10:00</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="step-container">
-                <div class="step-title">Stap 2: Yoghurtsaus maken</div>
-                <p>Meng in een kom:</p>
-                <ul>
-                    <li>200 g magere Griekse yoghurt</li>
-                    <li>1 tl knoflookpoeder</li>
-                    <li>½ tl komijn</li>
-                    <li>½ tl zout</li>
-                    <li>Sap van ½ limoen (optioneel)</li>
-                </ul>
-                <p>Roer goed en zet afgedekt in de koelkast.</p>
+
+            <div class="progress-container">
+                <div class="progress-fill" style="width: 20%"></div>
             </div>
-            
-            <div class="step-container">
-                <div class="step-title">Stap 3: Eieren koken (optioneel)</div>
-                <ul>
-                    <li>Kook 7 eieren hard (10 min)</li>
-                    <li>Pel ze, laat afkoelen, snijd in stukjes</li>
-                    <li>Gebruik ½ ei per burrito (±35 kcal per stuk)</li>
-                </ul>
-                
-                <div class="timer-container">
-                    <input type="number" class="timer-input" value="10" min="1">
-                    <button class="timer-button" id="start-timer-2">Start Timer</button>
-                    <div class="timer-display" id="timer-display-2">00:10:00</div>
-                </div>
+            <div class="progress-stats">
+                <div class="progress-start">Start</div>
+                <div class="progress-end">Klaar!</div>
             </div>
         </section>
         
         <!-- STAP 4 SECTIE -->
         <section id="stap4" class="content-section">
-            <h2 class="section-title">Stap 4: Tofu bereiden</h2>
-            
-            <div class="step-container">
-                <div class="step-title">Tofu voorbereiden</div>
-                <ol>
-                    <li>Neem 1.4 kg stevige tofu</li>
-                    <li>Pers goed uit (keukenpapier en pan)</li>
-                    <li>Rasp grof of verkruimel met handen tot 'shreds'</li>
-                </ol>
-            </div>
-            
-            <div class="step-container">
-                <div class="step-title">Droog bakken</div>
-                <ul>
-                    <li>Verhit een grote pan (zonder of met heel weinig olie)</li>
-                    <li>Bak de tofu-shreds in porties ±10–15 min</li>
-                    <li>Laat licht krokant en droog worden</li>
-                    <li>Regelmatig omscheppen</li>
-                </ul>
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-seedling"></i>Stap 4: Tofu bereiden
+                </h2>
                 
-                <div class="timer-container">
-                    <input type="number" class="timer-input" value="15" min="1">
-                    <button class="timer-button" id="start-timer-3">Start Timer</button>
-                    <div class="timer-display" id="timer-display-3">00:15:00</div>
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="step-title">Tofu voorbereiden</div>
+                        <div class="step-content">
+                            <ol>
+                                <li>Neem 1.4 kg stevige tofu</li>
+                                <li>Pers goed uit (keukenpapier en pan)</li>
+                                <li>Rasp grof of verkruimel met handen tot 'shreds'</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-title">Droog bakken</div>
+                        <div class="step-content">
+                            <ul>
+                                <li>Verhit een grote pan (zonder of met heel weinig olie)</li>
+                                <li>Bak de tofu-shreds in porties ±10–15 min</li>
+                                <li>Laat licht krokant en droog worden</li>
+                                <li>Regelmatig omscheppen</li>
+                            </ul>
+                            
+                            <div class="timer-container">
+                                <input type="number" class="timer-input" value="15" min="1">
+                                <button class="timer-button" id="start-timer-3">Start Timer</button>
+                                <div class="timer-display" id="timer-display-3">00:15:00</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-title">Marinade toevoegen (na het bakken)</div>
+                        <div class="step-content">
+                            <h4>Ingrediënten marinade:</h4>
+                            <ul>
+                                <li>4 el sojasaus</li>
+                                <li>2 el rijstazijn of citroensap</li>
+                                <li>1 el tomatenpuree</li>
+                                <li>2 tl gerookt paprikapoeder</li>
+                                <li>2 tl komijn</li>
+                                <li>1 tl knoflookpoeder</li>
+                                <li>1 tl uienpoeder</li>
+                                <li>1 tl ahornsiroop of honing</li>
+                                <li>½–1 tl cayenne of chilivlokken (optioneel)</li>
+                                <li>(eventueel 1 el water om te verdunnen)</li>
+                            </ul>
+                            
+                            <h4>Bereiding:</h4>
+                            <ul>
+                                <li>Voeg marinade toe aan de gebakken tofu</li>
+                                <li>Bak nog 2–3 min tot goed gemengd en gekarameliseerd</li>
+                            </ul>
+                            
+                            <div class="timer-container">
+                                <input type="number" class="timer-input" value="3" min="1">
+                                <button class="timer-button" id="start-timer-4">Start Timer</button>
+                                <div class="timer-display" id="timer-display-4">00:03:00</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="step-container">
-                <div class="step-title">Marinade toevoegen (na het bakken)</div>
-                
-                <h4>Ingrediënten marinade:</h4>
-                <ul>
-                    <li>4 el sojasaus</li>
-                    <li>2 el rijstazijn of citroensap</li>
-                    <li>1 el tomatenpuree</li>
-                    <li>2 tl gerookt paprikapoeder</li>
-                    <li>2 tl komijn</li>
-                    <li>1 tl knoflookpoeder</li>
-                    <li>1 tl uienpoeder</li>
-                    <li>1 tl ahornsiroop of honing</li>
-                    <li>½–1 tl cayenne of chilivlokken (optioneel)</li>
-                    <li>(eventueel 1 el water om te verdunnen)</li>
-                </ul>
-                
-                <h4>Bereiding:</h4>
-                <ul>
-                    <li>Voeg marinade toe aan de gebakken tofu</li>
-                    <li>Bak nog 2–3 min tot goed gemengd en gekarameliseerd</li>
-                </ul>
-                
-                <div class="timer-container">
-                    <input type="number" class="timer-input" value="3" min="1">
-                    <button class="timer-button" id="start-timer-4">Start Timer</button>
-                    <div class="timer-display" id="timer-display-4">00:03:00</div>
-                </div>
+
+            <div class="progress-container">
+                <div class="progress-fill" style="width: 40%"></div>
+            </div>
+            <div class="progress-stats">
+                <div class="progress-start">Start</div>
+                <div class="progress-end">Klaar!</div>
             </div>
         </section>
         
         <!-- STAP 5-6 SECTIE -->
         <section id="stap5-6" class="content-section">
-            <h2 class="section-title">Stap 5-6: Groente & Vullen</h2>
-            
-            <div class="step-container">
-                <div class="step-title">Stap 5: Groentemix maken</div>
-                <ul>
-                    <li>Snijd 3 rode paprika's + 2 rode uien in blokjes</li>
-                    <li>Fruit ui met beetje olie of water</li>
-                    <li>Voeg paprika toe, bak 5–6 min</li>
-                    <li>Voeg bonen + maïs toe, kort mee verwarmen</li>
-                    <li>Meng dit met de gemarineerde tofu</li>
-                </ul>
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-pepper-hot"></i>Stap 5-6: Groente & Samenstellen
+                </h2>
                 
-                <div class="timer-container">
-                    <input type="number" class="timer-input" value="6" min="1">
-                    <button class="timer-button" id="start-timer-5">Start Timer</button>
-                    <div class="timer-display" id="timer-display-5">00:06:00</div>
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="step-title">Groentemix maken</div>
+                        <div class="step-content">
+                            <ul>
+                                <li>Snijd 3 rode paprika's + 2 rode uien in blokjes</li>
+                                <li>Fruit ui met beetje olie of water</li>
+                                <li>Voeg paprika toe, bak 5–6 min</li>
+                                <li>Voeg bonen + maïs toe, kort mee verwarmen</li>
+                                <li>Meng dit met de gemarineerde tofu</li>
+                            </ul>
+                            
+                            <div class="timer-container">
+                                <input type="number" class="timer-input" value="6" min="1">
+                                <button class="timer-button" id="start-timer-5">Start Timer</button>
+                                <div class="timer-display" id="timer-display-5">00:06:00</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-item">
+                        <div class="step-title">Burrito's samenstellen (14 stuks)</div>
+                        <div class="step-content">
+                            <h4>Per burrito:</h4>
+                            <div class="ingredient-list">
+                                <div class="ingredient-item">
+                                    <div class="ingredient-content">
+                                        <div class="ingredient-name">Wrap</div>
+                                        <div class="ingredient-amount">1 stuks</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ingredient-item">
+                                    <div class="ingredient-content">
+                                        <div class="ingredient-name">Gekookte rijst</div>
+                                        <div class="ingredient-amount">± 60 g</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ingredient-item">
+                                    <div class="ingredient-content">
+                                        <div class="ingredient-name">Tofu/groente/bonenmengsel</div>
+                                        <div class="ingredient-amount">± 120–130 g</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ingredient-item">
+                                    <div class="ingredient-content">
+                                        <div class="ingredient-name">Hardgekookt ei (optioneel)</div>
+                                        <div class="ingredient-amount">½ ei</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ingredient-item">
+                                    <div class="ingredient-content">
+                                        <div class="ingredient-name">Yoghurtsaus</div>
+                                        <div class="ingredient-amount">1 el (±15 g)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p><strong>Totale vulling:</strong> ±230–250 g per stuk</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="step-container">
-                <div class="step-title">Stap 6: Burrito's samenstellen (14 stuks)</div>
-                
-                <h4>Per burrito:</h4>
-                <div class="ingredient-list">
-                    <div class="shopping-item-row">
-                        <div class="info-cell-mobile">
-                            <div class="product-name">Wrap</div>
-                            <div class="product-details">
-                                <span>1 stuks</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="shopping-item-row">
-                        <div class="info-cell-mobile">
-                            <div class="product-name">Gekookte rijst</div>
-                            <div class="product-details">
-                                <span>± 60 g</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="shopping-item-row">
-                        <div class="info-cell-mobile">
-                            <div class="product-name">Tofu/groente/bonenmengsel</div>
-                            <div class="product-details">
-                                <span>± 120–130 g</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="shopping-item-row">
-                        <div class="info-cell-mobile">
-                            <div class="product-name">Hardgekookt ei (optioneel)</div>
-                            <div class="product-details">
-                                <span>½ ei</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="shopping-item-row">
-                        <div class="info-cell-mobile">
-                            <div class="product-name">Yoghurtsaus</div>
-                            <div class="product-details">
-                                <span>1 el (±15 g)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <p><strong>Totale vulling:</strong> ±230–250 g per stuk</p>
+
+            <div class="progress-container">
+                <div class="progress-fill" style="width: 60%"></div>
+            </div>
+            <div class="progress-stats">
+                <div class="progress-start">Start</div>
+                <div class="progress-end">Klaar!</div>
             </div>
         </section>
         
         <!-- STAP 7 SECTIE -->
         <section id="stap7" class="content-section">
-            <h2 class="section-title">Stap 7: Bewaren & opwarmen</h2>
-            
-            <div class="shopping-item-row">
-                <div class="info-cell-mobile">
-                    <div class="product-name">Koelkast</div>
-                    <div class="product-details">
-                        <span>Max 3 dagen, luchtdicht verpakt</span>
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-snowflake"></i>Stap 7: Bewaren & opwarmen
+                </h2>
+                
+                <div class="category-header">
+                    <i class="fas fa-box"></i>Bewaarmethoden
+                </div>
+                <div class="ingredient-list">
+                    <div class="ingredient-item">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Koelkast</div>
+                            <div class="ingredient-amount">Max 3 dagen, luchtdicht verpakt</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Vriezer</div>
+                            <div class="ingredient-amount">Tot 2 maanden, individueel verpakt</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ingredient-item">
+                        <div class="ingredient-content">
+                            <div class="ingredient-name">Opwarmen</div>
+                            <div class="ingredient-amount">Magnetron (2–3 min) of tosti/grillpan</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tip-container">
+                    <div class="tip-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="tip-content">
+                        <div class="tip-title">Tip</div>
+                        <p>Vries burrito's apart in aluminiumfolie of bakpapier met naamlabel. Zo kun je ze gemakkelijk één voor één uitnemen en opwarmen.</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="shopping-item-row">
-                <div class="info-cell-mobile">
-                    <div class="product-name">Vriezer</div>
-                    <div class="product-details">
-                        <span>Tot 2 maanden, individueel verpakt</span>
-                    </div>
-                </div>
+
+            <div class="progress-container">
+                <div class="progress-fill" style="width: 80%"></div>
             </div>
-            
-            <div class="shopping-item-row">
-                <div class="info-cell-mobile">
-                    <div class="product-name">Opwarmen</div>
-                    <div class="product-details">
-                        <span>Magnetron (2–3 min) of tosti/grillpan</span>
-                    </div>
-                </div>
+            <div class="progress-stats">
+                <div class="progress-start">Start</div>
+                <div class="progress-end">Klaar!</div>
             </div>
-            
-            <p class="tip" style="margin-top: 15px; background: #f8f4e5; padding: 10px; border-radius: 8px; border-left: 4px solid var(--primary-color);"><strong>Tip:</strong> vries burrito's apart in aluminiumfolie of bakpapier met naamlabel.</p>
         </section>
         
         <!-- VOEDING SECTIE -->
         <section id="voeding" class="content-section">
-            <h2 class="section-title">Voedingswaarden (per burrito)</h2>
-            
-            <div class="shopping-item-row">
-                <div class="info-cell-mobile">
-                    <div class="product-name">Kcal</div>
-                    <div class="product-details">
-                        <span>±700</span>
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-heartbeat"></i>Voedingswaarden (per burrito)
+                </h2>
+                
+                <div class="nutrition-item">
+                    <div class="nutrition-name">Kcal</div>
+                    <div class="nutrition-value">±700</div>
+                </div>
+                
+                <div class="nutrition-item">
+                    <div class="nutrition-name">Eiwit</div>
+                    <div class="nutrition-value">±35–38 g</div>
+                </div>
+                
+                <div class="nutrition-item">
+                    <div class="nutrition-name">Koolhydraten</div>
+                    <div class="nutrition-value">±65 g</div>
+                </div>
+                
+                <div class="nutrition-item">
+                    <div class="nutrition-name">Vet</div>
+                    <div class="nutrition-value">±22 g</div>
+                </div>
+                
+                <div class="nutrition-item">
+                    <div class="nutrition-name">Vezels</div>
+                    <div class="nutrition-value">±7–8 g</div>
+                </div>
+                
+                <p style="margin-top: 1.5rem;">Deze waarden zijn inclusief ½ ei en 15 g yoghurtsaus per burrito.</p>
+                
+                <div class="tip-container">
+                    <div class="tip-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="tip-content">
+                        <div class="tip-title">Vegan Optie</div>
+                        <p>Vervang ei door extra bonen en de yoghurt door een plantaardig alternatief (bijv. Alpro ongezoet) voor een volledig vegan burrito.</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="shopping-item-row">
-                <div class="info-cell-mobile">
-                    <div class="product-name">Eiwit</div>
-                    <div class="product-details">
-                        <span>±35–38 g</span>
-                    </div>
-                </div>
+
+            <div class="progress-container">
+                <div class="progress-fill" style="width: 100%"></div>
             </div>
-            
-            <div class="shopping-item-row">
-                <div class="info-cell-mobile">
-                    <div class="product-name">Koolhydraten</div>
-                    <div class="product-details">
-                        <span>±65 g</span>
-                    </div>
-                </div>
+            <div class="progress-stats">
+                <div class="progress-start">Start</div>
+                <div class="progress-end">Klaar!</div>
             </div>
-            
-            <div class="shopping-item-row">
-                <div class="info-cell-mobile">
-                    <div class="product-name">Vet</div>
-                    <div class="product-details">
-                        <span>±22 g</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="shopping-item-row">
-                <div class="info-cell-mobile">
-                    <div class="product-name">Vezels</div>
-                    <div class="product-details">
-                        <span>±7–8 g</span>
-                    </div>
-                </div>
-            </div>
-            
-            <p style="margin-top: 15px;">Deze waarden zijn inclusief ½ ei en 15 g yoghurtsaus per burrito.</p>
-            <p>Wil je volledig vegan? Vervang ei door extra bonen en de yoghurt door een plantaardig alternatief (bijv. Alpro ongezoet).</p>
         </section>
-        
-        <div class="progress-container">
-            <div class="progress-title">Voortgang recept</div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-        </div>
     </div>
     
-    <button class="dark-mode-toggle" id="dark-mode-toggle">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-        </svg>
-    </button>
+    <div class="toggle-container">
+        <button class="toggle-button" id="print-button">
+            <i class="fas fa-print"></i>
+        </button>
+        <button class="toggle-button" id="dark-mode-toggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
     
     <script>
         // Navigatie tussen secties
@@ -1137,56 +1275,56 @@
         });
         
         // Checkbox functionaliteit voor boodschappenlijst
-        document.querySelectorAll('.shopping-checkbox').forEach(checkbox => {
+        document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', (e) => {
-                const row = e.target.closest('.shopping-item-row');
+                const item = e.target.closest('.ingredient-item');
                 
                 if (e.target.checked) {
-                    row.querySelector('.product-name').classList.add('checked');
+                    item.classList.add('checked');
                 } else {
-                    row.querySelector('.product-name').classList.remove('checked');
+                    item.classList.remove('checked');
                 }
                 
                 // Sla status op in localStorage
-                saveShoppingListState();
+                saveIngredientsState();
             });
         });
         
         // Opslaan van boodschappenlijst status
-        function saveShoppingListState() {
+        function saveIngredientsState() {
             const items = [];
-            document.querySelectorAll('.shopping-checkbox').forEach((checkbox, index) => {
+            document.querySelectorAll('.ingredient-checkbox').forEach((checkbox, index) => {
                 items.push({
                     index,
                     checked: checkbox.checked
                 });
             });
-            localStorage.setItem('shopping-list-state', JSON.stringify(items));
+            localStorage.setItem('tofu-burrito-ingredients', JSON.stringify(items));
         }
         
         // Laden van boodschappenlijst status
-        function loadShoppingListState() {
-            const savedState = localStorage.getItem('shopping-list-state');
+        function loadIngredientsState() {
+            const savedState = localStorage.getItem('tofu-burrito-ingredients');
             if (savedState) {
                 try {
                     const items = JSON.parse(savedState);
-                    const checkboxes = document.querySelectorAll('.shopping-checkbox');
+                    const checkboxes = document.querySelectorAll('.ingredient-checkbox');
                     
                     items.forEach(item => {
                         if (checkboxes[item.index]) {
                             checkboxes[item.index].checked = item.checked;
                             
                             if (item.checked) {
-                                const row = checkboxes[item.index].closest('.shopping-item-row');
-                                if (row) {
-                                    row.querySelector('.product-name').classList.add('checked');
+                                const ingredientItem = checkboxes[item.index].closest('.ingredient-item');
+                                if (ingredientItem) {
+                                    ingredientItem.classList.add('checked');
                                 }
                             }
                         }
                     });
                 } catch (e) {
-                    console.log('Fout bij laden van boodschappenlijst:', e);
-                    localStorage.removeItem('shopping-list-state');
+                    console.log('Fout bij laden van ingrediënten:', e);
+                    localStorage.removeItem('tofu-burrito-ingredients');
                 }
             }
         }
@@ -1210,8 +1348,8 @@
                     }
                     
                     // Start nieuwe timer
-                    if (button.textContent === 'Start Timer') {
-                        button.textContent = 'Pauze';
+                    if (button.textContent.includes('Start')) {
+                        button.innerHTML = '<i class="fas fa-pause"></i>&nbsp;Pauze';
                         button.dataset.status = 'running';
                         
                         window['timer' + index] = setInterval(() => {
@@ -1220,43 +1358,23 @@
                             
                             if (totalSeconds <= 0) {
                                 clearInterval(window['timer' + index]);
-                                button.textContent = 'Start Timer';
+                                button.innerHTML = '<i class="fas fa-play"></i>&nbsp;Start Timer';
                                 button.dataset.status = 'stopped';
                                 
-                                // Notificatie
-                                if ('Notification' in window && Notification.permission === 'granted') {
-                                    try {
-                                        new Notification('Timer voltooid!', {
-                                            body: `Je ${minutes} minuten timer is klaar.`
-                                        });
-                                    } catch (e) {
-                                        console.log('Notificatiefout:', e);
-                                    }
-                                }
+                                // Toon een eenvoudige melding wanneer de timer afloopt
+                                displayElement.style.color = 'var(--accent)';
+                                displayElement.style.fontWeight = '800';
                                 
-                                // Tril de telefoon als het kan
-                                if ('vibrate' in navigator) {
-                                    try {
-                                        navigator.vibrate([200, 100, 200]);
-                                    } catch (e) {
-                                        console.log('Vibrate fout:', e);
-                                    }
-                                }
-                                
-                                // Geluid afspelen
-                                try {
-                                    const audio = new Audio();
-                                    audio.src = "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLXrM7tiwTw0Wl+38+8d9GwFAlezr458nAFCq4sorrVAOPrvNY0J2YRhNt+bNX0EbBZP/4Fs0DRCy//q2XBEBwfrrjzwMEbH/9J07CxC0//GZNQ4Stv/vjzMPE7T/8o40DROz//KNNQ0Tsv/0jDQNE7P/9IszDRO0//OJMA0Ttf/yhzAOE7b/8ocwDRK2//OIMA4Rtf/zhzMPEbX/84U0DxC1//SENBAQtP/1gzQQELX/9IIzERC2//WDMxAP9//1hDUPDvf/9oY2Dgz3//eINw0L+P/2iToJCPn/94w7CAf6//iPPgUE+v/6k0MBAf7//ppLAP7//p5RAf3//ptTAvr/+JlXA/j/9JlcBPf/8JphBvb/7JxlCPP/6Z5pCvL/5KBvDPH/4KF0EvL/26R5GfP/16eCHvL/06yGJPL/z7CLKvL/zLWRMPP/ybmWNvT/xrycPPX/wMCiQvb/vMSnSPf/uMmtT/j/tM2zVvn/sNG4XPr/rNS+Yvv/qdjDaPz/ptvIbv3/o97Nc/7/oeLSef//n+XXf///nOrchP//mu7fiP//mfHjjf//mPTmkf//lvfpl///lvrsmv//lfzun///lP3xov//lv7zo///l/30pP//l/72pt//mP33p+3/mf74qfv/mf75qv//mvv6rf//nPn7r///nvf9sf//oPT+s///ovL/tv//pO///Lj//6bp/P26//+n5Pr+vP//qd74/r7//6vY9v/B//+t0fL+w///r8ru/sb//7HF6v7I//+zvOb+yv//tbXi/s3//7et3v7P//+6pdj+0v//vJ3U/tX//76Wz/7Y//+/j8v+2///wYnG/t3//8ODwv7g///FfL7+4v//x3W5/uX//8litP7o///LW7D+6v//zVSs/u3//85Np/7v///QRqP+8v//0EGf/vT//9E7m/73///SOJf++f//0jOS/vz//9Mwjv7+///TLYH+/v//1Sl7/v///9Ujdv7////WH3H+////1hpt/v///9cWaf7////XEmX+////2A5h/v///9gKXf7////ZCFr+////2QRW/v///9oAU/7////bAE/+////2wBL/v///9wASP7////dAET+////3QBB/v///94APv7////fADv+////3wA3/v///+AAM/7////gADD+////4QAt/v///+IAKP7////iACV+////4wAi/v///+QAHv7////kABv+////5AAY/v///+UAFf7////mABL+////5gAP/v///+cAC/7////nABj+////6AAV/v///+gAEv7////pAA/+////6QAM/v///+oACP7////qAAX+////6wAC/v///+sAAP7////sAQb+////7QIN/v///+4DFP7////uBBv+////7wUi/v///+8GKf7////wBy/+////8Qc2/v///+8IQ/7////uCVD+////7Qpf/v///+wMbv7////rDX3+////6g6N/v///+kPnv7////oEK7+////5xG//v///+YS0P7////lE+H+////5BTx/v///+MV//7////iFv/+////4Rf//v///+AY//7////fGf/+////3hr//v///90a//7////cG//+////2xz//v///9od//7////ZHv/+////2B///v///9cg//7////WIf/+////1SL//v///9Qj//7////tKGL+////5Slw/v///9wqgP7////UK5j+////zCu2/v///8Mr0v7////aLuf+////2i/5/v///9owC/7////ZMYL9////2DKl/P///9czyvv////VNPH5////1DYa+P///9M3RPb////SOHDz////0DnA8P///847G+7////LPYO4////yEAHrP///8VCWJ/////gRbST/////Ufo/f////5JM/z/////Sk/7/////kuD+f////9M0ff/////Th32/////1AI9P////9ROvL/////Umvw/////1Oe7v////9U0uz/////Vi/q/////1dn6P////9Ymer/////WdXo/////1sQ5/////9cS+X/////XYXk/////17B4v////9f/OH/////";
-                                    audio.play().catch(e => console.log('Audiofout:', e));
-                                } catch (e) {
-                                    console.log('Algemene audiofout:', e);
-                                }
+                                setTimeout(() => {
+                                    displayElement.style.color = '';
+                                    displayElement.style.fontWeight = '';
+                                }, 3000);
                             }
                         }, 1000);
                     } else {
                         // Pauzeer timer
                         clearInterval(window['timer' + index]);
-                        button.textContent = 'Start Timer';
+                        button.innerHTML = '<i class="fas fa-play"></i>&nbsp;Start Timer';
                         button.dataset.status = 'stopped';
                     }
                 });
@@ -1278,7 +1396,7 @@
             
             if (activeIndex !== -1) {
                 const progress = (activeIndex / (sections.length - 1)) * 100;
-                document.getElementById('progress-fill').style.width = `${progress}%`;
+                document.querySelector('#boodschappen .progress-fill').style.width = `${progress}%`;
             }
         }
         
@@ -1290,12 +1408,27 @@
         // Dark mode toggle
         document.getElementById('dark-mode-toggle').addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
-            localStorage.setItem('dark-mode', document.body.classList.contains('dark-mode'));
+            localStorage.setItem('tofu-burrito-dark-mode', document.body.classList.contains('dark-mode'));
+            
+            // Update het icoon
+            const icon = document.querySelector('#dark-mode-toggle i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
         });
         
         // Laad dark mode voorkeur
-        if (localStorage.getItem('dark-mode') === 'true') {
-            document.body.classList.add('dark-mode');
+        function loadDarkMode() {
+            if (localStorage.getItem('tofu-burrito-dark-mode') === 'true') {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('#dark-mode-toggle i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
         }
         
         // Portie berekening
@@ -1320,41 +1453,40 @@
             }
             
             // Update alle hoeveelheden
-            document.querySelectorAll('.product-details span:first-child').forEach(cell => {
-                const originalText = cell.getAttribute('data-original') || cell.textContent;
+            document.querySelectorAll('.ingredient-amount').forEach(element => {
+                const originalText = element.getAttribute('data-original') || element.textContent;
                 
                 // Sla de originele tekst op als het nog niet bestaat
-                if (!cell.getAttribute('data-original')) {
-                    cell.setAttribute('data-original', originalText);
+                if (!element.getAttribute('data-original')) {
+                    element.setAttribute('data-original', originalText);
                 }
                 
                 // Update de tekst alleen als het een hoeveelheid bevat
                 if (/\d+/.test(originalText)) {
-                    cell.textContent = updateQuantity(originalText, ratio);
+                    element.textContent = updateQuantity(originalText, ratio);
                 }
             });
             
-            // Update titel van boodschappenlijst
-            document.querySelector('#boodschappen > p').textContent = `Voor ${newPortionCount} tofu-burrito's van ±700 kcal`;
+            // Update recept meta
+            document.querySelector('.recipe-meta-item:first-child span').textContent = `Porties: ${newPortionCount} burrito's`;
+            
+            // Update boodschappenlijst titel
+            document.querySelector('#boodschappen p').textContent = `Voor ${newPortionCount} tofu-burrito's van ±700 kcal`;
         });
         
         // Initialisatie
         document.addEventListener('DOMContentLoaded', () => {
-            // iOS checkboxes fix
+            loadIngredientsState();
+            setupTimers();
+            updateProgress();
+            loadDarkMode();
+            
+            // iOS touch devices fix
             if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-                document.querySelectorAll('.shopping-checkbox').forEach(checkbox => {
+                document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
                     checkbox.style.width = '30px';
                     checkbox.style.height = '30px';
                 });
-            }
-            
-            loadShoppingListState();
-            setupTimers();
-            updateProgress();
-            
-            // Vraag toestemming voor notificaties op desktop
-            if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-                Notification.requestPermission();
             }
         });
     </script>
