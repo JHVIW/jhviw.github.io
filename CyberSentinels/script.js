@@ -373,12 +373,45 @@ class DataStore {
      */
     constructor(pobjEventManager) {
         this.#m_objEventManager = pobjEventManager;
+        
+        // Initialiseer alle datastores met standaardwaarden
         this.#m_objData = {
-            threatIntelligence: {},
-            osintData: {},
-            vulnerabilityData: {},
-            cryptoData: {},
-            socialEngineeringData: {}
+            threatIntelligence: {
+                activeThreatCount: 0,
+                attackCount: 0,
+                securityScore: 0,
+                recentAttacks: [],
+                threatMap: { nodes: [], edges: [] },
+                threatActors: [],
+                attackVectors: []
+            },
+            osintData: {
+                domainRecords: {},
+                socialProfiles: [],
+                emailData: {},
+                locationData: {}
+            },
+            vulnerabilityData: {
+                totalVulnerabilities: 0,
+                severityCounts: {
+                    critical: 0,
+                    high: 0,
+                    medium: 0,
+                    low: 0
+                },
+                recentVulnerabilities: [],
+                vulnerabilityTypes: []
+            },
+            cryptoData: {
+                algorithms: {
+                    symmetric: [],
+                    asymmetric: [],
+                    hash: []
+                }
+            },
+            socialEngineeringData: {
+                scenarios: []
+            }
         };
     }
     
@@ -3416,70 +3449,93 @@ class VulnerabilityModule extends BaseModule {
         this.#UpdateVulnerabilityVisualization(pobjResults);
     }
     
-    /**
+        /**
      * @method #InitializeSeverityChart
-     * @description Initialiseert de severity chart
+     * @description Initialiseert de severity chart met veilige null checks
      * @private
      */
     #InitializeSeverityChart() {
-        const objChartElement = document.getElementById("ctlVulnSeverityChart");
-        if (!objChartElement) return;
-        
-        const objData = this.GetData();
-        const objSeverityCounts = objData.vulnerabilityData?.severityCounts || {
-            critical: 0,
-            high: 0,
-            medium: 0,
-            low: 0
-        };
-        
-        // Creëer chart met ChartJS
-        this.#m_objVulnChart = new Chart(objChartElement, {
-            type: 'doughnut',
-            data: {
-                labels: ['Critical', 'High', 'Medium', 'Low'],
-                datasets: [{
-                    data: [
-                        objSeverityCounts.critical,
-                        objSeverityCounts.high,
-                        objSeverityCounts.medium,
-                        objSeverityCounts.low
-                    ],
-                    backgroundColor: [
-                        'var(--color-severity-critical)',
-                        'var(--color-severity-high)',
-                        'var(--color-severity-medium)',
-                        'var(--color-severity-low)'
-                    ],
-                    borderWidth: 1,
-                    borderColor: 'var(--color-bg-secondary)'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            color: 'var(--color-text-primary)',
-                            font: {
-                                size: 11
-                            }
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'var(--color-tooltip-bg)',
-                        titleColor: 'var(--color-text-primary)',
-                        bodyColor: 'var(--color-text-primary)',
-                        borderColor: 'var(--color-border)',
+        try {
+            // Controleer of chart element bestaat
+            const objChartElement = document.getElementById("ctlVulnSeverityChart");
+            if (!objChartElement) {
+                console.warn("Chart element niet gevonden: ctlVulnSeverityChart");
+                return; // Stop initialisatie als element ontbreekt
+            }
+            
+            // Veilig ophalen van data met fallbacks voor null/undefined
+            const objData = this.GetData() || {};
+            const objVulnData = objData.vulnerabilityData || {};
+            const objSeverityCounts = objVulnData.severityCounts || {
+                critical: 0,
+                high: 0,
+                medium: 0,
+                low: 0
+            };
+            
+            // Log voor debug doeleinden
+            console.log("Initialiseren severity chart met data:", objSeverityCounts);
+            
+            // Creëer chart met ChartJS
+            this.#m_objVulnChart = new Chart(objChartElement, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Critical', 'High', 'Medium', 'Low'],
+                    datasets: [{
+                        data: [
+                            objSeverityCounts.critical,
+                            objSeverityCounts.high,
+                            objSeverityCounts.medium,
+                            objSeverityCounts.low
+                        ],
+                        backgroundColor: [
+                            'var(--color-severity-critical)',
+                            'var(--color-severity-high)',
+                            'var(--color-severity-medium)',
+                            'var(--color-severity-low)'
+                        ],
                         borderWidth: 1,
-                        padding: 10,
-                        displayColors: true
+                        borderColor: 'var(--color-bg-secondary)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: 'var(--color-text-primary)',
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'var(--color-tooltip-bg)',
+                            titleColor: 'var(--color-text-primary)',
+                            bodyColor: 'var(--color-text-primary)',
+                            borderColor: 'var(--color-border)',
+                            borderWidth: 1,
+                            padding: 10,
+                            displayColors: true
+                        }
                     }
                 }
-            }
-        });
+            });
+            
+            console.log("Severity chart succesvol geïnitialiseerd");
+        } catch (objError) {
+            console.error("Fout bij initialiseren severity chart:", objError);
+            this.#m_objVulnChart = null; // Zorg dat we geen verwijzing naar half-geïnitialiseerde chart behouden
+            
+            // Publiceer error event zodat andere componenten hierop kunnen reageren
+            this.PublishEvent("error", {
+                message: "Kon severity chart niet initialiseren",
+                details: objError.message,
+                module: "vulnerabilityEngine"
+            });
+        }
     }
     
     /**
