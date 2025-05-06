@@ -44,7 +44,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('/api/placeholder/800/400') center/cover;
+            background: #e67e22;
             opacity: 0.2;
             z-index: 0;
         }
@@ -1168,21 +1168,26 @@
         function loadShoppingListState() {
             const savedState = localStorage.getItem('shopping-list-state');
             if (savedState) {
-                const items = JSON.parse(savedState);
-                const checkboxes = document.querySelectorAll('.shopping-checkbox');
-                
-                items.forEach(item => {
-                    if (checkboxes[item.index]) {
-                        checkboxes[item.index].checked = item.checked;
-                        
-                        if (item.checked) {
-                            const row = checkboxes[item.index].closest('.shopping-item-row');
-                            if (row) {
-                                row.querySelector('.product-name').classList.add('checked');
+                try {
+                    const items = JSON.parse(savedState);
+                    const checkboxes = document.querySelectorAll('.shopping-checkbox');
+                    
+                    items.forEach(item => {
+                        if (checkboxes[item.index]) {
+                            checkboxes[item.index].checked = item.checked;
+                            
+                            if (item.checked) {
+                                const row = checkboxes[item.index].closest('.shopping-item-row');
+                                if (row) {
+                                    row.querySelector('.product-name').classList.add('checked');
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                } catch (e) {
+                    console.log('Fout bij laden van boodschappenlijst:', e);
+                    localStorage.removeItem('shopping-list-state');
+                }
             }
         }
         
@@ -1220,22 +1225,31 @@
                                 
                                 // Notificatie
                                 if ('Notification' in window && Notification.permission === 'granted') {
-                                    new Notification('Timer voltooid!', {
-                                        body: `Je ${minutes} minuten timer is klaar.`
-                                    });
+                                    try {
+                                        new Notification('Timer voltooid!', {
+                                            body: `Je ${minutes} minuten timer is klaar.`
+                                        });
+                                    } catch (e) {
+                                        console.log('Notificatiefout:', e);
+                                    }
                                 }
                                 
                                 // Tril de telefoon als het kan
                                 if ('vibrate' in navigator) {
-                                    navigator.vibrate([200, 100, 200]);
+                                    try {
+                                        navigator.vibrate([200, 100, 200]);
+                                    } catch (e) {
+                                        console.log('Vibrate fout:', e);
+                                    }
                                 }
                                 
                                 // Geluid afspelen
                                 try {
-                                    const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLXrM7tiwTw0Wl+38+8d9GwFAlezr458nAFCq4sorrVAOPrvNY0J2YRhNt+bNX0EbBZP/4Fs0DRCy//q2XBEBwfrrjzwMEbH/9J07CxC0//GZNQ4Stv/vjzMPE7T/8o40DROz//KNNQ0Tsv/0jDQNE7P/9IszDRO0//OJMA0Ttf/yhzAOE7b/8ocwDRK2//OIMA4Rtf/zhzMPEbX/84U0DxC1//SENBAQtP/1gzQQELX/9IIzERC2//WDMxAP9//1hDUPDvf/9oY2Dgz3//eINw0L+P/2iToJCPn/94w7CAf6//iPPgUE+v/6k0MBAf7//ppLAP7//p5RAf3//ptTAvr/+JlXA/j/9JlcBPf/8JphBvb/7JxlCPP/6Z5pCvL/5KBvDPH/4KF0EvL/26R5GfP/16eCHvL/06yGJPL/z7CLKvL/zLWRMPP/ybmWNvT/xrycPPX/wMCiQvb/vMSnSPf/uMmtT/j/tM2zVvn/sNG4XPr/rNS+Yvv/qdjDaPz/ptvIbv3/o97Nc/7/oeLSef//n+XXf///nOrchP//mu7fiP//mfHjjf//mPTmkf//lvfpl///lvrsmv//lfzun///lP3xov//lv7zo///l/30pP//l/72pt//mP33p+3/mf74qfv/mf75qv//mvv6rf//nPn7r///nvf9sf//oPT+s///ovL/tv//pO///Lj//6bp/P26//+n5Pr+vP//qd74/r7//6vY9v/B//+t0fL+w///r8ru/sb//7HF6v7I//+zvOb+yv//tbXi/s3//7et3v7P//+6pdj+0v//vJ3U/tX//76Wz/7Y//+/j8v+2///wYnG/t3//8ODwv7g///FfL7+4v//x3W5/uX//8litP7o///LW7D+6v//zVSs/u3//85Np/7v///QRqP+8v//0EGf/vT//9E7m/73///SOJf++f//0jOS/vz//9Mwjv7+///TLYH+/v//1Sl7/v///9Ujdv7////WH3H+////1hpt/v///9cWaf7////XEmX+////2A5h/v///9gKXf7////ZCFr+////2QRW/v///9oAU/7////bAE/+////2wBL/v///9wASP7////dAET+////3QBB/v///94APv7////fADv+////3wA3/v///+AAM/7////gADD+////4QAt/v///+IAKP7////iACV+////4wAi/v///+QAHv7////kABv+////5AAY/v///+UAFf7////mABL+////5gAP/v///+cAC/7////nABj+////6AAV/v///+gAEv7////pAA/+////6QAM/v///+oACP7////qAAX+////6wAC/v///+sAAP7////sAQb+////7QIN/v///+4DFP7////uBBv+////7wUi/v///+8GKf7////wBy/+////8Qc2/v///+8IQ/7////uCVD+////7Qpf/v///+wMbv7////rDX3+////6g6N/v///+kPnv7////oEK7+////5xG//v///+YS0P7////lE+H+////5BTx/v///+MV//7////iFv/+////4Rf//v///+AY//7////fGf/+////3hr//v///90a//7////cG//+////2xz//v///9od//7////ZHv/+////2B///v///9cg//7////WIf/+////1SL//v///9Qj//7////tKGL+////5Slw/v///9wqgP7////UK5j+////zCu2/v///8Mr0v7////aLuf+////2i/5/v///9owC/7////ZMYL9////2DKl/P///9czyvv////VNPH5////1DYa+P///9M3RPb////SOHDz////0DnA8P///847G+7////LPYO4////yEAHrP///8VCWJ/////gRbST/////Ufo/f////5JM/z/////Sk/7/////kuD+f////9M0ff/////Th32/////1AI9P////9ROvL/////Umvw/////1Oe7v////9U0uz/////Vi/q/////1dn6P////9Ymer/////WdXo/////1sQ5/////9cS+X/////XYXk/////17B4v////9f/OH/////</audio>);
-                                    audio.play();
+                                    const audio = new Audio();
+                                    audio.src = "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLXrM7tiwTw0Wl+38+8d9GwFAlezr458nAFCq4sorrVAOPrvNY0J2YRhNt+bNX0EbBZP/4Fs0DRCy//q2XBEBwfrrjzwMEbH/9J07CxC0//GZNQ4Stv/vjzMPE7T/8o40DROz//KNNQ0Tsv/0jDQNE7P/9IszDRO0//OJMA0Ttf/yhzAOE7b/8ocwDRK2//OIMA4Rtf/zhzMPEbX/84U0DxC1//SENBAQtP/1gzQQELX/9IIzERC2//WDMxAP9//1hDUPDvf/9oY2Dgz3//eINw0L+P/2iToJCPn/94w7CAf6//iPPgUE+v/6k0MBAf7//ppLAP7//p5RAf3//ptTAvr/+JlXA/j/9JlcBPf/8JphBvb/7JxlCPP/6Z5pCvL/5KBvDPH/4KF0EvL/26R5GfP/16eCHvL/06yGJPL/z7CLKvL/zLWRMPP/ybmWNvT/xrycPPX/wMCiQvb/vMSnSPf/uMmtT/j/tM2zVvn/sNG4XPr/rNS+Yvv/qdjDaPz/ptvIbv3/o97Nc/7/oeLSef//n+XXf///nOrchP//mu7fiP//mfHjjf//mPTmkf//lvfpl///lvrsmv//lfzun///lP3xov//lv7zo///l/30pP//l/72pt//mP33p+3/mf74qfv/mf75qv//mvv6rf//nPn7r///nvf9sf//oPT+s///ovL/tv//pO///Lj//6bp/P26//+n5Pr+vP//qd74/r7//6vY9v/B//+t0fL+w///r8ru/sb//7HF6v7I//+zvOb+yv//tbXi/s3//7et3v7P//+6pdj+0v//vJ3U/tX//76Wz/7Y//+/j8v+2///wYnG/t3//8ODwv7g///FfL7+4v//x3W5/uX//8litP7o///LW7D+6v//zVSs/u3//85Np/7v///QRqP+8v//0EGf/vT//9E7m/73///SOJf++f//0jOS/vz//9Mwjv7+///TLYH+/v//1Sl7/v///9Ujdv7////WH3H+////1hpt/v///9cWaf7////XEmX+////2A5h/v///9gKXf7////ZCFr+////2QRW/v///9oAU/7////bAE/+////2wBL/v///9wASP7////dAET+////3QBB/v///94APv7////fADv+////3wA3/v///+AAM/7////gADD+////4QAt/v///+IAKP7////iACV+////4wAi/v///+QAHv7////kABv+////5AAY/v///+UAFf7////mABL+////5gAP/v///+cAC/7////nABj+////6AAV/v///+gAEv7////pAA/+////6QAM/v///+oACP7////qAAX+////6wAC/v///+sAAP7////sAQb+////7QIN/v///+4DFP7////uBBv+////7wUi/v///+8GKf7////wBy/+////8Qc2/v///+8IQ/7////uCVD+////7Qpf/v///+wMbv7////rDX3+////6g6N/v///+kPnv7////oEK7+////5xG//v///+YS0P7////lE+H+////5BTx/v///+MV//7////iFv/+////4Rf//v///+AY//7////fGf/+////3hr//v///90a//7////cG//+////2xz//v///9od//7////ZHv/+////2B///v///9cg//7////WIf/+////1SL//v///9Qj//7////tKGL+////5Slw/v///9wqgP7////UK5j+////zCu2/v///8Mr0v7////aLuf+////2i/5/v///9owC/7////ZMYL9////2DKl/P///9czyvv////VNPH5////1DYa+P///9M3RPb////SOHDz////0DnA8P///847G+7////LPYO4////yEAHrP///8VCWJ/////gRbST/////Ufo/f////5JM/z/////Sk/7/////kuD+f////9M0ff/////Th32/////1AI9P////9ROvL/////Umvw/////1Oe7v////9U0uz/////Vi/q/////1dn6P////9Ymer/////WdXo/////1sQ5/////9cS+X/////XYXk/////17B4v////9f/OH/////";
+                                    audio.play().catch(e => console.log('Audiofout:', e));
                                 } catch (e) {
-                                    console.log('Audioprobleem: ' + e);
+                                    console.log('Algemene audiofout:', e);
                                 }
                             }
                         }, 1000);
