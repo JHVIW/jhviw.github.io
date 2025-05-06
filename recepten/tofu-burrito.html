@@ -627,26 +627,149 @@
             }
         }
 
+        /* Geoptimaliseerde print styling */
+        .print-visible {
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        .preparing-print .ingredient-item.print-checked .ingredient-name,
+        .preparing-print .ingredient-item.print-checked .ingredient-amount {
+            text-decoration: line-through;
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
         @media print {
+            /* Verberg navigatie en interactieve elementen */
             .nav-container,
             .toggle-container,
-            .portion-control {
-                display: none;
+            .portion-control,
+            .progress-container,
+            .progress-fill,
+            .progress-stats,
+            .timer-container,
+            .ingredient-checkbox {
+                display: none !important;
             }
-
+            
+            /* Toon alle secties */
             .content-section {
-                display: block;
+                display: block !important;
+                opacity: 1 !important;
+                height: auto !important;
+                margin-bottom: 2cm;
                 page-break-after: always;
             }
-
+            
+            /* Mooie headers voor elke sectie */
+            .card-title {
+                color: var(--primary) !important;
+                font-size: 24px !important;
+                border-bottom: 2px solid var(--primary);
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+            
+            /* Mooie layout voor de kaarten */
             .card {
                 box-shadow: none;
-                border: 1px solid #ddd;
+                border: none;
+                padding: 0;
+                margin-bottom: 1cm;
+                page-break-inside: avoid;
             }
-
+            
+            /* Achtergrond en kleurenschema aanpassen */
             body {
-                background-color: white;
-                color: black;
+                background-color: white !important;
+                color: black !important;
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+            
+            /* Receptheader verbeteren voor print */
+            .recipe-header {
+                height: auto !important;
+                background-color: var(--primary) !important;
+                padding: 1.5cm 1cm 1cm !important;
+                margin-bottom: 1cm;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            .recipe-title {
+                font-size: 36px !important;
+            }
+            
+            /* Kleinere marges en optimale paginagrootte */
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+            
+            /* Ingrediëntenlayout voor print optimaliseren */
+            .ingredient-list {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5cm;
+            }
+            
+            .ingredient-item {
+                padding: 5px 0;
+                border: none;
+                border-bottom: 1px dotted #ddd;
+            }
+            
+            /* Verwijder checkbox ruimte */
+            .ingredient-content {
+                margin-left: 0;
+                padding-left: 0;
+            }
+            
+            /* Maak stappen mooier voor print */
+            .step-item {
+                margin-bottom: 15px;
+                page-break-inside: avoid;
+            }
+            
+            /* Zorg dat afbeeldingen en icons goed worden afgedrukt */
+            img, svg, i {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            /* Voeg automatische paginanummering toe */
+            .card::after {
+                content: counter(page);
+                position: absolute;
+                bottom: 5mm;
+                right: 5mm;
+                font-size: 8pt;
+                color: #999;
+            }
+            
+            /* Voeg een mooie footer toe aan elke pagina */
+            @page {
+                @bottom-center {
+                    content: "Tofu-Burrito Recept • www.jouwwebsite.nl";
+                    font-size: 8pt;
+                    color: #999;
+                }
+            }
+            
+            /* Aangevinkte items visualiseren in print */
+            .ingredient-item.print-checked .ingredient-name,
+            .ingredient-item.print-checked .ingredient-amount {
+                text-decoration: line-through;
+                color: #999 !important;
+                opacity: 0.7;
+            }
+            
+            .ingredient-item.print-checked::before {
+                content: "✓";
+                margin-right: 5px;
+                color: var(--primary);
             }
         }
     </style>
@@ -1402,7 +1525,35 @@
         
         // Print functionaliteit
         document.getElementById('print-button').addEventListener('click', () => {
-            window.print();
+            // Voeg een tijdelijke print-class toe aan de body
+            document.body.classList.add('preparing-print');
+            
+            // Toon alle secties voor het printen
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.add('print-visible');
+            });
+            
+            // Stel ingrediënten-checkboxes goed in voor print
+            document.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkbox.closest('.ingredient-item').classList.add('print-checked');
+                } else {
+                    checkbox.closest('.ingredient-item').classList.remove('print-checked');
+                }
+            });
+            
+            // Geef de browser tijd om de styling aan te passen voordat we printen
+            setTimeout(() => {
+                window.print();
+                
+                // Clean up na het printen
+                setTimeout(() => {
+                    document.body.classList.remove('preparing-print');
+                    document.querySelectorAll('.content-section').forEach(section => {
+                        section.classList.remove('print-visible');
+                    });
+                }, 1000);
+            }, 300);
         });
         
         // Dark mode toggle
