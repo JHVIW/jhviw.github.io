@@ -414,36 +414,82 @@ class DataStore {
             }
         };
     }
-    
+
     /**
+     * @method EnsureDataStructure
+     * @description Verzekert dat alle verwachte data objecten bestaan
+     * @private
+     */
+    #EnsureDataStructure() {
+        // Zorg dat alle hoofdcategorieën bestaan
+        if (!this.#m_objData.threatIntelligence) this.#m_objData.threatIntelligence = {};
+        if (!this.#m_objData.osintData) this.#m_objData.osintData = {};
+        if (!this.#m_objData.vulnerabilityData) this.#m_objData.vulnerabilityData = {};
+        if (!this.#m_objData.cryptoData) this.#m_objData.cryptoData = {};
+        if (!this.#m_objData.socialEngineeringData) this.#m_objData.socialEngineeringData = {};
+        
+        // Zorg dat vulnerability data subcategorieën bestaan
+        if (!this.#m_objData.vulnerabilityData.severityCounts) {
+            this.#m_objData.vulnerabilityData.severityCounts = {
+                critical: 0,
+                high: 0,
+                medium: 0,
+                low: 0
+            };
+        }
+        
+        if (!this.#m_objData.vulnerabilityData.recentVulnerabilities) {
+            this.#m_objData.vulnerabilityData.recentVulnerabilities = [];
+        }
+        
+        // Zorg dat threat intelligence subcategorieën bestaan
+        if (!this.#m_objData.threatIntelligence.attackVectors) {
+            this.#m_objData.threatIntelligence.attackVectors = [];
+        }
+    }
+    
+       /**
      * @method LoadInitialData
      * @description Laadt initiële data voor de applicatie
      * @returns {Promise<void>}
      */
     async LoadInitialData() {
-        // Simuleer netwerkvertraging voor demo
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Laad data vanaf lokale functies voor demo
-        this.#LoadThreatIntelligenceData();
-        this.#LoadOsintData();
-        this.#LoadVulnerabilityData();
-        this.#LoadCryptoData();
-        this.#LoadSocialEngineeringData();
-        
-        // Publiceer data geladen event
-        this.#m_objEventManager.Publish("data:loaded", {
-            status: "success",
-            timestamp: new Date().toISOString()
-        });
-        
-        // Publiceer data update voor dashboard stats
-        this.#m_objEventManager.Publish("data:updated", {
-            activeThreatCount: this.#m_objData.threatIntelligence.activeThreatCount,
-            vulnerabilityCount: this.#m_objData.vulnerabilityData.totalVulnerabilities,
-            securityScore: this.#m_objData.threatIntelligence.securityScore,
-            attackCount: this.#m_objData.threatIntelligence.attackCount
-        });
+        try {
+            // Zorg dat datastructuur bestaat voordat we data laden
+            this.#EnsureDataStructure();
+            
+            // Simuleer netwerkvertraging voor demo
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Laad data vanaf lokale functies voor demo
+            this.#LoadThreatIntelligenceData();
+            this.#LoadOsintData();
+            this.#LoadVulnerabilityData();
+            this.#LoadCryptoData();
+            this.#LoadSocialEngineeringData();
+            
+            // Publiceer data geladen event
+            this.#m_objEventManager.Publish("data:loaded", {
+                status: "success",
+                timestamp: new Date().toISOString()
+            });
+            
+            // Publiceer data update voor dashboard stats
+            this.#m_objEventManager.Publish("data:updated", {
+                activeThreatCount: this.#m_objData.threatIntelligence.activeThreatCount,
+                vulnerabilityCount: this.#m_objData.vulnerabilityData.totalVulnerabilities,
+                securityScore: this.#m_objData.threatIntelligence.securityScore,
+                attackCount: this.#m_objData.threatIntelligence.attackCount
+            });
+        } catch (objError) {
+            console.error("Fout bij laden initiële data:", objError);
+            
+            // Publiceer error event
+            this.#m_objEventManager.Publish("data:error", {
+                message: "Kon initiële data niet laden",
+                details: objError.message
+            });
+        }
     }
     
     /**
@@ -2042,22 +2088,31 @@ class ThreatIntelligenceModule extends BaseModule {
         }
     }
     
-    /**
+       /**
      * @method #InitializeAttackVectorChart
-     * @description Initialiseert attack vector chart
+     * @description Initialiseert attack vector chart met robuuste error handling
      * @private
      */
     #InitializeAttackVectorChart() {
-        const objChartElement = document.getElementById("ctlAttackVectors");
-        if (!objChartElement) return;
-        
-        const objVectors = this.GetData().attackVectors;
-        if (!objVectors) return;
-        
-        // Gebruik Chart.js voor grafiek
-        this.#m_objAttackVectorChart = new Chart(objChartElement, {
-            type: 'doughnut',
-            data: {
+        try {
+            // Controleer of DOM element bestaat
+            const objChartElement = document.getElementById("ctlAttackVectors");
+            if (!objChartElement) {
+                console.warn("Chart element niet gevonden: ctlAttackVectors");
+                return; // Stop de initialisatie als het element niet bestaat
+            }
+            
+            // Controleer of vectors data beschikbaar is
+            const objData = this.GetData() || {};
+            const objVectors = objData.attackVectors || [];
+            
+            if (!objVectors || objVectors.length === 0) {
+                console.warn("Geen attack vectors data beschikbaar voor chart");
+                return; // Stop de initialisatie als er geen data is
+            }
+            
+            // Prepareer chart data en opties
+            const objChartData = {
                 labels: objVectors.map(item => item.name),
                 datasets: [{
                     data: objVectors.map(item => item.percentage),
@@ -2072,8 +2127,9 @@ class ThreatIntelligenceModule extends BaseModule {
                     borderWidth: 1,
                     borderColor: 'var(--color-bg-secondary)'
                 }]
-            },
-            options: {
+            };
+            
+            const objChartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
@@ -2101,8 +2157,34 @@ class ThreatIntelligenceModule extends BaseModule {
                         }
                     }
                 }
+            };
+            
+            // Controleer of canvasContext verkregen kan worden
+            const objContext = objChartElement.getContext ? objChartElement.getContext('2d') : null;
+            if (!objContext) {
+                console.error("Kon geen 2D context verkrijgen voor chart element");
+                return;
             }
-        });
+            
+            // Creëer chart
+            this.#m_objAttackVectorChart = new Chart(objChartElement, {
+                type: 'doughnut',
+                data: objChartData,
+                options: objChartOptions
+            });
+            
+            console.log("Attack Vector chart succesvol geïnitialiseerd");
+        } catch (objError) {
+            console.error("Fout bij initialiseren attack vector chart:", objError);
+            this.#m_objAttackVectorChart = null;
+            
+            // Publiceer error event
+            this.PublishEvent("error", {
+                message: "Kon attack vector chart niet initialiseren",
+                details: objError.message,
+                module: "threatIntelligence" 
+            });
+        }
     }
     
     /**
@@ -2250,6 +2332,7 @@ class OSINTLabModule extends BaseModule {
             });
         });
     }
+    
     
     /**
      * @method #SetupStartInvestigation
