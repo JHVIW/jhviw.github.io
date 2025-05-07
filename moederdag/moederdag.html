@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fijne Moederdag</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #f8c9d4;
+            --secondary: #f4a8b9;
+            --accent: #fff4f7;
+            --text: #333;
+        }
+        
+        body {
+            background-color: var(--accent);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .flower {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .card-content {
+            padding: 40px 30px;
+            line-height: 1.6;
+        }
+        
+        .message {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .signature {
+            text-align: right;
+            font-size: 1.3rem;
+            font-family: 'Brush Script MT', cursive;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .button:hover {
+            background-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            transform: scale(0);
+        }
+        
+
+        
+        @media (max-width: 600px) {
+            .card {
+                width: 95%;
+                max-width: 100%;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .card-header {
+                padding: 30px 15px;
+            }
+            
+            .card-content {
+                padding: 25px 20px;
+            }
+            
+            .message {
+                font-size: 1rem;
+            }
+            
+            .signature {
+                font-size: 1.2rem;
+            }
+            
+            .photo-placeholder {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <h1 class="title">Fijne Moederdag</h1>
+            <p class="subtitle">Voor de beste moeder</p>
+            
+            <!-- Flowers will be added via JS -->
+            <div class="hearts"></div>
+        </div>
+        
+        <div class="card-content">
+            <p class="message">
+                Lieve mama,<br><br>
+                Bedankt dat je Coraline en mij overal in steunt en helpt.
+                Ik waardeer alles wat je voor ons doet en ben je daar dankbaar voor.<br><br>
+                Fijne Moederdag!
+            </p>
+            
+
+            <p class="signature">Liefs,<br> Rick</p>
+            
+            <button class="button" id="surpriseButton">Klik hier</button>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize GSAP
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animation for title elements
+        gsap.to(".title", {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            delay: 0.5
+        });
+        
+        gsap.to(".subtitle", {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            delay: 0.8
+        });
+        
+        // Animation for content
+        gsap.to(".message", {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            delay: 1.2
+        });
+        
+        gsap.to(".photos", {
+            opacity: 1,
+            duration: 1,
+            delay: 1.5
+        });
+        
+        gsap.to(".signature", {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            delay: 1.8
+        });
+        
+        gsap.to(".button", {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            delay: 2
+        });
+        
+        // Create flowers for the header
+        function createFlowers() {
+            const colors = ['#f4a8b9', '#ffdae3', '#ffc2d4', '#ffb6c1', '#ffffff'];
+            const header = document.querySelector('.card-header');
+            const headerWidth = header.offsetWidth;
+            const headerHeight = header.offsetHeight;
+            
+            for (let i = 0; i < 12; i++) {
+                const flower = document.createElement('div');
+                flower.classList.add('flower');
+                
+                // Random position
+                const left = Math.random() * headerWidth;
+                const top = Math.random() * headerHeight;
+                const size = 10 + Math.random() * 15;
+                const delay = Math.random() * 3;
+                
+                flower.style.left = `${left}px`;
+                flower.style.top = `${top}px`;
+                flower.style.width = `${size}px`;
+                flower.style.height = `${size}px`;
+                flower.style.borderRadius = '50%';
+                flower.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                header.appendChild(flower);
+                
+                gsap.to(flower, {
+                    opacity: 0.7,
+                    scale: 1.2,
+                    duration: 1,
+                    delay: delay,
+                    repeat: -1,
+                    yoyo: true
+                });
+            }
+        }
+        
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.querySelector('.hearts');
+            const containerWidth = heartsContainer.offsetWidth;
+            const containerHeight = heartsContainer.offsetHeight;
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.fontSize = `${12 + Math.random() * 14}px`;
+                
+                // Random position
+                const left = Math.random() * containerWidth;
+                const top = Math.random() * containerHeight;
+                const delay = Math.random() * 5;
+                
+                heart.style.left = `${left}px`;
+                heart.style.top = `${top}px`;
+                
+                heartsContainer.appendChild(heart);
+                
+                gsap.to(heart, {
+                    scale: 1,
+                    opacity: 0.7,
+                    duration: 1,
+                    delay: delay
+                });
+                
+                gsap.to(heart, {
+                    y: -20 - Math.random() * 50,
+                    x: 10 - Math.random() * 20,
+                    rotation: -10 + Math.random() * 20,
+                    opacity: 0,
+                    duration: 10 + Math.random() * 15,
+                    delay: delay + 1,
+                    ease: "power1.inOut",
+                    repeat: -1
+                });
+            }
+        }
+        
+        // Surprise button functionality
+        document.getElementById('surpriseButton').addEventListener('click', function() {
+            // Create a confetti effect
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = ['#f4a8b9', '#ffdae3', '#ffc2d4', '#ffb6c1', '#ffffff'][Math.floor(Math.random() * 5)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.left = `${Math.random() * window.innerWidth}px`;
+                confetti.style.top = `${-30 - Math.random() * 100}px`;
+                confetti.style.zIndex = '9999';
+                document.body.appendChild(confetti);
+                
+                gsap.to(confetti, {
+                    y: window.innerHeight + 100,
+                    x: 200 - Math.random() * 400,
+                    rotation: Math.random() * 360,
+                    duration: 2 + Math.random() * 3,
+                    ease: "power1.out",
+                    onComplete: function() {
+                        document.body.removeChild(confetti);
+                    }
+                });
+            }
+            
+            // Show a sweet message
+            const message = "Jij bent de allerbeste!";
+            alert(message);
+        });
+        
+        // Initialize everything when the page loads
+        window.addEventListener('load', function() {
+            createFlowers();
+            createHearts();
+        });
+    </script>
+</body>
+</html>
