@@ -348,9 +348,10 @@
                 });
             }
             
-            // Show a sweet message
-            const message = "Jij bent de allerbeste!";
-            alert(message);
+            // Show a sweet message after a small delay to let confetti start first
+            setTimeout(function() {
+                alert("Jij bent de allerbeste!");
+            }, 200);
         });
         
         // Initialize everything when the page loads
