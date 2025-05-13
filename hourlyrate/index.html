@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hourly Rate Tracker</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #4f46e5;
+            --accent-color: #8b5cf6;
+            --text-color: #f8fafc;
+            --background-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --gradient-start: #6366f1;
+            --gradient-end: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15), transparent 70%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.025em;
+        }
+
+        .rate-input {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .rate-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        .rate-input input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.6);
+            color: #f8fafc;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .rate-input input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+        }
+
+        .rate-input span {
+            position: absolute;
+            top: 2.9rem;
+            left: 0.8rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .rate-input input {
+            padding-left: 2.5rem;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4), 0 2px 4px -2px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .clock-container {
+            text-align: center;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .clock-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .clock {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #f8fafc, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .data-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            transition-delay: 0.2s;
+        }
+
+        .data-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .data-card {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .data-card h3 {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-card p {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .earnings p {
+            color: #10b981;
+        }
+
+        .glow {
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, rgba(139, 92, 246, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(20px);
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .glow:nth-child(2) {
+            top: auto;
+            bottom: -150px;
+            left: auto;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.5) 0%, rgba(99, 102, 241, 0) 70%);
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(30px, 30px);
+            }
+        }
+
+        .reset-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            padding: 0.75rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .reset-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #f8fafc;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .clock {
+                font-size: 2rem;
+            }
+
+            .data-card p {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow"></div>
+    <div class="glow"></div>
+
+    <div class="container">
+        <h1>Hourly Rate Tracker</h1>
+        
+        <div class="rate-input">
+            <label for="hourly-rate">Your Hourly Rate</label>
+            <span>$</span>
+            <input type="number" id="hourly-rate" placeholder="0.00" min="0" step="0.01">
+        </div>
+
+        <button id="start-btn" class="btn">Start Tracking</button>
+        
+        <div id="clock-container" class="clock-container">
+            <div id="clock" class="clock">00:00:00</div>
+        </div>
+
+        <div id="data-container" class="data-container">
+            <div class="data-card time-elapsed">
+                <h3>Time Elapsed</h3>
+                <p id="elapsed">00:00:00</p>
+            </div>
+
+            <div class="data-card earnings">
+                <h3>Earnings</h3>
+                <p id="earnings">$0.00</p>
+            </div>
+        </div>
+
+        <button id="reset-btn" class="reset-btn hidden">Reset Tracker</button>
+    </div>
+
+    <script>
+        const hourlyRateInput = document.getElementById('hourly-rate');
+        const startBtn = document.getElementById('start-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const clockContainer = document.getElementById('clock-container');
+        const clockDisplay = document.getElementById('clock');
+        const dataContainer = document.getElementById('data-container');
+        const elapsedDisplay = document.getElementById('elapsed');
+        const earningsDisplay = document.getElementById('earnings');
+
+        let hourlyRate = 0;
+        let startTime = null;
+        let timerInterval = null;
+        let elapsedSeconds = 0;
+
+        // Format time as HH:MM:SS
+        function formatTime(date) {
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const seconds = date.getSeconds().toString().padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Format elapsed time as HH:MM:SS
+        function formatElapsed(seconds) {
+            const hours = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const minutes = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const secs = (seconds % 60).toString().padStart(2, '0');
+            return `${hours}:${minutes}:${secs}`;
+        }
+
+        // Format earnings with 2 decimal places
+        function formatEarnings(amount) {
+            return `$${amount.toFixed(2)}`;
+        }
+
+        // Update the clock display
+        function updateClock() {
+            const now = new Date();
+            clockDisplay.textContent = formatTime(now);
+            
+            if (startTime) {
+                elapsedSeconds = Math.floor((now - startTime) / 1000);
+                elapsedDisplay.textContent = formatElapsed(elapsedSeconds);
+                
+                // Calculate earnings
+                const hoursPassed = elapsedSeconds / 3600;
+                const earnings = hourlyRate * hoursPassed;
+                earningsDisplay.textContent = formatEarnings(earnings);
+            }
+        }
+
+        // Start tracking
+        startBtn.addEventListener('click', () => {
+            hourlyRate = parseFloat(hourlyRateInput.value);
+            
+            if (isNaN(hourlyRate) || hourlyRate <= 0) {
+                // Shake input to indicate error
+                hourlyRateInput.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    hourlyRateInput.style.animation = '';
+                }, 500);
+                return;
+            }
+            
+            startTime = new Date();
+            elapsedSeconds = 0;
+            
+            // Show clock and data
+            clockContainer.classList.add('show');
+            dataContainer.classList.add('show');
+            
+            // Start interval for updating displays
+            timerInterval = setInterval(updateClock, 1000);
+            updateClock(); // Initial update
+            
+            // Disable input and button
+            hourlyRateInput.disabled = true;
+            startBtn.disabled = true;
+            
+            // Show reset button
+            resetBtn.classList.remove('hidden');
+        });
+
+        // Reset tracking
+        resetBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            startTime = null;
+            elapsedSeconds = 0;
+            
+            // Reset displays
+            elapsedDisplay.textContent = '00:00:00';
+            earningsDisplay.textContent = '$0.00';
+            
+            // Enable input and button
+            hourlyRateInput.disabled = false;
+            startBtn.disabled = false;
+            
+            // Hide the reset button
+            resetBtn.classList.add('hidden');
+            
+            // Animate out
+            clockContainer.classList.remove('show');
+            dataContainer.classList.remove('show');
+        });
+
+        // Initial clock update
+        updateClock();
+
+        // Add keyframe animation for shake effect
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
