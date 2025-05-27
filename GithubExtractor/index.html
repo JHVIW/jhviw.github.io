@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
-  <!-- Inline CSS -->
   <style>
     :root {
       --bg: #0f172a;
@@ -33,7 +32,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       padding: 2rem;
     }
 
@@ -43,7 +42,9 @@
       border-radius: var(--radius);
       box-shadow: 0 0 20px rgba(0,0,0,0.3);
       width: 100%;
-      max-width: 500px;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
     }
 
     h1 {
@@ -91,13 +92,27 @@
       color: var(--success);
     }
 
+    .results {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 1rem;
+      border-top: 1px solid #334155;
+      padding-top: 1rem;
+    }
+
     .author {
       background: #0f172a;
       padding: 1rem;
-      margin-top: 1rem;
+      margin-bottom: 0.75rem;
       border-radius: var(--radius);
       font-size: 0.95rem;
-      word-break: break-all;
+      word-break: break-word;
+    }
+
+    @media (max-height: 700px) {
+      .results {
+        max-height: 200px;
+      }
     }
   </style>
 </head>
@@ -109,11 +124,14 @@
 
     <div class="status" v-if="inProgress">🔍 Fetching commits...</div>
     <div class="status error" v-if="failed">❌ Could not fetch data. Please try again.</div>
-    <div class="status success" v-if="authors.length > 0">✅ Found {{ authors.length }} unique emails.</div>
+    <div class="status success" v-if="!inProgress && authors.length > 0">✅ Found {{ authors.length }} unique emails.</div>
+    <div class="status error" v-if="!inProgress && !failed && authors.length === 0 && userName">⚠️ No email addresses found for this user.</div>
 
-    <div class="author" v-for="author in authors" :key="author.email">
-      <strong>{{ author.name }}</strong><br>
-      {{ author.email }}
+    <div class="results">
+      <div class="author" v-for="author in authors" :key="author.email">
+        <strong>{{ author.name }}</strong><br>
+        {{ author.email }}
+      </div>
     </div>
   </div>
 
@@ -123,7 +141,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.19.11/URI.min.js"></script>
 
-  <!-- INLINE JS -->
+  <!-- JS LOGIC -->
   <script>
     var getQueryStringValue = function(queryParam){
         var currentURL = new URI();
@@ -158,6 +176,7 @@
             this.inProgress = true;
             this.failed = false;
             this.authors = [];
+            this.userName = userName;
 
             var self = this;
             var userApiPrefix = "https://api.github.com/users/";
@@ -165,7 +184,6 @@
 
             $.getJSON(userApiPrefix + userName + userApiSuffix)
               .done(function(data) {
-                self.failed = false;
                 var commits = _.pluck(_.flatten(_.pluck(_.pluck(data, "payload"), "commits")), "author");
                 var unique = uniqObjects(_.compact(commits));
                 var authors = _.map(unique, function(el) { return JSON.parse(el); });
