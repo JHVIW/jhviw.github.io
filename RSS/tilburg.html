@@ -135,7 +135,6 @@
     (function () {
       const RSS_URL = "https://www.alarmeringen.nl/feeds/region/midden-en-west-brabant.rss";
       const alertsContainer = document.getElementById("alerts");
-      const loader = document.getElementById("loader");
 
       /**
        * Functie om teksten (Titel/Beschrijving) te ontsmetten als plain text,
@@ -171,7 +170,7 @@
         if (item.pubDate) {
           const dateEl = document.createElement("p");
           const date = new Date(item.pubDate);
-          // Format: DD-MM-YYYY om begrijpelijk te maken
+          // Format: DD-MM-YYYY uu:mm
           const formatted =
             String(date.getDate()).padStart(2, "0") +
             "-" +
@@ -208,8 +207,16 @@
 
       /**
        * Haalt het RSS-feed op, parseert de XML, filtert op "Tilburg" en rendert de meldingen.
+       * Clear de container voordat nieuwe meldingen worden toegevoegd.
        */
       async function fetchAndDisplay() {
+        // Maak eerst de container leeg en voeg de loader opnieuw toe
+        alertsContainer.innerHTML = "";
+        const newLoader = document.createElement("div");
+        newLoader.className = "loader";
+        newLoader.id = "loader";
+        alertsContainer.appendChild(newLoader);
+
         try {
           const response = await fetch(RSS_URL);
           if (!response.ok) {
@@ -232,13 +239,16 @@
           const filtered = items.filter((it) => {
             const title = it.querySelector("title")?.textContent || "";
             const desc = it.querySelector("description")?.textContent || "";
-            // gebruik een case-insensitive match op woordgrens Tilburg
+            // Gebruik een case-insensitive match op woordgrens Tilburg
             const pattern = /\bTilburg\b/i;
             return pattern.test(title) || pattern.test(desc);
           });
 
-          // Opruimen: loader verwijderen
-          loader.remove();
+          // Verwijder loader voordat we de kaarten weergeven
+          const loaderEl = document.getElementById("loader");
+          if (loaderEl) {
+            loaderEl.remove();
+          }
 
           if (filtered.length === 0) {
             const noEl = document.createElement("p");
@@ -264,7 +274,10 @@
             });
           });
         } catch (error) {
-          loader.remove();
+          const loaderErr = document.getElementById("loader");
+          if (loaderErr) {
+            loaderErr.remove();
+          }
           const errorEl = document.createElement("div");
           errorEl.className = "error";
           errorEl.textContent = "Er is een fout opgetreden: " + error.message;
@@ -273,8 +286,12 @@
         }
       }
 
-      // Start het ophalen zodra de pagina geladen is
-      document.addEventListener("DOMContentLoaded", fetchAndDisplay);
+      // Start het ophalen zodra de pagina geladen is, en herhaal elke minuut
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchAndDisplay(); // Eerste keer ophalen
+        // Daarna elke 60 seconden (60.000 ms) herhalen
+        setInterval(fetchAndDisplay, 60000);
+      });
     })();
   </script>
 </body>
