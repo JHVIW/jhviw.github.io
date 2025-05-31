@@ -100,7 +100,8 @@
   </div>
 
   <script>
-    const RSS_URL = "https://api.rss2json.com/v1/api.json?rss_url=https://www.alarmeringen.nl/feeds/region/midden-en-west-brabant.rss";
+    const FEED_URL = "https://www.alarmeringen.nl/feeds/region/midden-en-west-brabant.rss";
+    const PROXY_URL = "https://api.allorigins.win/get?url=" + encodeURIComponent(FEED_URL);
 
     function sanitize(text) {
       const div = document.createElement("div");
@@ -113,12 +114,19 @@
       alerts.innerHTML = '<div class="loader">Laden...</div>';
 
       try {
-        const res = await fetch(RSS_URL);
-        const data = await res.json();
+        const response = await fetch(PROXY_URL);
+        const data = await response.json();
+        const xmlText = data.contents;
 
-        const tilburgItems = data.items.filter(item =>
-          /\bTilburg\b/i.test(item.title) || /\bTilburg\b/i.test(item.description)
-        );
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+        const items = Array.from(xmlDoc.querySelectorAll("item"));
+
+        const tilburgItems = items.filter(item => {
+          const title = item.querySelector("title")?.textContent || "";
+          const description = item.querySelector("description")?.textContent || "";
+          return /\bTilburg\b/i.test(title) || /\bTilburg\b/i.test(description);
+        });
 
         if (tilburgItems.length === 0) {
           alerts.innerHTML = `<div class="loader">Geen meldingen voor Tilburg.</div>`;
@@ -127,26 +135,32 @@
 
         alerts.innerHTML = "";
         tilburgItems.forEach(item => {
+          const title = item.querySelector("title")?.textContent || "Geen titel";
+          const description = item.querySelector("description")?.textContent || "";
+          const link = item.querySelector("link")?.textContent || "#";
+          const pubDate = new Date(item.querySelector("pubDate")?.textContent || "");
+
+          const dateString = pubDate.toLocaleDateString("nl-NL") + " " +
+                             pubDate.toLocaleTimeString("nl-NL", { hour: '2-digit', minute: '2-digit' });
+
           const card = document.createElement("div");
           card.className = "alert-card";
-
-          const date = new Date(item.pubDate);
-          const dateString = date.toLocaleDateString("nl-NL") + " " + date.toLocaleTimeString("nl-NL", { hour: '2-digit', minute: '2-digit' });
-
           card.innerHTML = `
-            <h2>${sanitize(item.title)}</h2>
+            <h2>${sanitize(title)}</h2>
             <p><strong>${dateString}</strong></p>
-            <p>${sanitize(item.description)}</p>
-            <a href="${item.link}" target="_blank">Meer info</a>
+            <p>${sanitize(description)}</p>
+            <a href="${link}" target="_blank">Meer info</a>
           `;
           alerts.appendChild(card);
         });
+
       } catch (e) {
         alerts.innerHTML = `<div class="error">❌ Fout bij laden: ${e.message}</div>`;
+        console.error("Fout bij laden:", e);
       }
     }
 
-    // Laad meteen bij opstarten
+    // Eerste keer automatisch laden
     fetchAlerts();
   </script>
 </body>
