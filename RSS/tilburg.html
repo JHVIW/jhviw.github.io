@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meldingen Tilburg</title>
+  <title>Alle P2000-meldingen</title>
   <style>
     body {
       margin: 0;
@@ -90,7 +90,7 @@
 </head>
 <body>
   <header>
-    <h1>Meldingen voor Tilburg</h1>
+    <h1>Alle P2000-meldingen</h1>
   </header>
   <div id="container">
     <button onclick="fetchAlerts()">🔄 Ververs meldingen</button>
@@ -122,19 +122,13 @@
         const xmlDoc = parser.parseFromString(xmlText, "application/xml");
         const items = Array.from(xmlDoc.querySelectorAll("item"));
 
-        const tilburgItems = items.filter(item => {
-          const title = item.querySelector("title")?.textContent || "";
-          const description = item.querySelector("description")?.textContent || "";
-          return /\bTilburg\b/i.test(title) || /\bTilburg\b/i.test(description);
-        });
-
-        if (tilburgItems.length === 0) {
-          alerts.innerHTML = `<div class="loader">Geen meldingen voor Tilburg.</div>`;
+        if (items.length === 0) {
+          alerts.innerHTML = `<div class="loader">Geen meldingen gevonden.</div>`;
           return;
         }
 
         alerts.innerHTML = "";
-        tilburgItems.forEach(item => {
+        items.forEach(item => {
           const title = item.querySelector("title")?.textContent || "Geen titel";
           const description = item.querySelector("description")?.textContent || "";
           const link = item.querySelector("link")?.textContent || "#";
