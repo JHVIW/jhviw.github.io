@@ -1,161 +1,81 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alle P2000-meldingen</title>
+  <meta charset="UTF-8">
+  <title>Alarmeringen Midden- en West-Brabant</title>
   <style>
     body {
-      margin: 0;
-      font-family: sans-serif;
-      background: #f4f4f4;
-      color: #333;
-    }
-
-    header {
-      background: #0055a5;
-      color: white;
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
       padding: 1rem;
+      margin: 0;
+    }
+    h1 {
       text-align: center;
+      color: #d62828;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.4rem;
+    .feed {
+      max-width: 700px;
+      margin: auto;
     }
-
-    #container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    button {
-      display: block;
-      width: 100%;
-      padding: 0.75rem;
-      font-size: 1rem;
-      background: #0077cc;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      margin-bottom: 1rem;
-    }
-
-    button:hover {
-      background: #005fa3;
-      cursor: pointer;
-    }
-
-    .alert-card {
+    .item {
       background: white;
-      padding: 1rem;
-      border-radius: 6px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin-bottom: 1rem;
-    }
-
-    .alert-card h2 {
-      font-size: 1.1rem;
-      margin: 0 0 0.5rem 0;
-      color: #003366;
-    }
-
-    .alert-card p {
       margin: 0.5rem 0;
-    }
-
-    .alert-card a {
-      color: #0055a5;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .alert-card a:hover {
-      text-decoration: underline;
-    }
-
-    .loader, .error {
-      text-align: center;
       padding: 1rem;
-      font-style: italic;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-
-    @media (max-width: 400px) {
-      header h1 {
-        font-size: 1.2rem;
-      }
+    .item a {
+      text-decoration: none;
+      color: #005f73;
+      font-weight: bold;
+    }
+    .item .date {
+      color: #666;
+      font-size: 0.85em;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Alle P2000-meldingen</h1>
-  </header>
-  <div id="container">
-    <button onclick="fetchAlerts()">🔄 Ververs meldingen</button>
-    <div id="alerts">
-      <div class="loader">Meldingen worden geladen...</div>
-    </div>
-  </div>
+  <h1>🚨 Alarmeringen Midden- en West-Brabant</h1>
+  <div class="feed" id="feed">Laden...</div>
 
   <script>
-    const FEED_URL = "https://www.alarmeringen.nl/feeds/region/midden-en-west-brabant.rss";
-    const PROXY_URL = "https://api.allorigins.win/get?url=" + encodeURIComponent(FEED_URL);
-
-    function sanitize(text) {
-      const div = document.createElement("div");
-      div.textContent = text;
-      return div.innerHTML;
-    }
-
-    async function fetchAlerts() {
-      const alerts = document.getElementById("alerts");
-      alerts.innerHTML = '<div class="loader">Laden...</div>';
-
+    async function fetchRSS() {
+      const sFeedUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://alarmeringen.nl/feeds/region/midden-en-west-brabant.rss");
       try {
-        const response = await fetch(PROXY_URL);
-        const data = await response.json();
-        const xmlText = data.contents;
+        const oResponse = await fetch(sFeedUrl);
+        const oData = await oResponse.json();
+        const sXML = oData.contents;
+        const oParser = new DOMParser();
+        const oXMLDoc = oParser.parseFromString(sXML, "application/xml");
+        const oItems = oXMLDoc.querySelectorAll("item");
 
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "application/xml");
-        const items = Array.from(xmlDoc.querySelectorAll("item"));
+        const oFeed = document.getElementById("feed");
+        oFeed.innerHTML = "";
 
-        if (items.length === 0) {
-          alerts.innerHTML = `<div class="loader">Geen meldingen gevonden.</div>`;
-          return;
-        }
+        oItems.forEach(oItem => {
+          const sTitle = oItem.querySelector("title")?.textContent || "";
+          const sLink = oItem.querySelector("link")?.textContent || "#";
+          const sDescription = oItem.querySelector("description")?.textContent || "";
+          const sPubDate = oItem.querySelector("pubDate")?.textContent || "";
 
-        alerts.innerHTML = "";
-        items.forEach(item => {
-          const title = item.querySelector("title")?.textContent || "Geen titel";
-          const description = item.querySelector("description")?.textContent || "";
-          const link = item.querySelector("link")?.textContent || "#";
-          const pubDate = new Date(item.querySelector("pubDate")?.textContent || "");
-
-          const dateString = pubDate.toLocaleDateString("nl-NL") + " " +
-                             pubDate.toLocaleTimeString("nl-NL", { hour: '2-digit', minute: '2-digit' });
-
-          const card = document.createElement("div");
-          card.className = "alert-card";
-          card.innerHTML = `
-            <h2>${sanitize(title)}</h2>
-            <p><strong>${dateString}</strong></p>
-            <p>${sanitize(description)}</p>
-            <a href="${link}" target="_blank">Meer info</a>
+          const oDiv = document.createElement("div");
+          oDiv.className = "item";
+          oDiv.innerHTML = `
+            <a href="${sLink}" target="_blank">${sTitle}</a>
+            <div class="date">${new Date(sPubDate).toLocaleString("nl-NL")}</div>
+            <div>${sDescription}</div>
           `;
-          alerts.appendChild(card);
+          oFeed.appendChild(oDiv);
         });
-
-      } catch (e) {
-        alerts.innerHTML = `<div class="error">❌ Fout bij laden: ${e.message}</div>`;
-        console.error("Fout bij laden:", e);
+      } catch (err) {
+        document.getElementById("feed").innerText = "❌ Fout bij laden van feed.";
+        console.error("Fout bij ophalen RSS:", err);
       }
     }
 
-    // Eerste keer automatisch laden
-    fetchAlerts();
+    fetchRSS();
   </script>
 </body>
 </html>
