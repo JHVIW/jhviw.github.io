@@ -6,15 +6,16 @@ root = tree.getroot()
 items = []
 
 for item in root.findall('.//item'):
-    title = item.find('title').text
-    link = item.find('link').text
-    desc = item.find('description').text
-    date = item.find('pubDate').text
+    title = item.findtext('title') or ""
+    link = item.findtext('link') or ""
+    desc = item.findtext('description') or ""
+    date = item.findtext('pubDate') or ""
+
     items.append({
-        'title': title,
-        'link': link,
-        'description': desc,
-        'pubDate': date
+        'title': title.strip(),
+        'link': link.strip(),
+        'description': desc.strip(),
+        'pubDate': date.strip()
     })
 
 with open('RSS/data/feed.json', 'w', encoding='utf-8') as f:
