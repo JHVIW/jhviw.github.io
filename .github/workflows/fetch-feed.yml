@@ -2,7 +2,7 @@ name: Fetch RSS Feed
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/1 * * * *'
   workflow_dispatch:
 
 permissions:
