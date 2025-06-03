@@ -16,7 +16,7 @@
   <div id="meldingen">Laden...</div>
 
   <script>
-    fetch("data/feed.json")
+    fetch("https://raw.githubusercontent.com/JHVIW/jhviw.github.io/refs/heads/main/RSS/data/feed.json")
       .then(response => response.json())
       .then(items => {
         const container = document.getElementById("meldingen");
@@ -33,7 +33,7 @@
         });
       })
       .catch(err => {
-        document.getElementById("meldingen").innerText = "❌ Fout bij laden van data.";
+        document.getElementById("meldingen").innerText = "❌ Fout bij laden van meldingen.";
         console.error(err);
       });
   </script>
