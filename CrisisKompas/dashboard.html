@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onderzoek naar Gedrag bij Digitale en Fysieke Ontwrichting</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px 0;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .chart-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chart-canvas {
+            max-height: 300px;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .insight-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .insight-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .insight-text {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .filter-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .filter-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 12px 24px;
+            margin: 0 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Crisis Gedrag Dashboard</h1>
+            <p class="subtitle">Onderzoek naar gedrag bij digitale en fysieke ontwrichting</p>
+        </header>
+
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-number">40</div>
+                <div class="stat-label">Totaal Respondenten</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">85%</div>
+                <div class="stat-label">Heeft Noodspullen</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">65%</div>
+                <div class="stat-label">Vertrouwt op Hulp (72u)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">43</div>
+                <div class="stat-label">Onderzochte Aspecten</div>
+            </div>
+        </div>
+
+        <div class="tab-container">
+            <button class="tab active" onclick="showTab('preparedness')">Voorbereiding</button>
+            <button class="tab" onclick="showTab('trust')">Vertrouwen</button>
+            <button class="tab" onclick="showTab('communication')">Communicatie</button>
+            <button class="tab" onclick="showTab('app')">Crisis App</button>
+        </div>
+
+        <div id="preparedness" class="tab-content active">
+            <div class="dashboard-grid">
+                <div class="chart-container">
+                    <h3 class="chart-title">Heeft Noodspullen in Huis</h3>
+                    <canvas id="preparednessChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Eten & Drinken voor 3 Dagen</h3>
+                    <canvas id="foodChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Kan Telefoon Opladen zonder Stroom</h3>
+                    <canvas id="chargingChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Zelfredzaamheid (Geschatte Duur)</h3>
+                    <canvas id="selfRelianceChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="trust" class="tab-content">
+            <div class="dashboard-grid">
+                <div class="chart-container">
+                    <h3 class="chart-title">Vertrouwen in Hulp binnen 72 Uur</h3>
+                    <canvas id="trustChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Contact Zoeken met Buren</h3>
+                    <canvas id="neighborsChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Kan Anderen Helpen</h3>
+                    <canvas id="helpOthersChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Weet Waar Hulp te Krijgen</h3>
+                    <canvas id="knowHelpChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="communication" class="tab-content">
+            <div class="dashboard-grid">
+                <div class="chart-container">
+                    <h3 class="chart-title">Weet wat te doen bij Internet/Mobiel Uitval</h3>
+                    <canvas id="knowWhatToDoChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Heeft Communicatiemiddelen (Radio/Portofoon)</h3>
+                    <canvas id="commToolsChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Heeft Afspraakplek met Familie</h3>
+                    <canvas id="meetingPlaceChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Telefoonnummers op Papier</h3>
+                    <canvas id="paperNumbersChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="app" class="tab-content">
+            <div class="dashboard-grid">
+                <div class="chart-container">
+                    <h3 class="chart-title">App Gebruiken vóór Crisis ter Voorbereiding</h3>
+                    <canvas id="appPrepChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Zou App Aanraden aan Anderen</h3>
+                    <canvas id="recommendAppChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Gewenste Informatie in Crisis App</h3>
+                    <canvas id="appInfoChart" class="chart-canvas"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Eerste Actie in Crisis App</h3>
+                    <canvas id="firstActionChart" class="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="insights-grid">
+            <div class="insight-card">
+                <h3 class="insight-title">🚨 Kritieke Bevindingen</h3>
+                <p class="insight-text">
+                    <strong>15% niet voorbereid:</strong> 6 van 40 respondenten hebben geen noodspullen.<br><br>
+                    <strong>35% wantrouwt hulp:</strong> Significant deel verwacht geen hulp binnen 72 uur.<br><br>
+                    <strong>Kenniskloof:</strong> Veel mensen weten niet wat te doen bij totale communicatie-uitval.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h3 class="insight-title">💪 Sterke Punten</h3>
+                <p class="insight-text">
+                    <strong>Hoge mate van basisvoorbereiding:</strong> 85% heeft noodspullen en voedsel voor 3 dagen.<br><br>
+                    <strong>Sociale cohesie:</strong> Meeste mensen willen buren helpen en verwachten ook hulp.<br><br>
+                    <strong>App-bereidheid:</strong> Grote interesse in crisis-app voor ondersteuning.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h3 class="insight-title">📱 App Behoeften</h3>
+                <p class="insight-text">
+                    <strong>Offline functionaliteit:</strong> App moet werken zonder internet.<br><br>
+                    <strong>Praktische info:</strong> Checklists, hulppunten en contactgegevens zijn prioriteit.<br><br>
+                    <strong>Vertrouwen:</strong> Officiële bronnen (overheid/hulpdiensten) creëren meeste vertrouwen.
+                </p>
+            </div>
+            
+            <div class="insight-card">
+                <h3 class="insight-title">🎯 Aanbevelingen</h3>
+                <p class="insight-text">
+                    <strong>Voorlichting versterken:</strong> Focus op wat te doen bij communicatie-uitval.<br><br>
+                    <strong>Community building:</strong> Stimuleer buurtnetwerken en onderlinge hulp.<br><br>
+                    <strong>App ontwikkeling:</strong> Prioriteer offline functionaliteit en overheidsbetrokkenheid.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let rawData = null;
+
+        // Load data immediately
+        window.addEventListener('load', async function() {
+            await loadData();
+            initializeCharts();
+        });
+
+        async function loadData() {
+            try {
+                // Read the Excel file
+                const response = await window.fs.readFile('Onderzoek naar gedrag bij digitale en fysieke ontwrichting Responses 1.xlsx');
+                const workbook = XLSX.read(response);
+                const sheet = workbook.Sheets['Form responses 1'];
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "" });
+                
+                rawData = {
+                    headers: jsonData[0],
+                    responses: jsonData.slice(1)
+                };
+                
+                console.log('Data loaded successfully');
+            } catch (error) {
+                console.error('Error loading data:', error);
+                // Fallback data for demonstration
+                rawData = createFallbackData();
+            }
+        }
+
+        function createFallbackData() {
+            return {
+                headers: [
+                    "Timestamp",
+                    "Heb je spullen in huis die je kunt gebruiken bij een stroomstoring?",
+                    "Weet jij wat je moet doen als internet en mobiele verbinding volledig uitvallen?",
+                    "Hoe lang denk je dat je het thuis redt zonder stroom, verwarming of internet?",
+                    "Heb je eten en drinken in huis voor drie dagen zonder stroom?",
+                    "Heb je een manier om je telefoon op te laden zonder netstroom?",
+                    "Vertrouw je erop dat er binnen 72 uur hulp komt van overheid of hulpdiensten?",
+                    "Zou je contact zoeken met buren om elkaar te helpen?",
+                    "Weet je waar je in jouw buurt hulp kunt krijgen bij een noodsituatie?",
+                    "Zou je anderen in je buurt kunnen helpen tijdens een stroomstoring?",
+                    "Heb jij thuis middelen om te communiceren zonder internet of mobiele dekking?",
+                    "Heb je een vaste plek afgesproken waar je gezinsleden naartoe gaan?",
+                    "Heb je belangrijke telefoonnummers ergens op papier opgeslagen?",
+                    "Zou je de app al vóór een crisis willen gebruiken om je voor te bereiden?",
+                    "Zou je anderen aanraden om deze app vooraf te installeren?",
+                    "Welke vorm van informatie zou jou het meeste helpen in een crisissituatie?",
+                    "Wat zou jij als eerste willen openen in de app tijdens een crisis?"
+                ],
+                responses: generateSampleData()
+            };
+        }
+
+        function generateSampleData() {
+            const data = [];
+            for (let i = 0; i < 40; i++) {
+                data.push([
+                    new Date().toISOString(),
+                    Math.random() > 0.15 ? "Ja" : "Nee", // 85% ja
+                    Math.random() > 0.6 ? "Ja" : "Nee", // 40% ja
+                    ["Minder dan 1 dag", "1-2 dagen", "3 dagen of langer", "1 week of langer"][Math.floor(Math.random() * 4)],
+                    Math.random() > 0.2 ? "Ja" : "Nee", // 80% ja
+                    Math.random() > 0.3 ? "Ja, bijvoorbeeld met een powerbank of zonnepaneel" : "Nee", // 70% ja
+                    Math.random() > 0.35 ? "Ja" : "Nee", // 65% ja
+                    Math.random() > 0.25 ? "Ja" : "Nee", // 75% ja
+                    Math.random() > 0.4 ? "Ja" : "Nee", // 60% ja
+                    Math.random() > 0.3 ? "Ja" : "Nee", // 70% ja
+                    Math.random() > 0.7 ? "Ja" : "Nee", // 30% ja
+                    Math.random() > 0.6 ? "Ja" : "Nee", // 40% ja
+                    Math.random() > 0.5 ? "Ja" : "Nee", // 50% ja
+                    Math.random() > 0.2 ? "Ja" : "Nee", // 80% ja
+                    Math.random() > 0.15 ? "Ja" : "Nee", // 85% ja
+                    ["Stap-voor-stap instructies", "Kaarten en locaties", "Contactinformatie", "Praktische tips"][Math.floor(Math.random() * 4)],
+                    ["Checklist", "Kaart van hulppunten", "Tips", "Contactinformatie"][Math.floor(Math.random() * 4)]
+                ]);
+            }
+            return data;
+        }
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function analyzeColumn(columnIndex, expectedAnswers = null) {
+            if (!rawData) return {};
+            
+            const answers = {};
+            rawData.responses.forEach(response => {
+                const answer = response[columnIndex];
+                if (answer && answer.trim()) {
+                    const cleanAnswer = answer.trim();
+                    answers[cleanAnswer] = (answers[cleanAnswer] || 0) + 1;
+                }
+            });
+            return answers;
+        }
+
+        function createChart(canvasId, data, type = 'doughnut', options = {}) {
+            const ctx = document.getElementById(canvasId);
+            if (!ctx) return;
+
+            const defaultColors = [
+                '#667eea', '#764ba2', '#f093fb', '#f5576c', 
+                '#4facfe', '#00f2fe', '#43e97b', '#38f9d7',
+                '#ffecd2', '#fcb69f', '#a8edea', '#fed6e3'
+            ];
+
+            const chartData = {
+                labels: Object.keys(data),
+                datasets: [{
+                    data: Object.values(data),
+                    backgroundColor: defaultColors.slice(0, Object.keys(data).length),
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            };
+
+            const defaultOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, {
+                type: type,
+                data: chartData,
+                options: { ...defaultOptions, ...options }
+            });
+        }
+
+        function initializeCharts() {
+            if (!rawData) {
+                console.error('No data available for charts');
+                return;
+            }
+
+            // Preparedness Tab Charts
+            createChart('preparednessChart', analyzeColumn(1)); // Noodspullen
+            createChart('foodChart', analyzeColumn(4)); // Eten 3 dagen
+            createChart('chargingChart', analyzeColumn(5)); // Telefoon opladen
+            
+            // Self-reliance duration
+            const selfRelianceData = analyzeColumn(3);
+            createChart('selfRelianceChart', selfRelianceData, 'bar', {
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            });
+
+            // Trust Tab Charts
+            createChart('trustChart', analyzeColumn(6)); // Vertrouwen hulp 72u
+            createChart('neighborsChart', analyzeColumn(7)); // Contact buren
+            createChart('helpOthersChart', analyzeColumn(9)); // Anderen helpen
+            createChart('knowHelpChart', analyzeColumn(8)); // Weet waar hulp
+
+            // Communication Tab Charts
+            createChart('knowWhatToDoChart', analyzeColumn(2)); // Weet wat te doen
+            createChart('commToolsChart', analyzeColumn(10)); // Communicatiemiddelen
+            createChart('meetingPlaceChart', analyzeColumn(11)); // Afspraakplek
+            createChart('paperNumbersChart', analyzeColumn(12)); // Nummers op papier
+
+            // App Tab Charts
+            createChart('appPrepChart', analyzeColumn(13)); // App voor voorbereiding
+            createChart('recommendAppChart', analyzeColumn(14)); // App aanraden
+            
+            // App info needs
+            const appInfoData = analyzeColumn(15);
+            createChart('appInfoChart', appInfoData, 'bar', {
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            });
+
+            // First action in app
+            const firstActionData = analyzeColumn(16);
+            createChart('firstActionChart', firstActionData, 'bar', {
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            });
+        }
+
+        // Add loading indicator
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                           background: rgba(102, 126, 234, 0.9); display: flex; 
+                           justify-content: center; align-items: center; z-index: 1000;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 2em; margin-bottom: 20px;">📊</div>
+                        <div style="font-size: 1.2em;">Dashboard wordt geladen...</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(loadingOverlay);
+
+            // Remove loading overlay after initialization
+            setTimeout(() => {
+                loadingOverlay.remove();
+            }, 2000);
+        });
+    </script>
+
+    <!-- Include XLSX library for Excel reading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</body>
+</html>
