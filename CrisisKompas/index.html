@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrisisKompas Infographic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: #dc2626;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.5em;
+            font-weight: 300;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: white;
+            border-left: 5px solid #dc2626;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #dc2626;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #dc2626;
+            padding-bottom: 10px;
+        }
+
+        .section p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #dc2626;
+            text-align: center;
+        }
+
+        .feature h3 {
+            color: #dc2626;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 0.95em;
+            text-align: left;
+        }
+
+        .scenarios {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .scenario {
+            background: #dc2626;
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .scenario h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .scenario p {
+            font-size: 0.95em;
+            text-align: left;
+        }
+
+        .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #dc2626;
+        }
+
+        .footer h3 {
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CrisisKompas</h1>
+            <div class="subtitle">Jouw offline gids in nood</div>
+        </div>
+
+        <div class="section">
+            <h2>Voorbereid op een crisis</h2>
+            <p>CrisisKompas helpt u zich voor te bereiden op scenario's zoals langdurige stroomuitval, complete uitval van telecommunicatie (telefoon en internet), en het wegvallen van elektronisch betalingsverkeer. Alle cruciale informatie is altijd en overal beschikbaar, zelfs zonder internetverbinding, zodat u in elke situatie zelfredzaam blijft.</p>
+        </div>
+
+        <div class="section">
+            <h2>Waarom CrisisKompas?</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="icon">🔒</div>
+                    <h3>Altijd toegankelijk</h3>
+                    <p>Volledig offline functionaliteit zorgt ervoor dat u cruciale informatie direct bij de hand heeft, zelfs als internet en mobiele netwerken volledig uitvallen. Uw gids in elke noodsituatie.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">📋</div>
+                    <h3>Praktisch & duidelijk</h3>
+                    <p>Biedt stapsgewijze instructies, heldere checklists en praktische tips, zodat iedereen, ongeacht voorkennis, zich effectief kan voorbereiden en handelen tijdens een crisis.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">👥</div>
+                    <h3>Voor iedereen</h3>
+                    <p>Essentiële en universeel toepasbare informatie voor elk huishouden in Brabant. Bereid uzelf en uw dierbaren voor op onverwachte situaties en vergroot uw zelfredzaamheid.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Belangrijkste Scenario's</h2>
+            <div class="scenarios">
+                <div class="scenario">
+                    <div class="icon">⚡</div>
+                    <h3>Geen stroom</h3>
+                    <p>Langdurige uitval van elektriciteit en de gevolgen daarvan. Inclusief tips voor noodpakketten, veiligheid en het conserveren van energie en warmte.</p>
+                </div>
+                <div class="scenario">
+                    <div class="icon">📡</div>
+                    <h3>Uitval telecommunicatie</h3>
+                    <p>Geen telefoon- en internetverbinding en de impact op communicatie. Met advies over alternatieve communicatiemiddelen en noodcontacten.</p>
+                </div>
+                <div class="scenario">
+                    <div class="icon">💳</div>
+                    <h3>Elektronisch betalen niet mogelijk</h3>
+                    <p>Niet meer kunnen pinnen of online betalen en de gevolgen voor financiële transacties. Met tips voor contant geld en alternatieven.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Essentiële voorbereidingen</h2>
+            <p><strong>Noodpakket (72 uur):</strong> Drinkwater (3 liter per persoon per dag), houdbaar eten, batterijradio, zaklamp, EHBO-doos, medicijnen, warme dekens, contant geld (€70 per volwassene, €30 per kind).</p>
+            <p><strong>Communicatie:</strong> Belangrijke telefoonnummers op papier, afgesproken ontmoetingsplek, batterij- of handradio voor officiële berichten.</p>
+            <p><strong>Veiligheid:</strong> Fluitje voor noodgevallen, kopieën van identiteitsbewijzen, kleine hoeveelheid gereedschap.</p>
+        </div>
+
+        <div class="footer">
+            <h3>Installeer CrisisKompas</h3>
+            <p>Voeg toe aan je startscherm voor snelle toegang en offline gebruik</p>
+            <p><strong>brabantkennis.vercel.app</strong></p>
+        </div>
+    </div>
+</body>
+</html>
+
