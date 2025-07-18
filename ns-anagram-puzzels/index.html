@@ -3,27 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Station Finder</title>
+    <title>NS Anagram Puzzels - Station Zoeker</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #003082 0%, #0066cc 100%);
+            min-height: 100vh;
         }
         
         .container {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,48,130,0.3);
+            border-top: 4px solid #ffcc00;
         }
         
         h1 {
-            color: #333;
+            color: #003082;
             text-align: center;
             margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
         }
         
         .input-section {
@@ -32,23 +36,26 @@
         
         label {
             display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: #555;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #003082;
+            font-size: 1.1em;
         }
         
         input[type="text"] {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 18px;
             box-sizing: border-box;
+            transition: border-color 0.3s ease;
         }
         
         input[type="text"]:focus {
             outline: none;
-            border-color: #007bff;
+            border-color: #003082;
+            box-shadow: 0 0 0 3px rgba(0,48,130,0.1);
         }
         
         .results {
@@ -56,16 +63,19 @@
         }
         
         .results h3 {
-            color: #333;
+            color: #003082;
             margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
         }
         
         .station-list {
             background: #f8f9fa;
-            border-radius: 5px;
-            padding: 15px;
+            border-radius: 8px;
+            padding: 20px;
             max-height: 400px;
             overflow-y: auto;
+            border: 1px solid #e0e0e0;
         }
         
         .station-item {
@@ -78,41 +88,86 @@
             border-bottom: none;
         }
         
+        .exact-match {
+            background: #ffcc00;
+            color: #003082;
+            font-weight: 700;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 4px 0;
+            border: 2px solid #003082;
+            box-shadow: 0 2px 8px rgba(0,48,130,0.2);
+        }
+        
+        .alternative-match {
+            background: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin: 3px 0;
+            border-left: 4px solid #003082;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        
         .no-results {
             text-align: center;
-            color: #888;
+            color: #666;
             font-style: italic;
+            padding: 20px;
         }
         
         .loading {
             text-align: center;
-            color: #666;
+            color: #003082;
+            font-weight: 600;
+            padding: 20px;
         }
         
         .error {
             color: #dc3545;
             background: #f8d7da;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 15px;
+            border-radius: 8px;
             margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
         }
         
-        .info {
-            background: #d1ecf1;
-            color: #0c5460;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+        .ns-header {
+            background: #003082;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px 8px 0 0;
+            margin: -40px -40px 30px -40px;
+            border-bottom: 3px solid #ffcc00;
+        }
+        
+        .ns-header h1 {
+            color: white;
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        .ns-logo {
+            display: inline-block;
+            background: #ffcc00;
+            color: #003082;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 900;
+            font-size: 0.8em;
+            margin-right: 15px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🚂 Station Finder</h1>
+        <div class="ns-header">
+            <span class="ns-logo">NS</span>
+            <h1>Station Finder</h1>
+        </div>
         
         <div class="input-section">
             <label for="letters">Voer letters in:</label>
-            <input type="text" id="letters" placeholder="Bijv: vlissingen, lingsvesign..." />
+            <input type="text" id="letters" placeholder="Bijv: vlissingen, lingsvesign.." />
         </div>
         
         <div class="results" id="results">
@@ -193,6 +248,62 @@
             return true;
         }
 
+        // Functie om match score te berekenen (hoe goed past het)
+        function calculateMatchScore(stationName, availableLetters) {
+            const station = stationName.toLowerCase();
+            const letters = availableLetters.toLowerCase();
+            
+            // Maak frequency maps
+            const availableLetterCount = {};
+            for (const char of letters) {
+                if (char !== ' ') {
+                    availableLetterCount[char] = (availableLetterCount[char] || 0) + 1;
+                }
+            }
+            
+            const stationLetterCount = {};
+            for (const char of station) {
+                if (char !== ' ') {
+                    stationLetterCount[char] = (stationLetterCount[char] || 0) + 1;
+                }
+            }
+            
+            // Bereken hoeveel letters matchen
+            let matchingLetters = 0;
+            let totalAvailableLetters = 0;
+            let totalStationLetters = 0;
+            
+            for (const char in availableLetterCount) {
+                totalAvailableLetters += availableLetterCount[char];
+            }
+            
+            for (const char in stationLetterCount) {
+                totalStationLetters += stationLetterCount[char];
+            }
+            
+            // Tel hoeveel letters daadwerkelijk kunnen worden gebruikt
+            for (const char in availableLetterCount) {
+                if (stationLetterCount[char]) {
+                    matchingLetters += Math.min(availableLetterCount[char], stationLetterCount[char]);
+                }
+            }
+            
+            // Score is gebaseerd op:
+            // 1. Percentage van beschikbare letters dat gebruikt wordt
+            // 2. Percentage van station letters dat gematcht wordt
+            // 3. Bonus voor exacte matches
+            const usePercentage = matchingLetters / totalAvailableLetters;
+            const matchPercentage = matchingLetters / totalStationLetters;
+            
+            // Exacte match krijgt score 1000
+            if (canMakeStation(stationName, availableLetters)) {
+                return 1000;
+            }
+            
+            // Anders een score tussen 0-999 gebaseerd op hoe goed het matcht
+            return Math.round((usePercentage * 500) + (matchPercentage * 499));
+        }
+
         // Functie om resultaten bij te werken
         function updateResults() {
             const resultsDiv = document.getElementById('results');
@@ -208,34 +319,50 @@
                 return;
             }
             
-            // Filter stations die gemaakt kunnen worden met de ingevoerde letters
-            const matchingStations = stations.filter(station => 
-                canMakeStation(station, inputValue)
-            );
+            // Bereken match scores voor alle stations
+            const stationsWithScores = stations.map(station => ({
+                name: station,
+                score: calculateMatchScore(station, inputValue),
+                isExactMatch: canMakeStation(station, inputValue)
+            }));
             
-            if (matchingStations.length === 0) {
-                resultsDiv.innerHTML = `
-                    <h3>Resultaten voor "${inputValue}":</h3>
-                    <div class="station-list">
-                        <div class="no-results">Geen stations gevonden met deze letters.</div>
-                    </div>
-                `;
-                return;
+            // Sorteer op score (hoogste eerst), dan alfabetisch
+            stationsWithScores.sort((a, b) => {
+                if (a.score !== b.score) {
+                    return b.score - a.score;
+                }
+                return a.name.localeCompare(b.name, 'nl');
+            });
+            
+            // Toon top 20 resultaten
+            const topResults = stationsWithScores.slice(0, 20);
+            const exactMatches = topResults.filter(s => s.isExactMatch);
+            
+            let resultsHTML = '';
+            if (exactMatches.length > 0) {
+                resultsHTML += `<h3>Perfecte matches voor "${inputValue}" (${exactMatches.length} gevonden):</h3>`;
+                const exactItems = exactMatches
+                    .map(s => `<div class="station-item exact-match">${s.name}</div>`)
+                    .join('');
+                resultsHTML += `<div class="station-list">${exactItems}</div>`;
+                
+                if (topResults.length > exactMatches.length) {
+                    resultsHTML += `<h3>Beste alternatieve matches:</h3>`;
+                    const alternativeItems = topResults
+                        .filter(s => !s.isExactMatch)
+                        .map(s => `<div class="station-item alternative-match">${s.name}</div>`)
+                        .join('');
+                    resultsHTML += `<div class="station-list">${alternativeItems}</div>`;
+                }
+            } else {
+                resultsHTML += `<h3>Beste matches voor "${inputValue}" (top 20):</h3>`;
+                const stationItems = topResults
+                    .map(s => `<div class="station-item alternative-match">${s.name}</div>`)
+                    .join('');
+                resultsHTML += `<div class="station-list">${stationItems}</div>`;
             }
             
-            // Sorteer alfabetisch
-            matchingStations.sort((a, b) => a.localeCompare(b, 'nl'));
-            
-            const stationItems = matchingStations
-                .map(station => `<div class="station-item">${station}</div>`)
-                .join('');
-            
-            resultsDiv.innerHTML = `
-                <h3>Resultaten voor "${inputValue}" (${matchingStations.length} gevonden):</h3>
-                <div class="station-list">
-                    ${stationItems}
-                </div>
-            `;
+            resultsDiv.innerHTML = resultsHTML;
         }
 
         // Event listener voor input veranderingen
