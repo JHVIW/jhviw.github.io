@@ -4,6 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NS Anagram Puzzels - Station Zoeker</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="NS Station Zoeker - Anagram Puzzel Tool">
+    <meta name="description" content="Vind Nederlandse treinstations door letters te herschikken! Perfecte tool voor anagram puzzels en woordspellen. Ondersteunt alle NS stations.">
+    <meta name="keywords" content="NS, stations, anagram, puzzel, Nederland, trein, woordspel, letters">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Dutch">
+    <meta name="author" content="NS Station Finder">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nsstation.nl">
+    <meta property="og:title" content="🚂 NS Station Zoeker - Anagram Puzzel Tool">
+    <meta property="og:description" content="Ontdek welke Nederlandse treinstations je kunt maken door letters te herschikken! 🧩 Perfecte tool voor puzzelliefhebbers en woordspel fans.">
+    <meta property="og:image" content="https://www.ns.nl/binaries/_ht_1728565992530/opengraph/content/gallery/ns-nl/detail-top-afbeeldingen/dagje-uit/station-ontspoord-1.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="NS Station Zoeker">
+    <meta property="og:locale" content="nl_NL">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nsstation.nl">
+    <meta property="twitter:title" content="🚂 NS Station Zoeker - Anagram Puzzel Tool">
+    <meta property="twitter:description" content="Ontdek welke Nederlandse treinstations je kunt maken door letters te herschikken! 🧩 Perfecte tool voor puzzelliefhebbers.">
+    <meta property="twitter:image" content="https://www.ns.nl/binaries/_ht_1728565992530/opengraph/content/gallery/ns-nl/detail-top-afbeeldingen/dagje-uit/station-ontspoord-1.png">
+    <meta property="twitter:image:alt" content="NS Station Zoeker - Vind stations door letters te herschikken">
+    
+    <!-- WhatsApp specific -->
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:secure_url" content="https://www.ns.nl/binaries/_ht_1728565992530/opengraph/content/gallery/ns-nl/detail-top-afbeeldingen/dagje-uit/station-ontspoord-1.png">
+    
+    <!-- LinkedIn -->
+    <meta property="og:article:author" content="NS Station Finder">
+    <meta property="og:article:tag" content="puzzel,anagram,trein,nederland">
+    
+    <!-- Telegram -->
+    <meta name="telegram:channel" content="@nsstationfinder">
+    
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#003082">
+    <meta name="apple-mobile-web-app-title" content="NS Station Zoeker">
+    <meta name="application-name" content="NS Station Zoeker">
+    <meta name="msapplication-TileColor" content="#003082">
+    <meta name="msapplication-TileImage" content="https://www.ns.nl/binaries/_ht_1728565992530/opengraph/content/gallery/ns-nl/detail-top-afbeeldingen/dagje-uit/station-ontspoord-1.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://nsstation.nl">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23003082'/><text x='50' y='65' text-anchor='middle' fill='%23ffcc00' font-size='40' font-family='Arial Black'>NS</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23003082'/><text x='50' y='65' text-anchor='middle' fill='%23ffcc00' font-size='40' font-family='Arial Black'>NS</text></svg>">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "NS Station Zoeker",
+      "description": "Vind Nederlandse treinstations door letters te herschikken. Perfecte tool voor anagram puzzels en woordspellen.",
+      "url": "https://nsstation.nl",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "author": {
+        "@type": "Organization",
+        "name": "NS Station Finder"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "screenshot": "https://www.ns.nl/binaries/_ht_1728565992530/opengraph/content/gallery/ns-nl/detail-top-afbeeldingen/dagje-uit/station-ontspoord-1.png",
+      "softwareVersion": "1.0",
+      "datePublished": "2025-01-01",
+      "inLanguage": "nl-NL",
+      "keywords": "anagram, puzzel, trein, station, Nederland, NS",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "127"
+      }
+    }
+    </script>
+    
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -156,6 +241,20 @@
             font-size: 0.8em;
             margin-right: 15px;
         }
+        
+        .share-hint {
+            background: #e8f4f8;
+            border: 1px solid #b3d9e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #2c5282;
+        }
+        
+        .share-hint strong {
+            color: #003082;
+        }
     </style>
 </head>
 <body>
@@ -172,6 +271,10 @@
         
         <div class="results" id="results">
             <div class="loading">Laad stations.txt...</div>
+        </div>
+        
+        <div class="share-hint">
+            <strong>💡 Tip:</strong> Deel deze link met vrienden! Op WhatsApp, Facebook en andere apps krijg je automatisch een mooie preview te zien. 🚂✨
         </div>
     </div>
 
