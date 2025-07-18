@@ -112,10 +112,7 @@
         
         <div class="input-section">
             <label for="letters">Voer letters in:</label>
-            <input type="text" id="letters" placeholder="Bijv: amsterdam, spoor, trein..." />
-            <div class="info">
-                Tip: Spaties in je invoer worden genegeerd, maar stationsnamen kunnen wel spaties bevatten.
-            </div>
+            <input type="text" id="letters" placeholder="Bijv: vlissingen, lingsvesign..." />
         </div>
         
         <div class="results" id="results">
@@ -155,24 +152,42 @@
             const letters = availableLetters.toLowerCase();
             
             // Maak een frequency map van beschikbare letters (exclusief spaties)
-            const letterCount = {};
+            const availableLetterCount = {};
             for (const char of letters) {
                 if (char !== ' ') {  // Negeer spaties in invoer
-                    letterCount[char] = (letterCount[char] || 0) + 1;
+                    availableLetterCount[char] = (availableLetterCount[char] || 0) + 1;
                 }
             }
             
-            // Controleer of elke letter in de stationsnaam beschikbaar is
+            // Maak een frequency map van letters in de stationsnaam (exclusief spaties)
+            const stationLetterCount = {};
             for (const char of station) {
-                if (char === ' ') {
-                    // Spaties in stationsnamen zijn toegestaan
-                    continue;
+                if (char !== ' ') {  // Negeer spaties in stationsnaam
+                    stationLetterCount[char] = (stationLetterCount[char] || 0) + 1;
                 }
-                
-                if (!letterCount[char] || letterCount[char] === 0) {
-                    return false;  // Letter niet beschikbaar
+            }
+            
+            // Controleer of de frequency maps exact overeenkomen
+            // Alle beschikbare letters moeten gebruikt worden
+            const availableKeys = Object.keys(availableLetterCount).sort();
+            const stationKeys = Object.keys(stationLetterCount).sort();
+            
+            // Controleer of beide dezelfde letters hebben
+            if (availableKeys.length !== stationKeys.length) {
+                return false;
+            }
+            
+            for (let i = 0; i < availableKeys.length; i++) {
+                if (availableKeys[i] !== stationKeys[i]) {
+                    return false;
                 }
-                letterCount[char]--;  // Gebruik de letter
+            }
+            
+            // Controleer of alle letters exact het juiste aantal keren voorkomen
+            for (const char of availableKeys) {
+                if (availableLetterCount[char] !== stationLetterCount[char]) {
+                    return false;
+                }
             }
             
             return true;
