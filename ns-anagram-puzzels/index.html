@@ -678,7 +678,7 @@
         // Functie om de puzzel weer te geven
         function displayPuzzle() {
             const puzzleDiv = document.getElementById('anagramPuzzle');
-            const wordsDisplay = currentPuzzle.words.join(' + ');
+            const wordsDisplay = currentPuzzle.words.join('   ');
             
             puzzleDiv.innerHTML = `
                 <div class="anagram-puzzle">
