@@ -334,8 +334,8 @@
                 return a.name.localeCompare(b.name, 'nl');
             });
             
-            // Toon top 20 resultaten
-            const topResults = stationsWithScores.slice(0, 20);
+            // Toon top 5 resultaten
+            const topResults = stationsWithScores.slice(0, 5);
             const exactMatches = topResults.filter(s => s.isExactMatch);
             
             let resultsHTML = '';
@@ -355,7 +355,7 @@
                     resultsHTML += `<div class="station-list">${alternativeItems}</div>`;
                 }
             } else {
-                resultsHTML += `<h3>Beste matches voor "${inputValue}" (top 20):</h3>`;
+                resultsHTML += `<h3>Beste matches voor "${inputValue}" (top 5):</h3>`;
                 const stationItems = topResults
                     .map(s => `<div class="station-item alternative-match">${s.name}</div>`)
                     .join('');
