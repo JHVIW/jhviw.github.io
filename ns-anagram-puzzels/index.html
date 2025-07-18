@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        
+        .results {
+            margin-top: 20px;
+        }
+        
+        .results h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .station-list {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .station-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+        
+        .station-item:last-child {
+            border-bottom: none;
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+        }
+        
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚂 Station Finder</h1>
+        
+        <div class="input-section">
+            <label for="letters">Voer letters in:</label>
+            <input type="text" id="letters" placeholder="Bijv: amsterdam, spoor, trein..." />
+            <div class="info">
+                Tip: Spaties in je invoer worden genegeerd, maar stationsnamen kunnen wel spaties bevatten.
+            </div>
+        </div>
+        
+        <div class="results" id="results">
+            <div class="loading">Laad stations.txt...</div>
+        </div>
+    </div>
+
+    <script>
+        let stations = [];
+        let isLoading = true;
+
+        // Functie om stations.txt te laden
+        async function loadStations() {
+            try {
+                const response = await fetch('stations.txt');
+                if (!response.ok) {
+                    throw new Error('Kan stations.txt niet laden');
+                }
+                const text = await response.text();
+                stations = text.split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line.length > 0);
+                
+                isLoading = false;
+                updateResults();
+            } catch (error) {
+                document.getElementById('results').innerHTML = 
+                    '<div class="error">Fout bij het laden van stations.txt: ' + error.message + '</div>';
+                isLoading = false;
+            }
+        }
+
+        // Functie om te controleren of een stationsnaam gemaakt kan worden met beschikbare letters
+        function canMakeStation(stationName, availableLetters) {
+            // Converteer beide naar lowercase voor case-insensitive vergelijking
+            const station = stationName.toLowerCase();
+            const letters = availableLetters.toLowerCase();
+            
+            // Maak een frequency map van beschikbare letters (exclusief spaties)
+            const letterCount = {};
+            for (const char of letters) {
+                if (char !== ' ') {  // Negeer spaties in invoer
+                    letterCount[char] = (letterCount[char] || 0) + 1;
+                }
+            }
+            
+            // Controleer of elke letter in de stationsnaam beschikbaar is
+            for (const char of station) {
+                if (char === ' ') {
+                    // Spaties in stationsnamen zijn toegestaan
+                    continue;
+                }
+                
+                if (!letterCount[char] || letterCount[char] === 0) {
+                    return false;  // Letter niet beschikbaar
+                }
+                letterCount[char]--;  // Gebruik de letter
+            }
+            
+            return true;
+        }
+
+        // Functie om resultaten bij te werken
+        function updateResults() {
+            const resultsDiv = document.getElementById('results');
+            const inputValue = document.getElementById('letters').value.trim();
+            
+            if (isLoading) {
+                resultsDiv.innerHTML = '<div class="loading">Laad stations.txt...</div>';
+                return;
+            }
+            
+            if (!inputValue) {
+                resultsDiv.innerHTML = '<div class="no-results">Voer letters in om stations te zoeken...</div>';
+                return;
+            }
+            
+            // Filter stations die gemaakt kunnen worden met de ingevoerde letters
+            const matchingStations = stations.filter(station => 
+                canMakeStation(station, inputValue)
+            );
+            
+            if (matchingStations.length === 0) {
+                resultsDiv.innerHTML = `
+                    <h3>Resultaten voor "${inputValue}":</h3>
+                    <div class="station-list">
+                        <div class="no-results">Geen stations gevonden met deze letters.</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sorteer alfabetisch
+            matchingStations.sort((a, b) => a.localeCompare(b, 'nl'));
+            
+            const stationItems = matchingStations
+                .map(station => `<div class="station-item">${station}</div>`)
+                .join('');
+            
+            resultsDiv.innerHTML = `
+                <h3>Resultaten voor "${inputValue}" (${matchingStations.length} gevonden):</h3>
+                <div class="station-list">
+                    ${stationItems}
+                </div>
+            `;
+        }
+
+        // Event listener voor input veranderingen
+        document.getElementById('letters').addEventListener('input', updateResults);
+        
+        // Laad stations bij het laden van de pagina
+        loadStations();
+    </script>
+</body>
+</html>
