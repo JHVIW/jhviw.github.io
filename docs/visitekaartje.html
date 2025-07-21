@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rick van Iwaarden – Visitekaartje</title>
+  <style>
+    /* Reset en basis */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    /* De kaart */
+    .business-card {
+      width: 85.6mm;
+      height: 53.98mm;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      border-radius: 8px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Achtergrondpatroon */
+    .card-bg-pattern {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.5" fill="%23ffffff" opacity="0.05"/><circle cx="75" cy="75" r="0.3" fill="%23ffffff" opacity="0.03"/><circle cx="50" cy="10" r="0.4" fill="%23ffffff" opacity="0.04"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.7;
+      z-index: 1;
+    }
+
+    /* Geometrisch accent */
+    .geometric-accent {
+      position: absolute;
+      top: -10px; right: -10px;
+      width: 40px; height: 40px;
+      border: 2px solid rgba(52,152,219,0.3);
+      border-radius: 50%;
+      transform: rotate(45deg);
+      z-index: 2;
+    }
+    .geometric-accent::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 20px; height: 20px;
+      border: 1px solid rgba(52,152,219,0.2);
+      border-radius: 50%;
+      transform: translate(-50%,-50%);
+    }
+
+    /* QR‑code */
+    .qr-code {
+      position: absolute;
+      bottom: 8px; right: 8px;
+      width: 35px; height: 35px;
+      background-image: url('https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://jhviw.github.io/docs/cv&bgcolor=2c3e50&color=ecf0f1&margin=0');
+      background-size: cover;
+      opacity: 0.3;
+      border-radius: 3px;
+      z-index: 2;
+    }
+
+    /* Content bovenop */
+    .card-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Avatar */
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #3498db;
+      margin-bottom: 8px;
+    }
+
+    /* Naam en titel */
+    .name {
+      font-size: 16px;
+      font-weight: bold;
+      color: #ecf0f1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+      text-align: center;
+    }
+    .title {
+      font-size: 11px;
+      color: #3498db;
+      font-weight: 600;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    /* Skills‑regel */
+    .skills-line {
+      font-size: 8px;
+      color: #ecf0f1;
+      text-align: center;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    /* Contact */
+    .contact-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      font-size: 8px;
+      color: #ecf0f1;
+    }
+    .contact-icon {
+      width: 12px;
+      height: 12px;
+      margin-right: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: #3498db;
+    }
+
+    /* Specialisaties */
+    .specialties {
+      width: 100%;
+    }
+    .specialty-label {
+      font-size: 7px;
+      color: #3498db;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: bold;
+      margin-bottom: 3px;
+      text-align: center;
+    }
+    .specialty-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+      justify-content: center;
+    }
+    .specialty-tag {
+      background: rgba(52,152,219,0.2);
+      color: #ecf0f1;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 6px;
+      border-left: 2px solid #3498db;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="business-card">
+    <div class="card-bg-pattern"></div>
+    <div class="geometric-accent"></div>
+    <div class="qr-code"></div>
+
+    <div class="card-content">
+      <img
+        src="https://media.licdn.com/dms/image/v2/D4E03AQFegFo0zwuesw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1708781510845?e=1755734400&v=beta&t=q9KFHVLCuqYkgazmDyeU2uSFJMkzhFG5lSLUktwGwA8"
+        alt="Rick van Iwaarden"
+        class="avatar"
+      />
+      <div class="name">Rick van Iwaarden</div>
+      <div class="title">Full‑stack Developer</div>
+      <div class="skills-line">C# · REST API’s · React · Node.js · SQL</div>
+
+      <div class="contact-section">
+        <div class="contact-item">
+          <span class="contact-icon">@</span>
+          <span>rickviwaarden@gmail.com</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">in</span>
+          <span>linkedin.com/in/rickviwaarden</span>
+        </div>
+      </div>
+
+      <div class="specialties">
+        <div class="specialty-label">Specialisaties</div>
+        <div class="specialty-tags">
+          <span class="specialty-tag">C# • ASP.NET</span>
+          <span class="specialty-tag">REST API's</span>
+          <span class="specialty-tag">React • Node.js</span>
+          <span class="specialty-tag">Cybersecurity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
