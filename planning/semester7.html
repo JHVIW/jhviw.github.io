@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Planning — VulnShop / Body of Knowledge / Individueel</title>
+<style>
+  :root{
+    --bg:#0f1724; --card:#0b1220; --muted:#9aa7b2; --accent:#6ee7b7; --accent2:#60a5fa;
+    --glass: rgba(255,255,255,0.03);
+    font-family: Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;}
+  body{
+    margin:0; background:linear-gradient(180deg,#071028 0%,#071525 100%); color:#e6eef6;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  .wrap{max-width:1200px;margin:28px auto;padding:28px;}
+  header{display:flex;align-items:center;gap:18px;margin-bottom:18px}
+  h1{font-size:20px;margin:0;}
+  .subtitle{color:var(--muted);font-size:13px}
+  .controls{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .tab{background:var(--glass);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
+  .tab.active{background:linear-gradient(90deg,var(--accent2),var(--accent));color:#042024;font-weight:600}
+  main{display:grid;grid-template-columns:360px 1fr;gap:20px}
+  aside{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03)}
+  .weeks{display:flex;flex-direction:column;gap:8px;max-height:72vh;overflow:auto;padding-right:6px}
+  .week{padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.02);cursor:pointer}
+  .week:hover{border-color:rgba(255,255,255,0.04)}
+  .week.active{background:linear-gradient(90deg, rgba(96,165,250,0.12), rgba(110,231,183,0.06));border-color:rgba(96,165,250,0.22)}
+  .week h3{margin:0;font-size:14px}
+  .dates{font-size:12px;color:var(--muted);margin-top:6px}
+  .badge{display:inline-block;font-size:11px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.03);color:var(--muted);margin-top:8px}
+  section.content{padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);min-height:72vh;overflow:auto}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:10px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.02)}
+  .card h4{margin:0 0 8px 0}
+  .task{font-size:14px;color:#dfeefc;margin-bottom:6px}
+  .muted{color:var(--muted);font-size:13px}
+  .pill{display:inline-block;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,0.25);font-size:13px;margin-right:8px}
+  footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
+  /* responsive */
+  @media (max-width:880px){
+    main{grid-template-columns:1fr;gap:12px}
+    aside{order:2}
+    section.content{order:1}
+  }
+  /* small search */
+  .search{display:flex;gap:8px;align-items:center}
+  .search input{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px;color:inherit}
+  .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .legend .item{display:flex;gap:8px;align-items:center;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--accent2),var(--accent))}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Projectplanning — VulnShop & Body of Knowledge / Individueel</h1>
+      <div class="subtitle">Automatisch highlight van de huidige week. Klik een week voor details.</div>
+    </div>
+    <div class="controls">
+      <div class="tab active" data-view="main">VulnShop & BoK</div>
+      <div class="tab" data-view="individueel">Individueel: Datarecovery</div>
+    </div>
+  </header>
+
+  <main>
+    <aside id="sidebar">
+      <div class="card">
+        <div class="muted">Vandaag</div>
+        <div style="margin-top:6px;font-weight:700" id="todayLabel">--</div>
+        <div class="dates" id="todayDate">--</div>
+        <div class="legend">
+          <div class="item"><span class="dot"></span> Huidige / actief</div>
+          <div class="item"><span class="pill">OK</span> Voltooid plannen</div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:10px 12px 12px 12px">
+        <div class="muted">Filter</div>
+        <div style="margin-top:8px">
+          <label style="display:block;margin-bottom:6px;font-size:13px">
+            Zoek weeksnummer of trefwoord
+          </label>
+          <div class="search">
+            <input id="searchInput" placeholder="bv. XSS, SQLi, upload, week 5" />
+            <button id="clearBtn" title="Wissen" style="padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)">x</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="weeks" id="weeksList" aria-live="polite"></div>
+      <footer id="sidebarFooter"></footer>
+    </aside>
+
+    <section class="content" id="content">
+      <div id="detailTop" class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="muted" id="detailRange">Selecteer een week</div>
+            <h2 id="detailTitle" style="margin:6px 0 0 0">Week details</h2>
+          </div>
+          <div style="text-align:right">
+            <div class="badge" id="detailBadge">--</div>
+            <div class="muted" style="margin-top:6px;font-size:12px" id="detailStatus">--</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="detailBody"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+/*
+  Data driven planning.
+  Two views: main (VulnShop & BoK) and individueel (datarecovery).
+  The script highlights the current week by comparing today's date to week ranges.
+*/
+
+function parseDate(s){ // s in YYYY-MM-DD
+  const parts = s.split('-').map(Number);
+  return new Date(Date.UTC(parts[0],parts[1]-1,parts[2]));
+}
+
+// MAIN project weeks (VulnShop & BoK) with exact text from user.
+const mainWeeks = [
+  {
+    id:1, title:'Week 1 — 8 t/m 14 september 2025',
+    start:'2025-09-08', end:'2025-09-14',
+    short:'Basisstructuur webshop, banners, BoK-skelet, HTTP & Proxies dossier, logboektemplate.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Bouw basisstructuur webshop. Eenvoudige server, CSS-template en dummy-pagina's (home, categorie, productdetail, zoekfunctie). Plaats op elke pagina een banner die aangeeft dat het een educatieve kwetsbare app is.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Start drie Academy-modules: Intro to Web Applications, Web Requests, Using Web Proxies. Leer over HTTP-methoden, headers, statuscodes en proxies (bv. Burp).</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Maak een OWASP-matrix skeleton. Kolommen voor testmethode, payload, impact en mitigatie leeg laten. Documenteer basiskennis van HTTP en proxies in een kort techniekendossier. Maak een logboektemplate.</p>
+    <div class="muted">Producten: Logboektemplate · BoK-skelet (OWASP-matrix v0.1) · Basisdossier: HTTP & Proxies</div>`
+  },
+  {
+    id:2, title:'Week 2 — 15 t/m 21 september 2025',
+    start:'2025-09-15', end:'2025-09-21',
+    short:'Login/registratie onveilig, stored XSS, XSS-module, write-up Stored XSS.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Implementeer onveilige login- en registratiepagina. Geen sterke hashing. Cookies zonder HttpOnly/Secure. Bouw stored XSS in productreviews.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Volg XSS-module en speel machine EarlyAccess. Oefen persistent XSS en admin takeover.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Voeg eerste volledige write-up toe: stored XSS. Documenteer payloads, screenshots, impact (sessiediefstal), mitigaties (output encoding, CSP). Koppel aan HTB-resultaten.</p>
+    <div class="muted">Producten: VulnShop write-up: Stored XSS · BoK-techniekendossier XSS v1 · Screenshots + payloadlijst</div>`
+  },
+  {
+    id:3, title:'Week 3 — 22 t/m 28 september 2025',
+    start:'2025-09-22', end:'2025-09-28',
+    short:'Reflected XSS in zoekfunctie, PoC cookie exfiltratie, Info Gathering module en How-to-Hack XSS guide.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Voeg reflected XSS toe aan de zoekfunctie. Bouw PoC voor cookie-exfiltratie naar dummy endpoint.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Werk aan Information Gathering - Web Edition. Breng endpoints en technologieën van VulnShop in kaart.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Write-up reflected XSS. Voeg OWASP-matrix case toe. Schrijf handleiding "How-to-Hack XSS" en laat peers testen; noteer peerresultaten.</p>
+    <div class="muted">Producten: VulnShop write-up: Reflected XSS · Handleiding "How-to-Hack XSS" v1 · Peer-testverslag · BoK-update XSS v2</div>`
+  },
+  {
+    id:4, title:'Week 4 — 29 sep t/m 5 okt 2025',
+    start:'2025-09-29', end:'2025-10-05',
+    short:'IDOR via URL-parameters, eenvoudige adminpagina, XSS+IDOR write-up, checklist object authorization.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Maak orders en profielen toegankelijk via URL-parameters zonder autorisatie (IDOR). Bouw eenvoudige adminpagina.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Speel machine Faculty (LFI + priv esc).</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Write-up over combinatie XSS en IDOR. Documenteer exploitatie en mitigatie. Maak checklist voor object-level authorization.</p>
+    <div class="muted">Producten: VulnShop write-up: IDOR · Write-up combinatie: XSS + IDOR · Checklist object-level authorization · Adminpagina v0.1</div>`
+  },
+  {
+    id:5, title:'Week 5 — 6 t/m 12 oktober 2025',
+    start:'2025-10-06', end:'2025-10-12',
+    short:'Databasekwetsbaarheid (SQLi/NoSQLi), auth-bypass en data-exfiltratie, SQLi dossier.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Implementeer databasekwetsbaarheid in login of productfilter. Kies tussen SQLi of NoSQLi. Demonstreer auth-bypass en data-exfiltratie.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Doorloop SQL Injection Fundamentals en speel Shoppy (NoSQLi).</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Schrijf techniekendossier over SQLi/NoSQLi. Documenteer payloads (boolean, time-based, union-select), resultaten en mitigaties (prepared statements).</p>
+    <div class="muted">Producten: VulnShop write-up: SQLi/NoSQLi · BoK-dossier SQLi/NoSQLi · Screenshots + payloadmatrix</div>`
+  },
+  {
+    id:6, title:'Week 6 — 13 t/m 19 oktober 2025 (herfstvakantie)',
+    start:'2025-10-13', end:'2025-10-19',
+    short:'Geen nieuwe functionaliteit. Literatuuronderzoek en bronnen toevoegen.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Geen nieuwe functionaliteit (herfstvakantie).</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Rond eventueel openstaande modules af.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Literatuuronderzoek. Voeg bronnen toe over moderne webaanvallen en AI-prompt-injection. Update BoK met literatuurlijst en samenvattingen.</p>
+    <div class="muted">Producten: Bronnenlijst v0.2 · BoK-update met literatuur</div>`
+  },
+  {
+    id:7, title:'Week 7 — 20 t/m 26 oktober 2025',
+    start:'2025-10-20', end:'2025-10-26',
+    short:'Uploadfunctie met zwakke validatie, bypasses, flagsysteem en scorekaart v0.1.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Bouw uploadfunctie voor profielfoto's met zwakke validatie. Onderzoek bypasses (dubbele extensies, MIME-spoofing). Viewer laadt uploads uit webroot. Simuleer RCE. Bouw flagsysteem en scorekaart v0.1.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Volg File Upload Attacks module en speel Bounty.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Schrijf upload-dossier en test bypasses. Maak matrix van extensies/MIME en serverreacties.</p>
+    <div class="muted">Producten: VulnShop write-up: File upload bypass · Upload-bypass matrix · Flagsysteem v0.1 · Scorekaart v0.1</div>`
+  },
+  {
+    id:8, title:'Week 8 — 27 okt t/m 2 nov 2025',
+    start:'2025-10-27', end:'2025-11-02',
+    short:'Path traversal endpoint, OPSEC-checklist, LFI write-up.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Bouw endpoint /invoice?file= met path traversal. Test met .env en logs. Maak OPSEC-checklist.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Speel machine Inject (LFI).</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Write-up LFI. Voeg OPSEC-checklist v1 toe aan BoK.</p>
+    <div class="muted">Producten: VulnShop write-up: LFI · OPSEC-checklist v1 · Screenshots PoC LFI</div>`
+  },
+  {
+    id:9, title:'Week 9 — 3 t/m 9 november 2025',
+    start:'2025-11-03', end:'2025-11-09',
+    short:'SSRF in Track shipment, adminflow uitbreiden, SSRF write-up.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Implementeer SSRF in "Track shipment" die URL's fetch't zonder restricties. Host interne mock-service. Breid adminflow uit zodat stored XSS in reviews activeert.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Speel machine Sau (SSRF gekoppeld aan CVE-2023-27163).</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Write-up SSRF. Documenteer edge-case tests zoals DNS-rebinding.</p>
+    <div class="muted">Producten: VulnShop write-up: SSRF · Adminflow v0.2 · BoK-dossier SSRF</div>`
+  },
+  {
+    id:10, title:'Week 10 — 10 t/m 16 november 2025',
+    start:'2025-11-10', end:'2025-11-16',
+    short:'Consolideren, mitigatie-cheatsheet, Command Injection write-up.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Consolideer bewijsbestanden en stabiliseer VulnShop. Schrijf mitigatie-cheatsheet v0.9.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Volg Command Injections module en speel Previse.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Documenteer mitigatie-cheatsheet v0.9 en write-up over command injection.</p>
+    <div class="muted">Producten: Mitigatie-cheatsheet v0.9 · Write-up command injection</div>`
+  },
+  {
+    id:11, title:'Week 11 — 17 t/m 23 november 2025',
+    start:'2025-11-17', end:'2025-11-23',
+    short:'Finalize upload tests, extend flagsysteem en evaluatie uploadfilters.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Finaliseer uploadfunctie met testcases (polyglots, EXIF-spoofing). Breid flagsysteem en scorekaart uit.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Speel machine Download (ORM-injectie + LFI).</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Voeg evaluatie toe van uploadfilters met false positives/negatives.</p>
+    <div class="muted">Producten: Upload-write-up final · Evaluatie uploadfilters · Flagsysteem v0.9</div>`
+  },
+  {
+    id:12, title:'Week 12 — 24 t/m 30 november 2025',
+    start:'2025-11-24', end:'2025-11-30',
+    short:'Attack chain XSS → sessie hijack → admin, AI-sectie starten.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Demonstreer attack chain: XSS → sessie hijack → admin-actie. Integreer ShopBuddy en verberg kortingscode in system prompt. Voer eerste jailbreak-tests uit.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Volg Web Service & API Attacks module.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Write-up attack chain. Start AI-sectie met eerste jailbreaks en transcripts.</p>
+    <div class="muted">Producten: Attack chain write-up · BoK-update AI-aanvallen v0.1 · AI-chatbot v0.1</div>`
+  },
+  {
+    id:13, title:'Week 13 — 1 t/m 7 december 2025',
+    start:'2025-12-01', end:'2025-12-07',
+    short:'Scorekaart compleet, peers flags laten halen, challenge write-ups.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Maak scorekaart compleet en laat peers flags proberen te halen.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Speel twee challenges: SQLi en XSS.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Documenteer challenge-resultaten en peer-test analyse.</p>
+    <div class="muted">Producten: Challenge write-ups (SQLi, XSS) · Peer-test verslag scorekaart</div>`
+  },
+  {
+    id:14, title:'Week 14 — 8 t/m 14 december 2025',
+    start:'2025-12-08', end:'2025-12-14',
+    short:'BoK v1, Handleiding "How-to-Hack VulnShop", AI-notitie v1.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Schrijf handleiding "How-to-Hack VulnShop" en AI-notitie over eerste jailbreaks.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Volg Modern Web Exploitation Techniques en speel Developer.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Rond versie 1 van de BoK af. Voeg synthese toe waarin HTB-resultaten vergeleken worden met VulnShop.</p>
+    <div class="muted">Producten: BoK v1 volledig · Handleiding "How-to-Hack VulnShop" · AI-notitie v1</div>`
+  },
+  {
+    id:15, title:'Week 15 — 15 t/m 21 december 2025',
+    start:'2025-12-15', end:'2025-12-21',
+    short:'Demo-oefening, peerreview, update handleidingen.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Oefen demo: webaanval en AI-aanval. Organiseer peerreview en noteer feedback.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Herhaal machine EarlyAccess en laat peers spelen.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Update handleidingen met peerfeedback.</p>
+    <div class="muted">Producten: Demo-script v1 · Peerreview-notities · Update handleiding</div>`
+  },
+  {
+    id:16, title:'Week 16 — 22 t/m 28 december 2025 (Kerstvakantie)',
+    start:'2025-12-22', end:'2025-12-28',
+    short:'Kerstvakantie — backlog bijwerken en openstaande dossiers voltooien.',
+    body:`<h4>Algemeen</h4>
+    <p class="task">Kerstvakantie. Gebruik tijd om backlog te verwerken en openstaande dossiers/write-ups te voltooien.</p>`
+  },
+  {
+    id:17, title:'Week 17 — 29 dec 2025 t/m 4 jan 2026 (Kerstvakantie)',
+    start:'2025-12-29', end:'2026-01-04',
+    short:'Kerstvakantie (week 2) — backlog en finalisaties.',
+    body:`<h4>Algemeen</h4>
+    <p class="task">Kerstvakantie. Afwerken backlog en openstaande documenten.</p>`
+  },
+  {
+    id:18, title:'Week 18 — 5 t/m 11 januari 2026',
+    start:'2026-01-05', end:'2026-01-11',
+    short:'Implementatie secure mode en voor/na-tests.',
+    body:`<h4>VulnShop</h4>
+    <p class="task">Implementatie secure mode: prepared statements, encoding, auth-checks, upload allowlist en SSRF-allowlist. Voor AI-chatbot verwijder verborgen code en voeg filters toe. Voer voor/na-tests uit.</p>
+    <h4>HackTheBox</h4>
+    <p class="task">Herhaal relevante machines (Shoppy, Sau, Inject) om mitigaties te vergelijken.</p>
+    <h4>Body of Knowledge</h4>
+    <p class="task">Documenteer secure mode en bewijs dat flags niet meer haalbaar zijn.</p>
+    <div class="muted">Producten: Secure mode v1 write-up · Voor/na-testresultaten</div>`
+  },
+  {
+    id:19, title:'Week 19 — 12 t/m 18 januari 2026',
+    start:'2026-01-12', end:'2026-01-18',
+    short:'Eindrapport schrijven, slides en evidence-run.',
+    body:`<h4>Alle sporen</h4>
+    <p class="task">Schrijf eindrapport. Maak advies-onepager en slides. Voer volledige evidence-run uit met web- en AI-cases. Gebruik BoK als basis.</p>`
+  },
+  {
+    id:20, title:'Week 20 — 19 t/m 25 januari 2026',
+    start:'2026-01-19', end:'2026-01-25',
+    short:'Feedback verwerken en definitieve versies maken.',
+    body:`<h4>Alle sporen</h4>
+    <p class="task">Verwerk feedback en maak definitieve versies van het eindrapport, onepager en slides. Vries repo in en doe dry-run van presentatie en demo.</p>`
+  },
+  {
+    id:21, title:'Week 21 — 26 januari t/m 1 februari 2026',
+    start:'2026-01-26', end:'2026-02-01',
+    short:'Inleveren, presentatie en reflectie afronden.',
+    body:`<h4>Alle sporen</h4>
+    <p class="task">Lever werk officieel in. Geef presentatie en demo (web + AI). Schrijf reflectie en rond LO-mapping af.</p>`
+  }
+];
+
+const indivWeeks = [
+  {
+    id:1, title:'Week 1 — 6 t/m 12 oktober 2025',
+    start:'2025-10-06', end:'2025-10-12',
+    short:'Literatuuronderzoek, recoverytools en onderzoeksplan. Logboektemplate.',
+    body:`<h4>Weekoverzicht</h4>
+    <p class="task">Rond literatuuronderzoek af. Bestudeer werking van recoverytools. Stel onderzoeksplan op met experimentele fasen. Ontwikkel logboektemplate. Basis voor project.</p>`
+  },
+  {
+    id:2, title:'Week 2 — 13 t/m 19 oktober 2025',
+    start:'2025-10-13', end:'2025-10-19',
+    short:'Experiment 1: write-blocker, TestDisk en ddrescue, nulmeting.',
+    body:`<h4>Experiment</h4>
+    <p class="task">Sluit beschadigde HDD aan via write-blocker. Gebruik TestDisk en ddrescue voor herstel. Leg procedure vast inclusief opstartproblemen en foutmeldingen. Dit is de nulmeting.</p>`
+  },
+  {
+    id:3, title:'Week 3 — 20 t/m 26 oktober 2025',
+    start:'2025-10-20', end:'2025-10-26',
+    short:'Analyse resultaten en begin PoC tool ontwikkeling.',
+    body:`<h4>Ontwikkeling & Analyse</h4>
+    <p class="task">Analyseer resultaten van week 2. Vergelijk tools. Begin ontwikkeling van proof-of-concept tool. Schrijf ontwerpdocumentatie en programmeer basismodule voor bestandspatroon-herkenning.</p>`
+  },
+  {
+    id:4, title:'Week 4 — 27 okt t/m 2 nov 2025',
+    start:'2025-10-27', end:'2025-11-02',
+    short:'Tool uitbreiden met file carving en export, praktijktests.',
+    body:`<h4>Toolontwikkeling</h4>
+    <p class="task">Breid functionaliteit uit met file carving en exportfunctie. Voer praktijktests uit met testdatasets. Documenteer successen en fouten. Eerste bruikbare versie verschijnt.</p>`
+  },
+  {
+    id:5, title:'Week 5 — 3 t/m 9 november 2025',
+    start:'2025-11-03', end:'2025-11-09',
+    short:'Validatie tool met gecontroleerde datasets en conceptdocumentatie.',
+    body:`<h4>Validatie</h4>
+    <p class="task">Voer uitgebreide tests uit met datasets met verwijderde of beschadigde bestanden. Analyseer effectiviteit. Schrijf eerste conceptdocumentatie met mogelijkheden en beperkingen.</p>`
+  },
+  {
+    id:6, title:'Week 6 — 10 t/m 16 november 2025',
+    start:'2025-11-10', end:'2025-11-16',
+    short:'Hardware-experimenten: write-blocker en controller opstelling.',
+    body:`<h4>Hardware Experiment</h4>
+    <p class="task">Bouw opstelling met write-blocker en vervangende controller om schijf uit te lezen. Maak foto's, schema's en testverslagen. Bekijk praktische haalbaarheid van hardware recovery.</p>`
+  },
+  {
+    id:7, title:'Week 7 — 17 t/m 23 november 2025',
+    start:'2025-11-17', end:'2025-11-23',
+    short:'Vergelijk software vs hardware resultaten en begin eindrapport.',
+    body:`<h4>Analyse</h4>
+    <p class="task">Vergelijk resultaten softwarematig vs hardwarematig. Formuleer conclusies over wanneer welke methode geschikt is. Start opzet eindrapport en verwerk eerste analyses en reflecties.</p>`
+  },
+  {
+    id:8, title:'Week 8 — 24 t/m 30 november 2025',
+    start:'2025-11-24', end:'2025-11-30',
+    short:'Consolidatie logboeken, screenshots en reflectie over politiecontext.',
+    body:`<h4>Consolidatie</h4>
+    <p class="task">Structureer logboeken, screenshots, softwaredocumentatie en hardwareverslagen. Schrijf reflectie over toepasbaarheid binnen politiecontexten. Concept-eindverslag neemt vorm aan.</p>`
+  },
+  {
+    id:9, title:'Week 9 — 1 t/m 7 december 2025',
+    start:'2025-12-01', end:'2025-12-07',
+    short:'Verdiepen eindrapport en demo maken.',
+    body:`<h4>Eindrapport & Demo</h4>
+    <p class="task">Verbind experimentresultaten met literatuur. Werk methodologische keuzes uit. Maak eerste versie demo en presentatie.</p>`
+  },
+  {
+    id:10, title:'Week 10 — 8 t/m 14 december 2025',
+    start:'2025-12-08', end:'2025-12-14',
+    short:'Feedback verwerken en generale repetitie demo.',
+    body:`<h4>Feedback</h4>
+    <p class="task">Vraag feedback van docenten/medestudenten op conceptverslag en demo. Verwerk opmerkingen systematisch. Voer generale repetitie uit.</p>`
+  },
+  {
+    id:11, title:'Week 11 — 15 t/m 19 december 2025',
+    start:'2025-12-15', end:'2025-12-19',
+    short:'Finaliseren en inleveren per 19 dec 2025.',
+    body:`<h4>Afronding</h4>
+    <p class="task">Finaliseer eindrapport, controleer logboeken en bijlagen. Maak presentatie gereed. Op 19 december 2025 lever je project in en voer je eventueel demo uit.</p>`
+  }
+];
+
+// Utility to get today's date in local timezone (midnight)
+function todayLocal() {
+  const d = new Date();
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+const state = {
+  view:'main',
+  weeksMap:{ main: mainWeeks, individueel: indivWeeks },
+  activeWeekId:null
+};
+
+const tabs = document.querySelectorAll('.tab');
+tabs.forEach(t => t.addEventListener('click', e=>{
+  tabs.forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  state.view = t.dataset.view === 'individueel' ? 'individueel' : 'main';
+  renderWeeks();
+}));
+
+const weeksList = document.getElementById('weeksList');
+const detailTitle = document.getElementById('detailTitle');
+const detailRange = document.getElementById('detailRange');
+const detailBadge = document.getElementById('detailBadge');
+const detailBody = document.getElementById('detailBody');
+const detailStatus = document.getElementById('detailStatus');
+const todayLabel = document.getElementById('todayLabel');
+const todayDate = document.getElementById('todayDate');
+const sidebarFooter = document.getElementById('sidebarFooter');
+const searchInput = document.getElementById('searchInput');
+const clearBtn = document.getElementById('clearBtn');
+
+clearBtn.addEventListener('click', ()=>{ searchInput.value=''; renderWeeks(); });
+
+searchInput.addEventListener('input', ()=>{ renderWeeks(); });
+
+function isInRange(date, start, end){
+  // date, start, end are Date objects (midnight UTC from parseDate)
+  return date >= start && date <= end;
+}
+
+function findActiveWeek(weeks){
+  const t = todayLocal();
+  for(const w of weeks){
+    const s = parseDate(w.start), e = parseDate(w.end);
+    // adjust s/e to local midnight for comparison: parseDate gives UTC midnight; convert to local by making Date with same YMD
+    const sLocal = new Date(s.getUTCFullYear(), s.getUTCMonth(), s.getUTCDate());
+    const eLocal = new Date(e.getUTCFullYear(), e.getUTCMonth(), e.getUTCDate());
+    if (isInRange(t, sLocal, eLocal)) return w.id;
+  }
+  // if none active, return next upcoming by start date
+  const upcoming = weeks.map(w=>{
+    const s=parseDate(w.start);
+    const sLocal = new Date(s.getUTCFullYear(), s.getUTCMonth(), s.getUTCDate());
+    return {id:w.id, start:sLocal};
+  }).filter(x=>x.start >= t).sort((a,b)=>a.start-b.start);
+  return upcoming.length? upcoming[0].id : weeks[weeks.length-1].id;
+}
+
+function formatDateRange(w){
+  return `${w.start} → ${w.end}`;
+}
+
+function renderWeeks(){
+  weeksList.innerHTML='';
+  const weeks = state.weeksMap[state.view];
+  const q = (searchInput.value||'').toLowerCase().trim();
+  // determine active
+  const activeId = findActiveWeek(weeks);
+  state.activeWeekId = activeId;
+  // today label
+  const d = new Date();
+  todayLabel.textContent = d.toLocaleDateString('nl-NL', {weekday:'long', day:'numeric', month:'short', year:'numeric'});
+  todayDate.textContent = `Tijdzone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+  sidebarFooter.textContent = `Weergave: ${state.view === 'main' ? 'VulnShop & BoK' : 'Individueel: Datarecovery'}`;
+
+  // create list
+  weeks.forEach(w=>{
+    const text = `${w.title} — ${w.short}`;
+    if (q){
+      if (!(text.toLowerCase().includes(q) || (w.body && w.body.toLowerCase().includes(q)))) return;
+    }
+    const el = document.createElement('div');
+    el.className = 'week' + (w.id === activeId ? ' active' : '');
+    el.dataset.id = w.id;
+    el.innerHTML = `<h3>${w.title}</h3><div class="dates">${formatDateRange(w)}</div><div class="muted" style="margin-top:8px">${w.short}</div>`;
+    el.addEventListener('click', ()=>{ showDetail(w.id); document.querySelectorAll('.week').forEach(x=>x.classList.remove('active')); el.classList.add('active'); });
+    weeksList.appendChild(el);
+  });
+
+  // auto-show active week
+  showDetail(activeId, true);
+}
+
+function showDetail(id, auto=false){
+  const weeks = state.weeksMap[state.view];
+  const w = weeks.find(x=>x.id===id);
+  if (!w) return;
+  detailTitle.textContent = w.title;
+  detailRange.textContent = formatDateRange(w);
+  detailBadge.textContent = state.view === 'main' ? 'VulnShop & BoK' : 'Individueel';
+  detailBody.innerHTML = `<div class="card"><div class="muted">Kern</div><h3 style="margin-top:6px">${w.short}</h3><div style="margin-top:10px">${w.body || ''}</div></div>`;
+  // status
+  const t = todayLocal();
+  const s=parseDate(w.start); const e=parseDate(w.end);
+  const sLocal = new Date(s.getUTCFullYear(), s.getUTCMonth(), s.getUTCDate());
+  const eLocal = new Date(e.getUTCFullYear(), e.getUTCMonth(), e.getUTCDate());
+  if (isInRange(t, sLocal, eLocal)){
+    detailStatus.textContent = 'Actief deze week';
+  } else if (t < sLocal){
+    detailStatus.textContent = 'Toekomstige week';
+  } else {
+    detailStatus.textContent = 'Afgelopen week';
+  }
+}
+
+// initial render
+renderWeeks();
+
+// keyboard: n/p to go next/prev week
+document.addEventListener('keydown', (e)=>{
+  if (e.key === 'n' || e.key === 'ArrowRight'){
+    stepWeek(1);
+  } else if (e.key === 'p' || e.key === 'ArrowLeft'){
+    stepWeek(-1);
+  }
+});
+
+function stepWeek(delta){
+  const weeks = state.weeksMap[state.view];
+  const idx = weeks.findIndex(x=>x.id===state.activeWeekId);
+  let ni = Math.max(0, Math.min(weeks.length-1, idx+delta));
+  state.activeWeekId = weeks[ni].id;
+  // highlight in list
+  document.querySelectorAll('.week').forEach(x=>x.classList.remove('active'));
+  const el = Array.from(document.querySelectorAll('.week')).find(x=>Number(x.dataset.id)===state.activeWeekId);
+  if (el) el.classList.add('active');
+  showDetail(state.activeWeekId);
+}
+
+// on load if view switched programmatically
+window.addEventListener('load', ()=>{ renderWeeks(); });
+
+</script>
+</body>
+</html>
