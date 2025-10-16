@@ -1,23 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
     <title>BrewTycoon - Idle Beer Tycoon</title>
     <style>
+        :root {
+            --gold:#d4af37;
+            --gold-soft:#f4e4c1;
+            --bg1:#1a0e0a;
+            --bg2:#2d1b15;
+            --panel:#1e140f;
+            --border:#8b6f47;
+            --text:#e8d4c0;
+            --accent:#ffd700;
+            --good:#2ecc71;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a0e0a 0%, #2d1b15 100%);
-            color: #e8d4c0;
+        html, body {
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+            color: var(--text);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
             overflow: hidden;
-            height: 100vh;
         }
+
+        /* Prevent double-tap zoom while keeping scrolling where needed */
+        body, button, .tap-button, .sell-button { touch-action: manipulation; }
+        button { font-size: 16px; } /* avoid iOS zoom on <16px controls */
 
         .svg-icon {
             width: 24px;
@@ -29,32 +49,45 @@
 
         .container {
             display: flex;
-            height: 100vh;
             flex-direction: column;
+            height: 100%;
         }
 
         .header {
             background: rgba(0, 0, 0, 0.7);
-            padding: 15px 20px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #d4af37;
+            border-bottom: 2px solid var(--gold);
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .header-wrap {
+            display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            align-items: center;
+            gap: 12px;
         }
 
         .stat-box {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 18px;
-            font-weight: bold;
+            gap: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            background: rgba(30, 20, 15, 0.7);
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
         }
 
         .stat-value {
-            color: #ffd700;
-            font-size: 20px;
+            color: var(--accent);
+            font-size: 18px;
         }
 
         .main {
@@ -66,11 +99,11 @@
         }
 
         .sidebar-left {
-            width: 200px;
+            width: 220px;
             background: rgba(30, 20, 15, 0.9);
-            border: 2px solid #8b6f47;
-            border-radius: 5px;
-            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
             overflow-y: auto;
             font-size: 14px;
         }
@@ -81,43 +114,38 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            min-width: 0;
+            gap: 12px;
         }
 
         .tap-button {
-            width: 140px;
-            height: 140px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #d4af37 0%, #f4e4c1 50%, #d4af37 100%);
-            border: 3px solid #8b6f47;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 50%, var(--gold) 100%);
+            border: 3px solid var(--border);
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.1s;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            transition: transform 0.08s ease, box-shadow 0.08s ease;
+            box-shadow: 0 0 18px rgba(212, 175, 55, 0.5);
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        .tap-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
-        }
-
-        .tap-button:active {
-            transform: scale(0.95);
-        }
+        .tap-button:hover { transform: scale(1.03); }
+        .tap-button:active { transform: scale(0.97); }
 
         .tap-button::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent);
+            inset: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent);
             pointer-events: none;
         }
 
@@ -125,263 +153,51 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             z-index: 1;
         }
 
-        .button-icon {
-            width: 50px;
-            height: 50px;
+        .button-icon { width: 54px; height: 54px; }
+
+        .sell-button {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--good) 0%, #27ae60 100%);
+            border: 3px solid #27ae60;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.08s ease, box-shadow 0.08s ease;
+            box-shadow: 0 0 18px rgba(46, 204, 113, 0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
         }
+
+        .sell-button:hover { transform: scale(1.03); }
+        .sell-button:active { transform: scale(0.97); }
 
         .phase-indicator {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 6px;
             font-size: 16px;
-            color: #ffd700;
-        }
-
-        .sidebar-right {
-            width: 250px;
-            background: rgba(30, 20, 15, 0.9);
-            border: 2px solid #8b6f47;
-            border-radius: 5px;
-            padding: 15px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            color: var(--accent);
         }
 
         .section-title {
-            border-bottom: 2px solid #d4af37;
+            border-bottom: 2px solid var(--gold);
             padding-bottom: 8px;
             margin-bottom: 10px;
-            color: #ffd700;
+            color: var(--accent);
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .tab-buttons {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 6px;
-            background: rgba(139, 111, 71, 0.5);
-            border: 1px solid #8b6f47;
-            color: #e8d4c0;
-            cursor: pointer;
-            font-size: 12px;
-            border-radius: 3px;
-            transition: all 0.3s;
-        }
-
-        .tab-btn.active {
-            background: #d4af37;
-            color: #1a0e0a;
-            font-weight: bold;
-        }
-
-        .upgrade-item {
-            background: rgba(60, 40, 30, 0.7);
-            border: 1px solid #8b6f47;
-            padding: 10px;
-            border-radius: 3px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 8px;
-        }
-
-        .upgrade-item:hover {
-            background: rgba(80, 50, 35, 0.9);
-            border-color: #d4af37;
-        }
-
-        .upgrade-item.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .upgrade-item.locked:hover {
-            background: rgba(60, 40, 30, 0.7);
-            border-color: #8b6f47;
-        }
-
-        .upgrade-name {
-            font-weight: bold;
-            color: #ffd700;
-            margin-bottom: 3px;
-        }
-
-        .upgrade-cost {
-            color: #ff9900;
-            font-size: 11px;
-        }
-
-        .upgrade-effect {
-            color: #a8e6a1;
-            font-size: 11px;
-            margin-top: 3px;
-        }
-
-        .stat-item {
-            padding: 8px;
-            background: rgba(60, 40, 30, 0.5);
-            border-left: 3px solid #d4af37;
-            margin-bottom: 5px;
-            font-size: 12px;
-            border-radius: 2px;
-        }
-
-        .stat-label {
-            color: #b8a090;
-            font-size: 11px;
-        }
-
-        .stat-value-small {
-            color: #ffd700;
-            font-weight: bold;
-        }
-
-        .footer {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-top: 2px solid #d4af37;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: rgba(30, 20, 15, 0.95);
-            padding: 30px;
-            border-radius: 5px;
-            border: 2px solid #d4af37;
-            max-width: 500px;
-            text-align: center;
-            animation: slideIn 0.3s;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-title {
-            font-size: 24px;
-            color: #ffd700;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .modal-text {
-            font-size: 16px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #d4af37, #f4e4c1);
-            border: 2px solid #8b6f47;
-            color: #1a0e0a;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 3px;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-
-        .btn:active {
-            transform: scale(0.95);
-        }
-
-        .btn-secondary {
-            background: rgba(139, 111, 71, 0.8);
-            color: #e8d4c0;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(139, 111, 71, 1);
-        }
-
-        @keyframes foam {
-            0%, 100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(-10px);
-                opacity: 0.7;
-            }
-        }
-
-        .foam-particle {
-            position: fixed;
-            pointer-events: none;
-            width: 30px;
-            height: 30px;
-            animation: foam 1s ease-out forwards;
-        }
-
-        @keyframes pop {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-
-        .pop-effect {
-            position: fixed;
-            pointer-events: none;
-            animation: pop 0.5s ease-out forwards;
-            font-weight: bold;
-            color: #ffd700;
-            font-size: 24px;
         }
 
         .scroll-area {
@@ -391,139 +207,265 @@
             padding-right: 10px;
         }
 
-        .scroll-area::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .scroll-area::-webkit-scrollbar-track {
-            background: rgba(60, 40, 30, 0.3);
-        }
-
-        .scroll-area::-webkit-scrollbar-thumb {
-            background: #8b6f47;
-            border-radius: 4px;
-        }
-
-        .scroll-area::-webkit-scrollbar-thumb:hover {
-            background: #d4af37;
-        }
+        .scroll-area::-webkit-scrollbar { width: 8px; }
+        .scroll-area::-webkit-scrollbar-track { background: rgba(60, 40, 30, 0.3); }
+        .scroll-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .scroll-area::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
         .beer-selector {
             display: flex;
-            gap: 5px;
+            gap: 6px;
             flex-wrap: wrap;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            justify-content: center;
         }
 
         .beer-btn {
             padding: 6px 10px;
             background: rgba(139, 111, 71, 0.5);
-            border: 1px solid #8b6f47;
-            color: #e8d4c0;
+            border: 1px solid var(--border);
+            color: var(--text);
             cursor: pointer;
-            font-size: 11px;
-            border-radius: 3px;
-            transition: all 0.3s;
+            font-size: 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
         }
 
-        .beer-btn.active {
-            background: #d4af37;
-            color: #1a0e0a;
-            font-weight: bold;
-            border-color: #ffd700;
-        }
-
-        .beer-btn:hover {
-            border-color: #d4af37;
-        }
-
-        .center-top {
-            margin-bottom: 20px;
-            text-align: center;
-        }
+        .beer-btn.active { background: var(--gold); color: var(--bg1); font-weight: 700; border-color: var(--accent); }
+        .beer-btn:hover { border-color: var(--gold); }
 
         .buttons-container {
             display: flex;
-            gap: 30px;
+            gap: 22px;
             align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .sell-button {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            border: 3px solid #27ae60;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.1s;
-            box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
+            margin: 6px 0 10px;
+            flex-wrap: wrap;
             justify-content: center;
-        }
-
-        .sell-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(46, 204, 113, 0.8);
-        }
-
-        .sell-button:active {
-            transform: scale(0.95);
         }
 
         .currency-display {
             text-align: center;
-            margin-top: 15px;
-            font-size: 16px;
+            font-size: 15px;
             color: #a8e6a1;
         }
+        .currency-amount { color: var(--accent); font-weight: 700; font-size: 20px; }
 
-        .currency-amount {
-            color: #ffd700;
-            font-weight: bold;
-            font-size: 20px;
+        .sidebar-right {
+            width: 300px;
+            background: rgba(30, 20, 15, 0.9);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow: hidden;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 8px;
+            background: rgba(139, 111, 71, 0.5);
+            border: 1px solid var(--border);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .tab-btn.active { background: var(--gold); color: var(--bg1); font-weight: 700; }
+
+        .upgrade-item {
+            background: rgba(60, 40, 30, 0.7);
+            border: 1px solid var(--border);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+        }
+        .upgrade-item:hover { background: rgba(80, 50, 35, 0.9); border-color: var(--gold); }
+        .upgrade-item.locked { opacity: 0.5; cursor: not-allowed; }
+        .upgrade-item.locked:hover { background: rgba(60, 40, 30, 0.7); border-color: var(--border); }
+        .upgrade-name { font-weight: 700; color: var(--accent); margin-bottom: 3px; }
+        .upgrade-cost { color: #ff9900; font-size: 11px; }
+        .upgrade-effect { color: #a8e6a1; font-size: 11px; margin-top: 3px; }
+
+        .stat-item {
+            padding: 8px;
+            background: rgba(60, 40, 30, 0.5);
+            border-left: 3px solid var(--gold);
+            margin-bottom: 5px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        .stat-label { color: #b8a090; font-size: 11px; }
+        .stat-value-small { color: var(--accent); font-weight: 700; }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 16px;
+            border-top: 2px solid var(--gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: rgba(30, 20, 15, 0.95);
+            padding: 24px;
+            border-radius: 10px;
+            border: 2px solid var(--gold);
+            max-width: 540px;
+            width: 100%;
+            text-align: center;
+            animation: slideIn 0.25s ease;
+        }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-title { font-size: 22px; color: var(--accent); margin-bottom: 14px; font-weight: 800; }
+        .modal-text { font-size: 15px; margin-bottom: 14px; line-height: 1.6; }
+        .modal-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 10px 16px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+            border: 2px solid var(--border);
+            color: var(--bg1);
+            font-weight: 800;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            font-size: 14px;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(212,175,55,0.25); }
+        .btn:active { transform: translateY(0); }
+        .btn-secondary { background: rgba(139, 111, 71, 0.9); color: var(--text); }
+
+        @keyframes foam { 0%,100%{transform: translateY(0); opacity: 1;} 50%{ transform: translateY(-10px); opacity: 0.7;} }
+        .foam-particle { position: fixed; pointer-events: none; width: 26px; height: 26px; animation: foam 0.9s ease-out forwards; }
+
+        .pop-effect {
+            position: fixed;
+            pointer-events: none;
+            animation: pop 0.45s ease-out forwards;
+            font-weight: 800;
+            color: var(--accent);
+            font-size: 22px;
+        }
+        @keyframes pop { 0%{ transform: scale(1); opacity: 1;} 100%{ transform: scale(1.4); opacity: 0;} }
+
+        /* Bottom tabs for mobile */
+        .bottom-tabs {
+            display: none;
+        }
+
+        /* Mobile layout */
+        @media (max-width: 768px) {
+            .main {
+                flex-direction: column;
+                gap: 8px;
+                padding: 8px;
+                padding-bottom: calc(60px + env(safe-area-inset-bottom));
+            }
+            .sidebar-left, .sidebar-right {
+                width: 100%;
+                border-radius: 10px;
+            }
+            .sidebar-left {
+                max-height: 140px;
+            }
+            .center { padding: 6px 6px 0; }
+
+            .sidebar-right {
+                position: fixed;
+                left: 8px;
+                right: 8px;
+                bottom: calc(60px + env(safe-area-inset-bottom) + 8px);
+                height: 40vh;
+                border: 2px solid var(--gold);
+                background: rgba(30, 20, 15, 0.95);
+                z-index: 4;
+            }
+            .sidebar-right .tab-buttons { display: none; }
+
+            .bottom-tabs {
+                position: fixed;
+                left: 0; right: 0;
+                bottom: 0;
+                height: 60px;
+                padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+                background: rgba(0,0,0,0.9);
+                border-top: 2px solid var(--gold);
+                display: flex;
+                gap: 8px;
+                z-index: 6;
+            }
+            .bottom-tabs .tab-btn {
+                border-radius: 10px;
+                font-size: 13px;
+                padding: 8px;
+            }
+
+            .tap-button, .sell-button { width: 148px; height: 148px; }
+            .button-icon { width: 50px; height: 50px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="stat-box">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 6v12M9 9h6a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-6"></path>
-                </svg>
-                <span>Currency:</span>
-                <span class="stat-value" id="currencyDisplay">0</span>
-            </div>
-            <div class="stat-box">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
-                </svg>
-                <span>Reputation:</span>
-                <span class="stat-value" id="reputationDisplay">0</span>
-            </div>
-            <div class="stat-box">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L15.09 8.26H22L17.82 12.88L20.91 19.12L12 15.4L3.09 19.12L6.18 12.88L2 8.26H8.91L12 2Z"/>
-                </svg>
-                <span>Experience:</span>
-                <span class="stat-value" id="experienceDisplay">0</span>
-            </div>
-            <div class="stat-box">
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="14" width="7" height="7"></rect>
-                    <rect x="3" y="14" width="7" height="7"></rect>
-                </svg>
-                <span>Phase:</span>
-                <span class="stat-value" id="phaseDisplay">1</span>
+            <div class="header-wrap">
+                <div class="stat-box">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 6v12M9 9h6a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-6"></path>
+                    </svg>
+                    <span>Currency:</span>
+                    <span class="stat-value" id="currencyDisplay">0</span>
+                </div>
+                <div class="stat-box">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+                    </svg>
+                    <span>Reputation:</span>
+                    <span class="stat-value" id="reputationDisplay">0</span>
+                </div>
+                <div class="stat-box">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L15.09 8.26H22L17.82 12.88L20.91 19.12L12 15.4L3.09 19.12L6.18 12.88L2 8.26H8.91L12 2Z"/>
+                    </svg>
+                    <span>Experience:</span>
+                    <span class="stat-value" id="experienceDisplay">0</span>
+                </div>
+                <div class="stat-box">
+                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Phase:</span>
+                    <span class="stat-value" id="phaseDisplay">1</span>
+                </div>
             </div>
         </div>
 
@@ -552,7 +494,7 @@
                         <div class="stat-label">Prestige Level</div>
                         <div class="stat-value-small" id="prestigeLevelDisplay">0</div>
                     </div>
-                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #8b6f47;">
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
                         <button class="btn btn-secondary" id="prestigeBtn" style="width: 100%; display: none;">
                             PRESTIGE
                         </button>
@@ -561,23 +503,37 @@
             </div>
 
             <div class="center">
-                <div class="center-top">
-                    <div style="font-size: 20px; margin-bottom: 15px; color: #ffd700;">
-                        Current Beer: <span id="currentBeerType">Blonde Ale</span>
-                    </div>
-                    <div class="beer-selector" id="beerSelector"></div>
+                <div style="font-size: 18px; color: var(--accent);">
+                    Current Beer: <span id="currentBeerType">Blonde Ale</span>
                 </div>
-                
-                <button class="tap-button" id="tapBtn" title="Click to brew and earn gold">
-                    <div class="button-content">
-                        <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M10 3h4v3h2V3h0a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v3h2V3z"/>
-                            <path d="M8 6h8v11a4 4 0 0 1-4 4 4 4 0 0 1-4-4V6z"/>
-                            <path d="M9 9h6M9 12h6M9 15h6"/>
-                        </svg>
-                        <span>TAP KEG</span>
-                    </div>
-                </button>
+                <div class="beer-selector" id="beerSelector"></div>
+
+                <div class="buttons-container">
+                    <button class="tap-button" id="tapBtn" title="Click to brew and earn gold">
+                        <div class="button-content">
+                            <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <path d="M10 3h4v3h2V3h0a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v3h2V3z"/>
+                                <path d="M8 6h8v11a4 4 0 0 1-4 4 4 4 0 0 1-4-4V6z"/>
+                                <path d="M9 9h6M9 12h6M9 15h6"/>
+                            </svg>
+                            <span>TAP KEG</span>
+                        </div>
+                    </button>
+
+                    <button class="sell-button" id="sellBtn" title="Sell all ready beer">
+                        <div class="button-content">
+                            <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <path d="M3 6h18M5 6l1 12a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3l1-12"/>
+                                <path d="M9 6V4a3 3 0 0 1 3-3 3 3 0 0 1 3 3v2"/>
+                            </svg>
+                            <span>SELL</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="currency-display">
+                    Ready to Sell: <span class="currency-amount" id="readyToSell">0</span>
+                </div>
 
                 <div class="phase-indicator">
                     <span id="phaseName">Artisanal Beginning</span>
@@ -593,8 +549,9 @@
 
                 <div id="upgrades-tab" class="tab-content scroll-area">
                     <div class="section-title">
-                        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-. 9-2zm10-9l-4.5 9h-3l-2-4.6-4 4.6H1l7.5-11 2 4.6 4-4.6h3z"/>
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <!-- fixed malformed path -->
+                            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2zm10-9l-4.5 9h-3l-2-4.6-4 4.6H1l7.5-11 2 4.6 4-4.6h3z"/>
                         </svg>
                         Upgrades
                     </div>
@@ -603,7 +560,7 @@
 
                 <div id="buildings-tab" class="tab-content scroll-area" style="display: none;">
                     <div class="section-title">
-                        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                         </svg>
                         Buildings
@@ -613,7 +570,7 @@
 
                 <div id="prestige-tab" class="tab-content scroll-area" style="display: none;">
                     <div class="section-title">
-                        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M12 2L15.09 8.26H22L17.82 12.88L20.91 19.12L12 15.4L3.09 19.12L6.18 12.88L2 8.26H8.91L12 2Z"/>
                         </svg>
                         Prestige Upgrades
@@ -625,7 +582,7 @@
 
         <div class="footer">
             <div>
-                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+                <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
                 </svg>
                 <span>Gold/sec:</span>
@@ -633,40 +590,48 @@
             </div>
             <div>
                 <span>Bottles Sold:</span>
-                <span id="bottlesSold" style="color: #ffd700;">0</span>
+                <span id="bottlesSold" style="color: var(--accent);">0</span>
             </div>
             <div>
                 <span>Playtime:</span>
                 <span id="playtime">0m</span>
             </div>
-            <div>
-                <span>v1.0 - BrewTycoon</span>
-            </div>
+            <div><span>v1.0 - BrewTycoon</span></div>
+        </div>
+
+        <!-- Bottom tabs for mobile -->
+        <div class="bottom-tabs" id="bottomTabs">
+            <button class="tab-btn active" data-tab="upgrades">Upgrades</button>
+            <button class="tab-btn" data-tab="buildings">Buildings</button>
+            <button class="tab-btn" data-tab="prestige">Prestige</button>
         </div>
     </div>
 
-    <div class="modal" id="phaseModal">
-        <div class="modal-content">
+    <!-- Phase modal -->
+    <div class="modal" id="phaseModal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true">
             <div class="modal-title" id="phaseTitle">Phase Unlocked!</div>
             <div class="modal-text" id="phaseText"></div>
             <div class="modal-buttons">
-                <button class="btn" onclick="closePhaseModal()">Great!</button>
+                <button class="btn" onclick="closePhaseModal()">Great</button>
             </div>
         </div>
     </div>
 
-    <div class="modal" id="prestigeModal">
-        <div class="modal-content">
+    <!-- Prestige modal -->
+    <div class="modal" id="prestigeModal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true">
             <div class="modal-title">Activate Prestige?</div>
             <div class="modal-text" id="prestigeText"></div>
             <div class="modal-buttons">
-                <button class="btn" onclick="executePrestige()">Yes, Reset!</button>
+                <button class="btn" onclick="executePrestige()">Yes, Reset</button>
                 <button class="btn btn-secondary" onclick="closePrestigeModal()">Cancel</button>
             </div>
         </div>
     </div>
 
     <script>
+        /* ----- Game State ----- */
         const game = {
             currency: 0,
             readyToSell: 0,
@@ -675,189 +640,38 @@
             phase: 1,
             bottlesSold: 0,
             playtimeSeconds: 0,
-            
+
             beerPerClick: 1,
             clickMultiplier: 1,
             incomeMultiplier: 1,
-            
+
             upgrades: {},
-            
             beerTypes: {
-                blonde: {
-                    name: 'Blonde Ale',
-                    unlockedAt: 0,
-                    price: 10,
-                    reputationBoost: 1
-                },
-                ipa: {
-                    name: 'IPA',
-                    unlockedAt: 3,
-                    price: 50,
-                    reputationBoost: 1.5
-                },
-                stout: {
-                    name: 'Stout',
-                    unlockedAt: 6,
-                    price: 150,
-                    reputationBoost: 2
-                },
-                tripel: {
-                    name: 'Tripel',
-                    unlockedAt: 9,
-                    price: 300,
-                    reputationBoost: 2.5
-                },
-                amberAle: {
-                    name: 'Amber Ale',
-                    unlockedAt: 12,
-                    price: 500,
-                    reputationBoost: 2
-                },
-                legendary: {
-                    name: 'Legendary Beer',
-                    unlockedAt: 15,
-                    price: 5000,
-                    reputationBoost: 5
-                }
+                blonde: { name: 'Blonde Ale', unlockedAt: 0, price: 10, reputationBoost: 1 },
+                ipa: { name: 'IPA', unlockedAt: 3, price: 50, reputationBoost: 1.5 },
+                stout: { name: 'Stout', unlockedAt: 6, price: 150, reputationBoost: 2 },
+                tripel: { name: 'Tripel', unlockedAt: 9, price: 300, reputationBoost: 2.5 },
+                amberAle: { name: 'Amber Ale', unlockedAt: 12, price: 500, reputationBoost: 2 },
+                legendary: { name: 'Legendary Beer', unlockedAt: 15, price: 5000, reputationBoost: 5 }
             },
-            
             selectedBeerType: 'blonde',
             incomePerSecond: 0
         };
 
         const upgradesList = {
-            woodenVat: {
-                name: 'Wooden Vat',
-                type: 'production',
-                cost: 100,
-                effect: 'bierPerClick',
-                effectValue: 1,
-                unlockedAt: 0,
-                purchased: false,
-                description: '+1 beer per click'
-            },
-            steelVat: {
-                name: 'Steel Vat',
-                type: 'production',
-                cost: 500,
-                effect: 'bierPerClick',
-                effectValue: 5,
-                unlockedAt: 1,
-                purchased: false,
-                description: '+5 beer per click'
-            },
-            automaticTap: {
-                name: 'Automatic Tap',
-                type: 'production',
-                cost: 1000,
-                effect: 'incomePerSecond',
-                effectValue: 1,
-                unlockedAt: 2,
-                purchased: false,
-                description: '+1 gold/sec'
-            },
-            fermentationChamber: {
-                name: 'Fermentation Chamber',
-                type: 'production',
-                cost: 5000,
-                effect: 'incomePerSecond',
-                effectValue: 5,
-                unlockedAt: 3,
-                purchased: false,
-                description: '+5 gold/sec'
-            },
-            qualityCert: {
-                name: 'Quality Certification',
-                type: 'economic',
-                cost: 2000,
-                effect: 'priceMultiplier',
-                effectValue: 1.1,
-                unlockedAt: 2,
-                purchased: false,
-                description: '+10% selling prices'
-            },
-            marketingCampaign: {
-                name: 'Marketing Campaign',
-                type: 'economic',
-                cost: 3000,
-                effect: 'reputationMultiplier',
-                effectValue: 1.2,
-                unlockedAt: 3,
-                purchased: false,
-                description: '+20% reputation'
-            },
-            coolingUnit: {
-                name: 'Cooling Unit',
-                type: 'production',
-                cost: 7500,
-                effect: 'incomeMultiplier',
-                effectValue: 1.15,
-                unlockedAt: 4,
-                purchased: false,
-                description: '+15% income'
-            },
-            bottlingLine: {
-                name: 'Bottling Line',
-                type: 'production',
-                cost: 15000,
-                effect: 'incomePerSecond',
-                effectValue: 20,
-                unlockedAt: 5,
-                purchased: false,
-                description: '+20 gold/sec'
-            },
-            distributionCenter: {
-                name: 'Distribution Center',
-                type: 'economic',
-                cost: 20000,
-                effect: 'priceMultiplier',
-                effectValue: 1.5,
-                unlockedAt: 6,
-                purchased: false,
-                description: '×1.5 selling prices'
-            },
-            exportLicense: {
-                name: 'Export License',
-                type: 'economic',
-                cost: 50000,
-                effect: 'incomeMultiplier',
-                effectValue: 1.3,
-                unlockedAt: 7,
-                purchased: false,
-                description: '+30% global income'
-            },
-            brewingTeam: {
-                name: 'Brewing Team (Level)',
-                type: 'production',
-                cost: 4000,
-                effect: 'staffBonus',
-                effectValue: 0.01,
-                unlockedAt: 4,
-                purchased: false,
-                purchaseCount: 0,
-                description: '+1% production per level',
-                repeatable: true
-            },
-            qualityLab: {
-                name: 'Quality Lab',
-                type: 'production',
-                cost: 25000,
-                effect: 'incomePerSecond',
-                effectValue: 50,
-                unlockedAt: 8,
-                purchased: false,
-                description: '+50 gold/sec'
-            },
-            masterBrewMentorship: {
-                name: 'Master Brew Mentorship',
-                type: 'production',
-                cost: 75000,
-                effect: 'incomeMultiplier',
-                effectValue: 2,
-                unlockedAt: 10,
-                purchased: false,
-                description: '×2 all income'
-            }
+            woodenVat: { name: 'Wooden Vat', type: 'production', cost: 100, effect: 'bierPerClick', effectValue: 1, unlockedAt: 0, purchased: false, description: '+1 beer per click' },
+            steelVat: { name: 'Steel Vat', type: 'production', cost: 500, effect: 'bierPerClick', effectValue: 5, unlockedAt: 1, purchased: false, description: '+5 beer per click' },
+            automaticTap: { name: 'Automatic Tap', type: 'production', cost: 1000, effect: 'incomePerSecond', effectValue: 1, unlockedAt: 2, purchased: false, description: '+1 gold/sec' },
+            fermentationChamber: { name: 'Fermentation Chamber', type: 'production', cost: 5000, effect: 'incomePerSecond', effectValue: 5, unlockedAt: 3, purchased: false, description: '+5 gold/sec' },
+            qualityCert: { name: 'Quality Certification', type: 'economic', cost: 2000, effect: 'priceMultiplier', effectValue: 1.1, unlockedAt: 2, purchased: false, description: '+10% selling prices' },
+            marketingCampaign: { name: 'Marketing Campaign', type: 'economic', cost: 3000, effect: 'reputationMultiplier', effectValue: 1.2, unlockedAt: 3, purchased: false, description: '+20% reputation' },
+            coolingUnit: { name: 'Cooling Unit', type: 'production', cost: 7500, effect: 'incomeMultiplier', effectValue: 1.15, unlockedAt: 4, purchased: false, description: '+15% income' },
+            bottlingLine: { name: 'Bottling Line', type: 'production', cost: 15000, effect: 'incomePerSecond', effectValue: 20, unlockedAt: 5, purchased: false, description: '+20 gold/sec' },
+            distributionCenter: { name: 'Distribution Center', type: 'economic', cost: 20000, effect: 'priceMultiplier', effectValue: 1.5, unlockedAt: 6, purchased: false, description: '×1.5 selling prices' },
+            exportLicense: { name: 'Export License', type: 'economic', cost: 50000, effect: 'incomeMultiplier', effectValue: 1.3, unlockedAt: 7, purchased: false, description: '+30% global income' },
+            brewingTeam: { name: 'Brewing Team (Level)', type: 'production', cost: 4000, effect: 'staffBonus', effectValue: 0.01, unlockedAt: 4, purchased: false, purchaseCount: 0, description: '+1% production per level', repeatable: true },
+            qualityLab: { name: 'Quality Lab', type: 'production', cost: 25000, effect: 'incomePerSecond', effectValue: 50, unlockedAt: 8, purchased: false, description: '+50 gold/sec' },
+            masterBrewMentorship: { name: 'Master Brew Mentorship', type: 'production', cost: 75000, effect: 'incomeMultiplier', effectValue: 2, unlockedAt: 10, purchased: false, description: '×2 all income' }
         };
 
         const phaseNames = [
@@ -876,32 +690,53 @@
             5: 'Congratulations! You\'ve achieved legendary status. Enjoy the ultimate game experience!'
         };
 
-        // Initialize game
+        /* ----- Init ----- */
         function init() {
             loadGame();
             createUpgradeButtons();
             createBeerSelectors();
-            updateUI();
+            updateUI(true);
             setupEventListeners();
-            gameLoop();
-            playtimeLoop();
+            startLoops();
         }
 
         function setupEventListeners() {
-            document.getElementById('tapBtn').addEventListener('click', brewBeer);
-            document.getElementById('sellBtn').addEventListener('click', sellAllBeer);
-            
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    switchTab(e.target.dataset.tab);
-                });
+            const tapBtn = document.getElementById('tapBtn');
+            const sellBtn = document.getElementById('sellBtn');
+
+            // Click and pointer support
+            tapBtn.addEventListener('click', brewBeer);
+            tapBtn.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') brewBeer(); });
+
+            if (sellBtn) {
+                sellBtn.addEventListener('click', sellAllBeer);
+                sellBtn.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') sellAllBeer(); });
+            }
+
+            // Desktop right-panel tabs
+            document.querySelectorAll('.sidebar-right .tab-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => switchTab(e.currentTarget.dataset.tab, e.currentTarget));
             });
+            // Bottom mobile tabs
+            document.querySelectorAll('#bottomTabs .tab-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => switchTab(e.currentTarget.dataset.tab, e.currentTarget));
+            });
+
+            // Prevent double-tap zoom
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) { e.preventDefault(); }
+                lastTouchEnd = now;
+            }, { passive: false });
+
+            // iOS pinch gesture guard
+            document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
         }
 
         function createBeerSelectors() {
             const selector = document.getElementById('beerSelector');
             selector.innerHTML = '';
-            
             Object.entries(game.beerTypes).forEach(([key, beer]) => {
                 if (game.experience >= beer.unlockedAt) {
                     const btn = document.createElement('button');
@@ -928,30 +763,30 @@
         function createUpgradeTab() {
             const list = document.getElementById('upgradesList');
             list.innerHTML = '';
-            
+
             Object.entries(upgradesList).forEach(([key, upgrade]) => {
                 if (upgrade.unlockedAt <= game.phase) {
                     const item = document.createElement('div');
                     item.className = `upgrade-item ${game.currency < upgrade.cost && !upgrade.purchased ? 'locked' : ''}`;
-                    
+
                     let costText = upgrade.cost.toLocaleString();
                     if (upgrade.repeatable && upgrade.purchaseCount > 0) {
                         costText = (upgrade.cost * Math.pow(1.1, upgrade.purchaseCount)).toFixed(0);
                     }
-                    
+
                     item.innerHTML = `
                         <div class="upgrade-name">${upgrade.name}</div>
                         <div class="upgrade-effect">${upgrade.description}</div>
-                        <div class="upgrade-cost">Gold: ${costText}</div>
+                        <div class="upgrade-cost">Gold: ${Number(costText).toLocaleString()}</div>
                     `;
-                    
+
                     if (!upgrade.purchased || upgrade.repeatable) {
                         item.onclick = () => buyUpgrade(key);
                     } else {
                         item.style.opacity = '0.3';
                         item.style.cursor = 'default';
                     }
-                    
+
                     list.appendChild(item);
                 }
             });
@@ -960,46 +795,16 @@
         function createBuildingTab() {
             const list = document.getElementById('buildingsList');
             list.innerHTML = '';
-            
+
             const buildings = [
-                {
-                    name: 'Fermentation Plant',
-                    cost: 10000,
-                    income: 15,
-                    unlocked: game.phase >= 3,
-                    description: '+15 gold/sec'
-                },
-                {
-                    name: 'Packaging Facility',
-                    cost: 30000,
-                    income: 50,
-                    unlocked: game.phase >= 5,
-                    description: '+50 gold/sec'
-                },
-                {
-                    name: 'Quality Control Lab',
-                    cost: 50000,
-                    income: 100,
-                    unlocked: game.phase >= 7,
-                    description: '+100 gold/sec'
-                },
-                {
-                    name: 'International Hub',
-                    cost: 100000,
-                    income: 250,
-                    unlocked: game.phase >= 8,
-                    description: '+250 gold/sec'
-                },
-                {
-                    name: 'Master Brewery Complex',
-                    cost: 250000,
-                    income: 1000,
-                    unlocked: game.phase >= 9,
-                    description: '+1000 gold/sec'
-                }
+                { name: 'Fermentation Plant', cost: 10000, income: 15, unlocked: game.phase >= 3, description: '+15 gold/sec' },
+                { name: 'Packaging Facility', cost: 30000, income: 50, unlocked: game.phase >= 5, description: '+50 gold/sec' },
+                { name: 'Quality Control Lab', cost: 50000, income: 100, unlocked: game.phase >= 7, description: '+100 gold/sec' },
+                { name: 'International Hub', cost: 100000, income: 250, unlocked: game.phase >= 8, description: '+250 gold/sec' },
+                { name: 'Master Brewery Complex', cost: 250000, income: 1000, unlocked: game.phase >= 9, description: '+1000 gold/sec' }
             ];
-            
-            buildings.forEach((building, idx) => {
+
+            buildings.forEach((building) => {
                 if (building.unlocked) {
                     const item = document.createElement('div');
                     item.className = `upgrade-item ${game.currency < building.cost ? 'locked' : ''}`;
@@ -1017,40 +822,15 @@
         function createPrestigeTab() {
             const list = document.getElementById('prestigeUpgradesList');
             list.innerHTML = '';
-            
+
             const prestigeUpgrades = [
-                {
-                    name: 'Master Brewer',
-                    cost: 10,
-                    effect: '×2 automatic production',
-                    unlocked: game.experience >= 10
-                },
-                {
-                    name: 'Special Yeast',
-                    cost: 25,
-                    effect: 'Faster fermentation',
-                    unlocked: game.experience >= 25
-                },
-                {
-                    name: 'Brand Recognition',
-                    cost: 50,
-                    effect: '×1.5 selling prices',
-                    unlocked: game.experience >= 50
-                },
-                {
-                    name: 'Heritage Recipe',
-                    cost: 100,
-                    effect: '+5% production per prestige',
-                    unlocked: game.experience >= 100
-                },
-                {
-                    name: 'Brewery Legacy',
-                    cost: 200,
-                    effect: '+10% reputation per prestige',
-                    unlocked: game.experience >= 200
-                }
+                { name: 'Master Brewer', cost: 10, effect: '×2 automatic production', unlocked: game.experience >= 10 },
+                { name: 'Special Yeast', cost: 25, effect: 'Faster fermentation', unlocked: game.experience >= 25 },
+                { name: 'Brand Recognition', cost: 50, effect: '×1.5 selling prices', unlocked: game.experience >= 50 },
+                { name: 'Heritage Recipe', cost: 100, effect: '+5% production per prestige', unlocked: game.experience >= 100 },
+                { name: 'Brewery Legacy', cost: 200, effect: '+10% reputation per prestige', unlocked: game.experience >= 200 }
             ];
-            
+
             prestigeUpgrades.forEach(upgrade => {
                 if (upgrade.unlocked) {
                     const item = document.createElement('div');
@@ -1065,22 +845,22 @@
             });
         }
 
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.style.display = 'none';
-            });
-            
-            event.target.classList.add('active');
-            document.getElementById(tabName + '-tab').style.display = 'block';
+        function switchTab(tabName, btnEl) {
+            // deactivate all
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(p => p.style.display = 'none');
+
+            // activate the selected
+            const panel = document.getElementById(`${tabName}-tab`);
+            if (panel) panel.style.display = 'block';
+
+            // activate the clicked button(s) with same data-tab
+            document.querySelectorAll(`.tab-btn[data-tab="${tabName}"]`).forEach(b => b.classList.add('active'));
         }
 
         function brewBeer() {
             const beerAmount = game.beerPerClick * game.clickMultiplier;
             game.readyToSell += beerAmount;
-            
             createFoamEffect();
             playTapSound();
             updateUI();
@@ -1090,13 +870,13 @@
             if (game.readyToSell > 0) {
                 const beerType = game.beerTypes[game.selectedBeerType];
                 const goldEarned = game.readyToSell * beerType.price * game.incomeMultiplier;
-                
+
                 game.currency += goldEarned;
                 game.bottlesSold += game.readyToSell;
-                
+
                 const reputationGain = Math.floor(game.readyToSell * beerType.reputationBoost * 0.1);
                 game.reputation += reputationGain;
-                
+
                 game.readyToSell = 0;
                 playPopSound();
                 updateUI();
@@ -1107,40 +887,33 @@
         function buyUpgrade(key) {
             const upgrade = upgradesList[key];
             let cost = upgrade.cost;
-            
+
             if (upgrade.repeatable && upgrade.purchaseCount > 0) {
                 cost = Math.floor(upgrade.cost * Math.pow(1.1, upgrade.purchaseCount));
             }
-            
+
             if (game.currency >= cost) {
                 game.currency -= cost;
-                
-                switch(upgrade.effect) {
+
+                switch (upgrade.effect) {
                     case 'bierPerClick':
-                        game.beerPerClick += upgrade.effectValue;
-                        break;
+                        game.beerPerClick += upgrade.effectValue; break;
                     case 'incomePerSecond':
-                        game.incomePerSecond += upgrade.effectValue;
-                        break;
+                        game.incomePerSecond += upgrade.effectValue; break;
                     case 'priceMultiplier':
-                        game.incomeMultiplier *= upgrade.effectValue;
-                        break;
+                        game.incomeMultiplier *= upgrade.effectValue; break;
                     case 'incomeMultiplier':
-                        game.incomeMultiplier *= upgrade.effectValue;
-                        break;
+                        game.incomeMultiplier *= upgrade.effectValue; break;
                     case 'staffBonus':
-                        upgrade.purchaseCount += 1;
+                        upgrade.purchaseCount = (upgrade.purchaseCount || 0) + 1;
                         game.incomePerSecond *= (1 + upgrade.purchaseCount * upgrade.effectValue);
                         break;
                     case 'reputationMultiplier':
-                        game.reputation *= upgrade.effectValue;
-                        break;
+                        game.reputation *= upgrade.effectValue; break;
                 }
-                
-                if (!upgrade.repeatable) {
-                    upgrade.purchased = true;
-                }
-                
+
+                if (!upgrade.repeatable) { upgrade.purchased = true; }
+
                 playUpgradeSound();
                 createUpgradeButtons();
                 updateUI();
@@ -1161,24 +934,26 @@
 
         function executePrestige() {
             closePrestigeModal();
-            
+
             game.experience += Math.floor(game.bottlesSold / 100000);
             const prestigeBonus = 1 + (game.experience * 0.05);
             game.incomeMultiplier *= prestigeBonus;
             game.incomePerSecond *= prestigeBonus;
-            
+
             game.currency = 0;
             game.readyToSell = 0;
             game.beerPerClick = 1;
             game.phase = 1;
             game.bottlesSold = 0;
-            
+
             Object.keys(upgradesList).forEach(key => {
                 if (!upgradesList[key].repeatable) {
                     upgradesList[key].purchased = false;
+                } else {
+                    // keep counts for repeatables
                 }
             });
-            
+
             playPrestigeSound();
             createUpgradeButtons();
             updateUI();
@@ -1232,13 +1007,13 @@
         function createFoamEffect() {
             const x = Math.random() * window.innerWidth;
             const y = Math.random() * window.innerHeight;
-            
+
             const foam = document.createElement('div');
             foam.className = 'foam-particle';
             foam.style.left = x + 'px';
             foam.style.top = y + 'px';
             foam.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 100%; height: 100%; color: #ffd700;">
+                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 100%; height: 100%; color: var(--accent);">
                     <circle cx="6" cy="6" r="3" opacity="0.7"/>
                     <circle cx="12" cy="5" r="2.5" opacity="0.8"/>
                     <circle cx="18" cy="7" r="2" opacity="0.6"/>
@@ -1247,56 +1022,60 @@
                 </svg>
             `;
             document.body.appendChild(foam);
-            
-            setTimeout(() => foam.remove(), 1000);
+            setTimeout(() => foam.remove(), 900);
         }
 
-        function updateUI() {
-            // Header updates
+        /* ----- UI Update ----- */
+        let lastSaveTs = 0;
+        function updateUI(forceSave=false) {
+            // Header
             document.getElementById('currencyDisplay').textContent = formatNumber(game.currency);
             document.getElementById('reputationDisplay').textContent = formatNumber(game.reputation);
             document.getElementById('experienceDisplay').textContent = game.experience;
             document.getElementById('phaseDisplay').textContent = game.phase;
-            
-            // Sidebar updates
+
+            // Left stats
             document.getElementById('incomePerSec').textContent = formatNumber(game.incomePerSecond) + '/sec';
             document.getElementById('multiplierDisplay').textContent = game.incomeMultiplier.toFixed(2) + 'x';
-            
+
             let staffBonus = 0;
             Object.values(upgradesList).forEach(u => {
-                if (u.effect === 'staffBonus' && u.purchaseCount > 0) {
+                if (u.effect === 'staffBonus' && (u.purchaseCount || 0) > 0) {
                     staffBonus += u.purchaseCount;
                 }
             });
             document.getElementById('staffBonusDisplay').textContent = (staffBonus).toFixed(1) + ' levels';
             document.getElementById('prestigeLevelDisplay').textContent = game.experience >= 10 ? (game.experience / 10).toFixed(1) : 0;
-            
-            // Phase update
+
+            // Phase
             document.getElementById('phaseName').textContent = phaseNames[game.phase - 1] || 'Legendary Status';
-            
-            // Center updates
+
+            // Center
             document.getElementById('readyToSell').textContent = formatNumber(game.readyToSell);
-            
-            // Footer updates
+
+            // Footer
             document.getElementById('productionStatus').textContent = formatNumber(game.incomePerSecond);
             document.getElementById('bottlesSold').textContent = formatNumber(game.bottlesSold);
-            
+
             const minutes = Math.floor(game.playtimeSeconds / 60);
             const hours = Math.floor(minutes / 60);
-            if (hours > 0) {
-                document.getElementById('playtime').textContent = hours + 'h ' + (minutes % 60) + 'm';
-            } else {
-                document.getElementById('playtime').textContent = minutes + 'm';
-            }
-            
-            // Prestige button
+            document.getElementById('playtime').textContent = hours > 0 ? `${hours}h ${minutes % 60}m` : `${minutes}m`;
+
+            // Prestige btn
+            const pBtn = document.getElementById('prestigeBtn');
             if (game.bottlesSold >= 100000 && game.phase > 1) {
-                document.getElementById('prestigeBtn').style.display = 'block';
-                document.getElementById('prestigeBtn').onclick = showPrestigeModal;
+                pBtn.style.display = 'block';
+                pBtn.onclick = showPrestigeModal;
+            } else {
+                pBtn.style.display = 'none';
             }
-            
-            // Save game
-            saveGame();
+
+            // Throttled save
+            const now = Date.now();
+            if (forceSave || now - lastSaveTs > 2000) {
+                saveGame();
+                lastSaveTs = now;
+            }
         }
 
         function formatNumber(num) {
@@ -1323,7 +1102,9 @@
                 upgrades: upgradesList,
                 playtimeSeconds: game.playtimeSeconds
             };
-            localStorage.setItem('brewcraftSave', JSON.stringify(gameState));
+            try {
+                localStorage.setItem('brewcraftSave', JSON.stringify(gameState));
+            } catch { /* ignore quota */ }
         }
 
         function loadGame() {
@@ -1343,7 +1124,7 @@
                     game.incomePerSecond = state.incomePerSecond || 0;
                     game.selectedBeerType = state.selectedBeerType || 'blonde';
                     game.playtimeSeconds = state.playtimeSeconds || 0;
-                    
+
                     if (state.upgrades) {
                         Object.keys(state.upgrades).forEach(key => {
                             if (upgradesList[key]) {
@@ -1352,40 +1133,48 @@
                             }
                         });
                     }
-                } catch(e) {
-                    console.log('Save file corrupted, starting fresh');
-                }
+                } catch { /* corrupted save, start fresh */ }
             }
         }
 
-        function gameLoop() {
-            game.currency += game.incomePerSecond / 60;
+        /* ----- Loops with delta time ----- */
+        let rafId = null;
+        let lastTs = performance.now();
+
+        function gameFrame(ts) {
+            const dt = Math.max(0, ts - lastTs) / 1000; // seconds
+            lastTs = ts;
+
+            game.currency += game.incomePerSecond * dt;
             updateUI();
-            requestAnimationFrame(gameLoop);
+
+            rafId = requestAnimationFrame(gameFrame);
         }
 
-        function playtimeLoop() {
-            game.playtimeSeconds += 1;
-            updateUI();
-            setTimeout(playtimeLoop, 1000);
+        function startLoops() {
+            lastTs = performance.now();
+            rafId = requestAnimationFrame(gameFrame);
+
+            // Playtime ticker
+            setInterval(() => {
+                game.playtimeSeconds += 1;
+                updateUI();
+            }, 1000);
         }
 
+        /* ----- Sounds ----- */
         function playTapSound() {
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = audioContext.createOscillator();
                 const gain = audioContext.createGain();
-                
-                osc.connect(gain);
-                gain.connect(audioContext.destination);
-                
+                osc.connect(gain); gain.connect(audioContext.destination);
                 osc.frequency.value = 800;
-                gain.gain.setValueAtTime(0.05, audioContext.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                
+                gain.gain.setValueAtTime(0.04, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.09);
                 osc.start(audioContext.currentTime);
-                osc.stop(audioContext.currentTime + 0.1);
-            } catch(e) {}
+                osc.stop(audioContext.currentTime + 0.09);
+            } catch {}
         }
 
         function playUpgradeSound() {
@@ -1393,18 +1182,14 @@
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = audioContext.createOscillator();
                 const gain = audioContext.createGain();
-                
-                osc.connect(gain);
-                gain.connect(audioContext.destination);
-                
+                osc.connect(gain); gain.connect(audioContext.destination);
                 osc.frequency.setValueAtTime(1200, audioContext.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.05, audioContext.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                
+                osc.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.18);
+                gain.gain.setValueAtTime(0.04, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.18);
                 osc.start(audioContext.currentTime);
-                osc.stop(audioContext.currentTime + 0.2);
-            } catch(e) {}
+                osc.stop(audioContext.currentTime + 0.18);
+            } catch {}
         }
 
         function playPopSound() {
@@ -1412,43 +1197,35 @@
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = audioContext.createOscillator();
                 const gain = audioContext.createGain();
-                
-                osc.connect(gain);
-                gain.connect(audioContext.destination);
-                
+                osc.connect(gain); gain.connect(audioContext.destination);
                 osc.frequency.setValueAtTime(1500, audioContext.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.075, audioContext.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0, audioContext.currentTime + 0.1);
-                
+                gain.gain.setValueAtTime(0.06, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
                 osc.start(audioContext.currentTime);
                 osc.stop(audioContext.currentTime + 0.1);
-            } catch(e) {}
+            } catch {}
         }
 
         function playPrestigeSound() {
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
                 const notes = [523.25, 659.25, 783.99];
                 notes.forEach((freq, idx) => {
                     const osc = audioContext.createOscillator();
                     const gain = audioContext.createGain();
-                    
-                    osc.connect(gain);
-                    gain.connect(audioContext.destination);
-                    
+                    osc.connect(gain); gain.connect(audioContext.destination);
                     osc.frequency.value = freq;
-                    gain.gain.setValueAtTime(0.05, audioContext.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-                    
-                    osc.start(audioContext.currentTime);
-                    osc.stop(audioContext.currentTime + 0.5);
+                    const t0 = audioContext.currentTime + idx * 0.05;
+                    gain.gain.setValueAtTime(0.04, t0);
+                    gain.gain.exponentialRampToValueAtTime(0.01, t0 + 0.45);
+                    osc.start(t0);
+                    osc.stop(t0 + 0.45);
                 });
-            } catch(e) {}
+            } catch {}
         }
 
-        // Start the game
+        /* ----- Start ----- */
         init();
     </script>
 </body>
