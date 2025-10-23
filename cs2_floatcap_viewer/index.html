@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS:2 Skin Sorter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #ffa500;
+        }
+
+        input, select {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+
+        .stats {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #ffa500;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .skin-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .skin-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffa500;
+            box-shadow: 0 10px 30px rgba(255, 165, 0, 0.3);
+        }
+
+        .skin-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+
+        .skin-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .skin-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 0.9em;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .rarity-Covert {
+            border-left: 4px solid #eb4b4b;
+        }
+
+        .rarity-Classified {
+            border-left: 4px solid #d32ce6;
+        }
+
+        .market-btn {
+            margin-top: 10px;
+            padding: 10px;
+            background: linear-gradient(135deg, #ffa500, #ff6b00);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .market-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.5);
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CS2 Skin Sorter</h1>
+        
+        <div class="controls">
+            <div class="filter-group">
+                <div class="filter-item">
+                    <label for="searchInput">Search Skin</label>
+                    <input type="text" id="searchInput" placeholder="e.g. AWP, AK-47, Fade...">
+                </div>
+                
+                <div class="filter-item">
+                    <label for="rarityFilter">Rarity</label>
+                    <select id="rarityFilter">
+                        <option value="">All</option>
+                        <option value="Covert">Covert</option>
+                        <option value="Classified">Classified</option>
+                    </select>
+                </div>
+                
+                <div class="filter-item">
+                    <label for="sortBy">Sort By</label>
+                    <select id="sortBy">
+                        <option value="minFloat">Min Float (High to Low)</option>
+                        <option value="minFloatAsc">Min Float (Low to High)</option>
+                        <option value="name">Name (A to Z)</option>
+                        <option value="weapon">Weapon (A to Z)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats" id="stats">Loading...</div>
+        
+        <div class="grid" id="skinGrid">
+            <div class="loading">Loading skins...</div>
+        </div>
+    </div>
+
+    <script>
+        let allSkins = [];
+        let filteredSkins = [];
+
+        // Load JSON data
+        fetch('https://jhviw.github.io/cs2_floatcap_viewer/skins.json')
+            .then(response => response.json())
+            .then(data => {
+                allSkins = Object.entries(data).map(([name, skin]) => ({
+                    name,
+                    ...skin
+                }));
+                filteredSkins = [...allSkins];
+                displaySkins();
+                updateStats();
+            })
+            .catch(error => {
+                document.getElementById('skinGrid').innerHTML = 
+                    '<div class="loading">Error: Could not load skins_sorted_by_min_float.json</div>';
+            });
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', filterSkins);
+        document.getElementById('rarityFilter').addEventListener('change', filterSkins);
+        document.getElementById('sortBy').addEventListener('change', sortAndDisplay);
+
+        function filterSkins() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const rarity = document.getElementById('rarityFilter').value;
+
+            filteredSkins = allSkins.filter(skin => {
+                const matchesSearch = skin.name.toLowerCase().includes(search) ||
+                                    skin.weapon.toLowerCase().includes(search) ||
+                                    skin.finish.toLowerCase().includes(search);
+                const matchesRarity = !rarity || skin.rarity === rarity;
+                return matchesSearch && matchesRarity;
+            });
+
+            sortAndDisplay();
+        }
+
+        function sortAndDisplay() {
+            const sortBy = document.getElementById('sortBy').value;
+
+            switch(sortBy) {
+                case 'minFloat':
+                    filteredSkins.sort((a, b) => b['float-caps'][0] - a['float-caps'][0]);
+                    break;
+                case 'minFloatAsc':
+                    filteredSkins.sort((a, b) => a['float-caps'][0] - b['float-caps'][0]);
+                    break;
+                case 'name':
+                    filteredSkins.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'weapon':
+                    filteredSkins.sort((a, b) => a.weapon.localeCompare(b.weapon));
+                    break;
+            }
+
+            displaySkins();
+            updateStats();
+        }
+
+        function displaySkins() {
+            const grid = document.getElementById('skinGrid');
+            
+            if (filteredSkins.length === 0) {
+                grid.innerHTML = '<div class="loading">No skins found</div>';
+                return;
+            }
+
+            grid.innerHTML = filteredSkins.map(skin => {
+                const minFloat = skin['float-caps'][0];
+                const maxFloat = skin['float-caps'][1];
+                
+                // Format: Weapon | Skin (Condition)
+                const fullName = `${skin.weapon} | ${skin.finish} (${skin.exterior})`;
+                const marketUrl = `https://steamcommunity.com/market/listings/730/${encodeURIComponent(fullName)}`;
+
+                return `
+                    <div class="skin-card rarity-${skin.rarity}" onclick="window.open('${marketUrl}', '_blank')">
+                        <div class="skin-name">${skin.weapon} | ${skin.finish}</div>
+                        <div class="skin-info">
+                            <div class="info-row">
+                                <span>Exterior:</span>
+                                <span>${skin.exterior}</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Rarity:</span>
+                                <span>${skin.rarity}</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Min Float:</span>
+                                <span>${minFloat.toFixed(4)}</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Max Float:</span>
+                                <span>${maxFloat.toFixed(4)}</span>
+                            </div>
+                        </div>
+                        <button class="market-btn" onclick="event.stopPropagation(); window.open('${marketUrl}', '_blank')">
+                            Open Steam Market
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            const stats = document.getElementById('stats');
+            stats.textContent = `${filteredSkins.length} of ${allSkins.length} skins`;
+        }
+    </script>
+</body>
+</html>
