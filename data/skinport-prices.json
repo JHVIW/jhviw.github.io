@@ -1345,14 +1345,14 @@
     "min_price": 2.4
   },
   {
+    "market_hash_name": "AUG | Colony (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 4.32
+  },
+  {
     "market_hash_name": "Arno The Overgrown | Guerrilla Warfare",
     "currency": "USD",
     "min_price": 23.82
-  },
-  {
-    "market_hash_name": "AUG | Colony (Factory New)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Aspirant | Gendarmerie Nationale",
@@ -1510,9 +1510,9 @@
     "min_price": 76.59
   },
   {
-    "market_hash_name": "AUG | Colony (Minimal Wear)",
+    "market_hash_name": "AUG | Colony (Factory New)",
     "currency": "USD",
-    "min_price": 4.32
+    "min_price": null
   },
   {
     "market_hash_name": "AUG | Commando Company (Battle-Scarred)",
@@ -1593,6 +1593,11 @@
     "market_hash_name": "AUG | Copperhead (Field-Tested)",
     "currency": "USD",
     "min_price": 83.76
+  },
+  {
+    "market_hash_name": "AUG | Luxe Trim (Well-Worn)",
+    "currency": "USD",
+    "min_price": 0.18
   },
   {
     "market_hash_name": "AUG | Creep (Battle-Scarred)",
@@ -1745,11 +1750,6 @@
     "min_price": 0.52
   },
   {
-    "market_hash_name": "AUG | Luxe Trim (Well-Worn)",
-    "currency": "USD",
-    "min_price": 0.18
-  },
-  {
     "market_hash_name": "AUG | Midnight Lily (Battle-Scarred)",
     "currency": "USD",
     "min_price": null
@@ -1802,7 +1802,7 @@
   {
     "market_hash_name": "AUG | Navy Murano (Factory New)",
     "currency": "USD",
-    "min_price": 9.72
+    "min_price": 9.66
   },
   {
     "market_hash_name": "AUG | Navy Murano (Field-Tested)",
@@ -1897,7 +1897,7 @@
   {
     "market_hash_name": "AUG | Sand Storm (Factory New)",
     "currency": "USD",
-    "min_price": 108.37
+    "min_price": 108.3
   },
   {
     "market_hash_name": "AUG | Sand Storm (Well-Worn)",
@@ -2318,11 +2318,6 @@
     "market_hash_name": "Autograph Capsule | Legends (Foil) | Atlanta 2017",
     "currency": "USD",
     "min_price": 97.19
-  },
-  {
-    "market_hash_name": "XM1014 | Zombie Offensive (Well-Worn)",
-    "currency": "USD",
-    "min_price": 0.7
   },
   {
     "market_hash_name": "Autograph Capsule | Luminosity Gaming | MLG Columbus 2016",
@@ -3117,7 +3112,7 @@
   {
     "market_hash_name": "AWP | POP AWP (Factory New)",
     "currency": "USD",
-    "min_price": 41.71
+    "min_price": 40.79
   },
   {
     "market_hash_name": "AWP | POP AWP (Field-Tested)",
@@ -3722,7 +3717,7 @@
   {
     "market_hash_name": "★ Bayonet | Slaughter (Minimal Wear)",
     "currency": "USD",
-    "min_price": 353.94
+    "min_price": 369.53
   },
   {
     "market_hash_name": "★ Bayonet | Stained (Field-Tested)",
@@ -3852,7 +3847,7 @@
   {
     "market_hash_name": "★ Bloodhound Gloves | Bronzed (Field-Tested)",
     "currency": "USD",
-    "min_price": 289.65
+    "min_price": 305.55
   },
   {
     "market_hash_name": "★ Bloodhound Gloves | Charred (Battle-Scarred)",
@@ -3868,6 +3863,11 @@
     "market_hash_name": "★ Bloodhound Gloves | Charred (Field-Tested)",
     "currency": "USD",
     "min_price": 399.37
+  },
+  {
+    "market_hash_name": "★ Bloodhound Gloves | Charred (Well-Worn)",
+    "currency": "USD",
+    "min_price": 201.45
   },
   {
     "market_hash_name": "★ Bloodhound Gloves | Guerrilla (Factory New)",
@@ -3933,16 +3933,6 @@
     "market_hash_name": "Boston 2018 Returning Challengers (Holo-Foil)",
     "currency": "USD",
     "min_price": 51.91
-  },
-  {
-    "market_hash_name": "★ Bowie Knife | Freehand (Factory New)",
-    "currency": "USD",
-    "min_price": 104.11
-  },
-  {
-    "market_hash_name": "★ Bowie Knife | Lore (Well-Worn)",
-    "currency": "USD",
-    "min_price": 101.12
   },
   {
     "market_hash_name": "★ Bowie Knife",
@@ -4190,6 +4180,11 @@
     "min_price": 66.83
   },
   {
+    "market_hash_name": "★ Bowie Knife | Freehand (Factory New)",
+    "currency": "USD",
+    "min_price": 104.11
+  },
+  {
     "market_hash_name": "★ Bowie Knife | Freehand (Field-Tested)",
     "currency": "USD",
     "min_price": 86.63
@@ -4268,6 +4263,11 @@
     "market_hash_name": "★ Bowie Knife | Lore (Minimal Wear)",
     "currency": "USD",
     "min_price": 130.77
+  },
+  {
+    "market_hash_name": "★ Bowie Knife | Lore (Well-Worn)",
+    "currency": "USD",
+    "min_price": 101.12
   },
   {
     "market_hash_name": "★ Bowie Knife | Marble Fade (Factory New)",
@@ -4642,7 +4642,7 @@
   {
     "market_hash_name": "★ Butterfly Knife | Boreal Forest (Battle-Scarred)",
     "currency": "USD",
-    "min_price": null
+    "min_price": 509.28
   },
   {
     "market_hash_name": "★ Butterfly Knife | Boreal Forest (Field-Tested)",
@@ -4837,7 +4837,7 @@
   {
     "market_hash_name": "★ Butterfly Knife | Freehand (Factory New)",
     "currency": "USD",
-    "min_price": 861.4
+    "min_price": 810.58
   },
   {
     "market_hash_name": "★ Butterfly Knife | Freehand (Field-Tested)",
@@ -4857,7 +4857,7 @@
   {
     "market_hash_name": "★ Butterfly Knife | Gamma Doppler (Factory New)",
     "currency": "USD",
-    "min_price": 2462.28
+    "min_price": 2191.79
   },
   {
     "market_hash_name": "★ Butterfly Knife | Gamma Doppler (Factory New)",
@@ -5095,14 +5095,14 @@
     "min_price": 2.81
   },
   {
-    "market_hash_name": "Charm | 8 Ball IGL",
-    "currency": "USD",
-    "min_price": 53.89
-  },
-  {
     "market_hash_name": "Charm | Baby Karat CT",
     "currency": "USD",
     "min_price": 23.59
+  },
+  {
+    "market_hash_name": "Charm | 8 Ball IGL",
+    "currency": "USD",
+    "min_price": 53.89
   },
   {
     "market_hash_name": "Charm | Baby Karat T",
@@ -5587,7 +5587,7 @@
   {
     "market_hash_name": "★ Classic Knife | Case Hardened (Factory New)",
     "currency": "USD",
-    "min_price": 336.87
+    "min_price": 313.62
   },
   {
     "market_hash_name": "★ Classic Knife | Case Hardened (Field-Tested)",
@@ -5757,7 +5757,7 @@
   {
     "market_hash_name": "Col. Mangos Dabisi | Guerrilla Warfare",
     "currency": "USD",
-    "min_price": 40.02
+    "min_price": 39.34
   },
   {
     "market_hash_name": "Cologne 2016 Challengers (Holo-Foil)",
@@ -5852,7 +5852,7 @@
   {
     "market_hash_name": "CS20 Case",
     "currency": "USD",
-    "min_price": 1.01
+    "min_price": 1.04
   },
   {
     "market_hash_name": "CS:GO Capsule Key",
@@ -6562,7 +6562,7 @@
   {
     "market_hash_name": "Desert Eagle | Calligraffiti (Factory New)",
     "currency": "USD",
-    "min_price": 11.57
+    "min_price": 10.73
   },
   {
     "market_hash_name": "Desert Eagle | Calligraffiti (Field-Tested)",
@@ -6680,11 +6680,6 @@
     "min_price": 1.04
   },
   {
-    "market_hash_name": "Desert Eagle | Night (Minimal Wear)",
-    "currency": "USD",
-    "min_price": 17.77
-  },
-  {
     "market_hash_name": "Desert Eagle | Directive (Field-Tested)",
     "currency": "USD",
     "min_price": 1.16
@@ -6693,6 +6688,11 @@
     "market_hash_name": "Desert Eagle | Directive (Minimal Wear)",
     "currency": "USD",
     "min_price": 4.32
+  },
+  {
+    "market_hash_name": "Desert Eagle | Starcade (Well-Worn)",
+    "currency": "USD",
+    "min_price": 61.66
   },
   {
     "market_hash_name": "Desert Eagle | Directive (Well-Worn)",
@@ -7035,6 +7035,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "Desert Eagle | Night (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 17.77
+  },
+  {
     "market_hash_name": "Desert Eagle | Night (Well-Worn)",
     "currency": "USD",
     "min_price": 12.43
@@ -7178,11 +7183,6 @@
     "market_hash_name": "Desert Eagle | Starcade (Minimal Wear)",
     "currency": "USD",
     "min_price": 172.12
-  },
-  {
-    "market_hash_name": "Desert Eagle | Starcade (Well-Worn)",
-    "currency": "USD",
-    "min_price": 61.66
   },
   {
     "market_hash_name": "Desert Eagle | Sunset Storm 壱 (Battle-Scarred)",
@@ -7398,6 +7398,11 @@
     "market_hash_name": "DreamHack Cluj-Napoca 2015 Overpass Souvenir Package",
     "currency": "USD",
     "min_price": null
+  },
+  {
+    "market_hash_name": "Easy Peasy Pin",
+    "currency": "USD",
+    "min_price": 4.01
   },
   {
     "market_hash_name": "Dreams & Nightmares Case",
@@ -8425,11 +8430,6 @@
     "min_price": 37.51
   },
   {
-    "market_hash_name": "Easy Peasy Pin",
-    "currency": "USD",
-    "min_price": 4.01
-  },
-  {
     "market_hash_name": "Elite Trapper Solman | Guerrilla Warfare",
     "currency": "USD",
     "min_price": 48.19
@@ -8503,16 +8503,6 @@
     "market_hash_name": "eSports 2014 Summer Case",
     "currency": "USD",
     "min_price": 12.52
-  },
-  {
-    "market_hash_name": "FAMAS | Sundown (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "FAMAS | Vendetta (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Falchion Case",
@@ -8607,7 +8597,7 @@
   {
     "market_hash_name": "★ Falchion Knife | Bright Water (Factory New)",
     "currency": "USD",
-    "min_price": 104.48
+    "min_price": 103.21
   },
   {
     "market_hash_name": "★ Falchion Knife | Bright Water (Field-Tested)",
@@ -8623,11 +8613,6 @@
     "market_hash_name": "★ Falchion Knife | Bright Water (Well-Worn)",
     "currency": "USD",
     "min_price": 83.66
-  },
-  {
-    "market_hash_name": "FAMAS | Bad Trip (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": 51.26
   },
   {
     "market_hash_name": "★ Falchion Knife | Case Hardened (Field-Tested)",
@@ -9045,6 +9030,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "FAMAS | Bad Trip (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": 51.26
+  },
+  {
     "market_hash_name": "FAMAS | Bad Trip (Factory New)",
     "currency": "USD",
     "min_price": 131.3
@@ -9302,7 +9292,7 @@
   {
     "market_hash_name": "FAMAS | Grey Ghost (Battle-Scarred)",
     "currency": "USD",
-    "min_price": 0.05
+    "min_price": 0.04
   },
   {
     "market_hash_name": "FAMAS | Grey Ghost (Factory New)",
@@ -9620,6 +9610,11 @@
     "min_price": 36.37
   },
   {
+    "market_hash_name": "FAMAS | Sundown (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "FAMAS | Sundown (Minimal Wear)",
     "currency": "USD",
     "min_price": 97.34
@@ -9647,7 +9642,7 @@
   {
     "market_hash_name": "FAMAS | Survivor Z (Well-Worn)",
     "currency": "USD",
-    "min_price": 0.89
+    "min_price": 0.61
   },
   {
     "market_hash_name": "FAMAS | Teardown (Battle-Scarred)",
@@ -9695,6 +9690,11 @@
     "min_price": 14.01
   },
   {
+    "market_hash_name": "FAMAS | Vendetta (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "FAMAS | Vendetta (Factory New)",
     "currency": "USD",
     "min_price": 0.29
@@ -9728,11 +9728,6 @@
     "market_hash_name": "FAMAS | Waters of Nephthys (Field-Tested)",
     "currency": "USD",
     "min_price": 101.08
-  },
-  {
-    "market_hash_name": "FAMAS | Waters of Nephthys (Minimal Wear)",
-    "currency": "USD",
-    "min_price": 112.31
   },
   {
     "market_hash_name": "FAMAS | Yeti Camo (Battle-Scarred)",
@@ -9783,16 +9778,6 @@
     "market_hash_name": "FAMAS | ZX Spectron (Well-Worn)",
     "currency": "USD",
     "min_price": 2.86
-  },
-  {
-    "market_hash_name": "X-Ray P250 Package",
-    "currency": "USD",
-    "min_price": 1.84
-  },
-  {
-    "market_hash_name": "Five-SeveN | Nitro (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Fever Case",
@@ -10275,11 +10260,6 @@
     "min_price": 0.04
   },
   {
-    "market_hash_name": "Five-SeveN | Scumbria (Factory New)",
-    "currency": "USD",
-    "min_price": 2.75
-  },
-  {
     "market_hash_name": "Five-SeveN | Midnight Paintover (Minimal Wear)",
     "currency": "USD",
     "min_price": 0.08
@@ -10348,6 +10328,11 @@
     "market_hash_name": "Five-SeveN | Nitro (Minimal Wear)",
     "currency": "USD",
     "min_price": 48.97
+  },
+  {
+    "market_hash_name": "Five-SeveN | Nitro (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Five-SeveN | Orange Peel (Battle-Scarred)",
@@ -10425,9 +10410,19 @@
     "min_price": 0.25
   },
   {
+    "market_hash_name": "Five-SeveN | Scumbria (Factory New)",
+    "currency": "USD",
+    "min_price": 2.75
+  },
+  {
     "market_hash_name": "Five-SeveN | Scumbria (Field-Tested)",
     "currency": "USD",
     "min_price": 0.35
+  },
+  {
+    "market_hash_name": "Five-SeveN | Scumbria (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 0.38
   },
   {
     "market_hash_name": "Five-SeveN | Scumbria (Well-Worn)",
@@ -12375,6 +12370,11 @@
     "min_price": 7.03
   },
   {
+    "market_hash_name": "Glock-18 | Gamma Doppler (Well-Worn)",
+    "currency": "USD",
+    "min_price": 103.43
+  },
+  {
     "market_hash_name": "Glock-18 | AXIA (Battle-Scarred)",
     "currency": "USD",
     "min_price": 48.41
@@ -12565,6 +12565,11 @@
     "min_price": 0.41
   },
   {
+    "market_hash_name": "Glove Case Key",
+    "currency": "USD",
+    "min_price": 18.7
+  },
+  {
     "market_hash_name": "Glock-18 | Coral Bloom (Factory New)",
     "currency": "USD",
     "min_price": 4.61
@@ -12662,7 +12667,7 @@
   {
     "market_hash_name": "Glock-18 | Gamma Doppler (Factory New)",
     "currency": "USD",
-    "min_price": 220.55
+    "min_price": 216.16
   },
   {
     "market_hash_name": "Glock-18 | Gamma Doppler (Factory New)",
@@ -12727,11 +12732,6 @@
   {
     "market_hash_name": "Glock-18 | Gamma Doppler (Well-Worn)",
     "currency": "USD",
-    "min_price": 103.43
-  },
-  {
-    "market_hash_name": "Glock-18 | Gamma Doppler (Well-Worn)",
-    "currency": "USD",
     "min_price": 59.45
   },
   {
@@ -12777,7 +12777,7 @@
   {
     "market_hash_name": "Glock-18 | Gold Toof (Field-Tested)",
     "currency": "USD",
-    "min_price": 31.83
+    "min_price": 32.18
   },
   {
     "market_hash_name": "Glock-18 | Gold Toof (Minimal Wear)",
@@ -13500,11 +13500,6 @@
     "min_price": 15.44
   },
   {
-    "market_hash_name": "Glove Case Key",
-    "currency": "USD",
-    "min_price": 18.7
-  },
-  {
     "market_hash_name": "Ground Rebel  | Elite Crew",
     "currency": "USD",
     "min_price": 7.74
@@ -13572,7 +13567,7 @@
   {
     "market_hash_name": "★ Gut Knife | Blue Steel (Factory New)",
     "currency": "USD",
-    "min_price": 172.85
+    "min_price": null
   },
   {
     "market_hash_name": "★ Gut Knife | Blue Steel (Field-Tested)",
@@ -13628,6 +13623,11 @@
     "market_hash_name": "★ Gut Knife | Case Hardened (Battle-Scarred)",
     "currency": "USD",
     "min_price": 166.88
+  },
+  {
+    "market_hash_name": "★ Gut Knife | Case Hardened (Field-Tested)",
+    "currency": "USD",
+    "min_price": 121.36
   },
   {
     "market_hash_name": "★ Gut Knife | Crimson Web (Battle-Scarred)",
@@ -14082,7 +14082,7 @@
   {
     "market_hash_name": "★ Hand Wraps | Duct Tape (Battle-Scarred)",
     "currency": "USD",
-    "min_price": 62.96
+    "min_price": 61.28
   },
   {
     "market_hash_name": "★ Hand Wraps | Duct Tape (Factory New)",
@@ -14210,11 +14210,6 @@
     "min_price": 24.57
   },
   {
-    "market_hash_name": "Huntsman Case Key",
-    "currency": "USD",
-    "min_price": 15.5
-  },
-  {
     "market_hash_name": "Horizon Case",
     "currency": "USD",
     "min_price": 1.41
@@ -14228,6 +14223,11 @@
     "market_hash_name": "Howl Pin",
     "currency": "USD",
     "min_price": 52.18
+  },
+  {
+    "market_hash_name": "Huntsman Case Key",
+    "currency": "USD",
+    "min_price": 15.5
   },
   {
     "market_hash_name": "★ Huntsman Knife",
@@ -14286,11 +14286,6 @@
   },
   {
     "market_hash_name": "★ Huntsman Knife | Blue Steel (Factory New)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "★ Huntsman Knife | Crimson Web (Factory New)",
     "currency": "USD",
     "min_price": null
   },
@@ -14361,6 +14356,11 @@
   },
   {
     "market_hash_name": "★ Huntsman Knife | Crimson Web (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "★ Huntsman Knife | Crimson Web (Factory New)",
     "currency": "USD",
     "min_price": null
   },
@@ -14797,7 +14797,7 @@
   {
     "market_hash_name": "★ Hydra Gloves | Rattler (Field-Tested)",
     "currency": "USD",
-    "min_price": 43.2
+    "min_price": 41.61
   },
   {
     "market_hash_name": "★ Hydra Gloves | Rattler (Minimal Wear)",
@@ -15192,7 +15192,7 @@
   {
     "market_hash_name": "★ Karambit | Rust Coat (Battle-Scarred)",
     "currency": "USD",
-    "min_price": 518.54
+    "min_price": 514.43
   },
   {
     "market_hash_name": "★ Karambit | Rust Coat (Well-Worn)",
@@ -15375,27 +15375,12 @@
     "min_price": 70.33
   },
   {
-    "market_hash_name": "M249 | Humidor (Battle-Scarred)",
+    "market_hash_name": "★ M9 Bayonet | Fade (Minimal Wear)",
     "currency": "USD",
     "min_price": null
   },
   {
-    "market_hash_name": "Zeus x27 | Charged Up (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": 4.52
-  },
-  {
-    "market_hash_name": "M249 | Humidor (Factory New)",
-    "currency": "USD",
-    "min_price": 18.58
-  },
-  {
-    "market_hash_name": "Zeus x27 | Charged Up (Factory New)",
-    "currency": "USD",
-    "min_price": 38.96
-  },
-  {
-    "market_hash_name": "MAC-10 | Tornado (Factory New)",
+    "market_hash_name": "MAC-10 | Gold Brick (Well-Worn)",
     "currency": "USD",
     "min_price": null
   },
@@ -15637,7 +15622,7 @@
   {
     "market_hash_name": "★ Kukri Knife | Stained (Well-Worn)",
     "currency": "USD",
-    "min_price": 85.58
+    "min_price": 84.26
   },
   {
     "market_hash_name": "★ Kukri Knife | Urban Masked (Battle-Scarred)",
@@ -15652,7 +15637,7 @@
   {
     "market_hash_name": "★ Kukri Knife | Urban Masked (Field-Tested)",
     "currency": "USD",
-    "min_price": 65.81
+    "min_price": 63.77
   },
   {
     "market_hash_name": "★ Kukri Knife | Urban Masked (Minimal Wear)",
@@ -15668,6 +15653,11 @@
     "market_hash_name": "Lambda Pin",
     "currency": "USD",
     "min_price": 4.74
+  },
+  {
+    "market_hash_name": "MAG-7 | Silver (Factory New)",
+    "currency": "USD",
+    "min_price": 16.99
   },
   {
     "market_hash_name": "Lieutenant Rex Krikey | SEAL Frogman",
@@ -15853,6 +15843,16 @@
     "market_hash_name": "M249 | Gator Mesh (Minimal Wear)",
     "currency": "USD",
     "min_price": 0.07
+  },
+  {
+    "market_hash_name": "M249 | Humidor (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "M249 | Humidor (Factory New)",
+    "currency": "USD",
+    "min_price": 18.58
   },
   {
     "market_hash_name": "M249 | Hypnosis (Factory New)",
@@ -18017,7 +18017,7 @@
   {
     "market_hash_name": "M4A4 | 龍王 (Dragon King) (Field-Tested)",
     "currency": "USD",
-    "min_price": 14.75
+    "min_price": 13.11
   },
   {
     "market_hash_name": "M4A4 | 龍王 (Dragon King) (Minimal Wear)",
@@ -18047,7 +18047,7 @@
   {
     "market_hash_name": "★ M9 Bayonet | Autotronic (Minimal Wear)",
     "currency": "USD",
-    "min_price": 1281.44
+    "min_price": 1072.83
   },
   {
     "market_hash_name": "★ M9 Bayonet | Autotronic (Well-Worn)",
@@ -18260,11 +18260,6 @@
     "min_price": 1190.84
   },
   {
-    "market_hash_name": "★ M9 Bayonet | Fade (Minimal Wear)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "★ M9 Bayonet | Forest DDPAT (Battle-Scarred)",
     "currency": "USD",
     "min_price": null
@@ -18308,11 +18303,6 @@
     "market_hash_name": "★ M9 Bayonet | Freehand (Minimal Wear)",
     "currency": "USD",
     "min_price": 459.71
-  },
-  {
-    "market_hash_name": "★ M9 Bayonet | Freehand (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "★ M9 Bayonet | Gamma Doppler (Factory New)",
@@ -18413,6 +18403,11 @@
     "market_hash_name": "★ M9 Bayonet | Safari Mesh (Field-Tested)",
     "currency": "USD",
     "min_price": 327.81
+  },
+  {
+    "market_hash_name": "★ M9 Bayonet | Safari Mesh (Minimal Wear)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "★ M9 Bayonet | Scorched (Battle-Scarred)",
@@ -18866,11 +18861,6 @@
   },
   {
     "market_hash_name": "MAC-10 | Gold Brick (Minimal Wear)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "MAC-10 | Gold Brick (Well-Worn)",
     "currency": "USD",
     "min_price": null
   },
@@ -19362,7 +19352,7 @@
   {
     "market_hash_name": "MAC-10 | Stalker (Minimal Wear)",
     "currency": "USD",
-    "min_price": 76.31
+    "min_price": 74.16
   },
   {
     "market_hash_name": "MAC-10 | Stalker (Well-Worn)",
@@ -19453,6 +19443,11 @@
     "market_hash_name": "MAC-10 | Tornado (Battle-Scarred)",
     "currency": "USD",
     "min_price": 2.8
+  },
+  {
+    "market_hash_name": "MAC-10 | Tornado (Factory New)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "MAC-10 | Tornado (Minimal Wear)",
@@ -20055,11 +20050,6 @@
     "min_price": 2.21
   },
   {
-    "market_hash_name": "MAG-7 | Silver (Factory New)",
-    "currency": "USD",
-    "min_price": 16.99
-  },
-  {
     "market_hash_name": "MAG-7 | Silver (Minimal Wear)",
     "currency": "USD",
     "min_price": null
@@ -20228,6 +20218,11 @@
     "market_hash_name": "★ Moto Gloves | 3rd Commando Company (Field-Tested)",
     "currency": "USD",
     "min_price": 57.48
+  },
+  {
+    "market_hash_name": "MP7 | Impire (Factory New)",
+    "currency": "USD",
+    "min_price": 16.91
   },
   {
     "market_hash_name": "★ Moto Gloves | 3rd Commando Company (Minimal Wear)",
@@ -21117,7 +21112,7 @@
   {
     "market_hash_name": "MP7 | Cirrus (Field-Tested)",
     "currency": "USD",
-    "min_price": 1.22
+    "min_price": 1.19
   },
   {
     "market_hash_name": "MP7 | Cirrus (Minimal Wear)",
@@ -21248,11 +21243,6 @@
     "market_hash_name": "MP7 | Gunsmoke (Minimal Wear)",
     "currency": "USD",
     "min_price": 5.1
-  },
-  {
-    "market_hash_name": "MP7 | Impire (Factory New)",
-    "currency": "USD",
-    "min_price": 16.91
   },
   {
     "market_hash_name": "MP7 | Impire (Field-Tested)",
@@ -21790,11 +21780,6 @@
     "min_price": 0.02
   },
   {
-    "market_hash_name": "MP9 | Dart (Factory New)",
-    "currency": "USD",
-    "min_price": 2.92
-  },
-  {
     "market_hash_name": "MP9 | Buff Blue (Minimal Wear)",
     "currency": "USD",
     "min_price": 0.04
@@ -21873,6 +21858,11 @@
     "market_hash_name": "MP9 | Dark Age (Field-Tested)",
     "currency": "USD",
     "min_price": null
+  },
+  {
+    "market_hash_name": "MP9 | Dart (Factory New)",
+    "currency": "USD",
+    "min_price": 2.92
   },
   {
     "market_hash_name": "MP9 | Dart (Field-Tested)",
@@ -22730,11 +22720,6 @@
     "min_price": 3.34
   },
   {
-    "market_hash_name": "Zeus x27 | Charged Up (Field-Tested)",
-    "currency": "USD",
-    "min_price": 5.09
-  },
-  {
     "market_hash_name": "Music Kit | PVRIS, Evergreen",
     "currency": "USD",
     "min_price": 5.35
@@ -23110,11 +23095,6 @@
     "min_price": 56.03
   },
   {
-    "market_hash_name": "Negev | Palm (Factory New)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Negev | Army Sheen (Factory New)",
     "currency": "USD",
     "min_price": 0.05
@@ -23333,6 +23313,11 @@
     "market_hash_name": "Negev | Nuclear Waste (Field-Tested)",
     "currency": "USD",
     "min_price": 5.77
+  },
+  {
+    "market_hash_name": "Negev | Palm (Factory New)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Negev | Phoenix Stencil (Battle-Scarred)",
@@ -23555,6 +23540,11 @@
     "min_price": 186.9
   },
   {
+    "market_hash_name": "★ Nomad Knife | Doppler (Factory New)",
+    "currency": "USD",
+    "min_price": 449.97
+  },
+  {
     "market_hash_name": "★ Nomad Knife | Case Hardened (Field-Tested)",
     "currency": "USD",
     "min_price": 179.74
@@ -23628,11 +23618,6 @@
     "market_hash_name": "★ Nomad Knife | Doppler (Factory New)",
     "currency": "USD",
     "min_price": 379.91
-  },
-  {
-    "market_hash_name": "★ Nomad Knife | Doppler (Factory New)",
-    "currency": "USD",
-    "min_price": 449.97
   },
   {
     "market_hash_name": "★ Nomad Knife | Doppler (Factory New)",
@@ -23772,7 +23757,7 @@
   {
     "market_hash_name": "★ Nomad Knife | Stained (Battle-Scarred)",
     "currency": "USD",
-    "min_price": 131.27
+    "min_price": 126.46
   },
   {
     "market_hash_name": "★ Nomad Knife | Stained (Factory New)",
@@ -24395,6 +24380,11 @@
     "min_price": 13.92
   },
   {
+    "market_hash_name": "Nova | Tempest (Factory New)",
+    "currency": "USD",
+    "min_price": 20.98
+  },
+  {
     "market_hash_name": "Nova | Tempest (Minimal Wear)",
     "currency": "USD",
     "min_price": 4.92
@@ -24527,7 +24517,7 @@
   {
     "market_hash_name": "Nova | Wurst Hölle (Field-Tested)",
     "currency": "USD",
-    "min_price": 0.31
+    "min_price": 0.32
   },
   {
     "market_hash_name": "Nova | Wurst Hölle (Minimal Wear)",
@@ -24665,24 +24655,9 @@
     "min_price": 12.04
   },
   {
-    "market_hash_name": "Zeus x27 | Charged Up (Minimal Wear)",
-    "currency": "USD",
-    "min_price": 14.96
-  },
-  {
-    "market_hash_name": "P2000 | Silver (Minimal Wear)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Osiris | Elite Crew",
     "currency": "USD",
     "min_price": 9.76
-  },
-  {
-    "market_hash_name": "P250 | Ripple (Factory New)",
-    "currency": "USD",
-    "min_price": 0.75
   },
   {
     "market_hash_name": "Overpass Pin",
@@ -24885,6 +24860,11 @@
     "min_price": 0.68
   },
   {
+    "market_hash_name": "P250 | Ripple (Factory New)",
+    "currency": "USD",
+    "min_price": 0.75
+  },
+  {
     "market_hash_name": "P2000 | Handgun (Factory New)",
     "currency": "USD",
     "min_price": 15.63
@@ -25030,6 +25010,11 @@
     "min_price": 2.4
   },
   {
+    "market_hash_name": "P2000 | Ocean Foam (Factory New)",
+    "currency": "USD",
+    "min_price": 172.85
+  },
+  {
     "market_hash_name": "P2000 | Ocean Foam (Minimal Wear)",
     "currency": "USD",
     "min_price": null
@@ -25152,7 +25137,7 @@
   {
     "market_hash_name": "P2000 | Royal Baroque (Factory New)",
     "currency": "USD",
-    "min_price": 2.36
+    "min_price": 2.35
   },
   {
     "market_hash_name": "P2000 | Royal Baroque (Field-Tested)",
@@ -25183,6 +25168,11 @@
     "market_hash_name": "P2000 | Silver (Factory New)",
     "currency": "USD",
     "min_price": 123.71
+  },
+  {
+    "market_hash_name": "P2000 | Silver (Minimal Wear)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "P2000 | Space Race (Battle-Scarred)",
@@ -25597,7 +25587,7 @@
   {
     "market_hash_name": "P250 | Digital Architect (Factory New)",
     "currency": "USD",
-    "min_price": 73.16
+    "min_price": 69.63
   },
   {
     "market_hash_name": "P250 | Digital Architect (Well-Worn)",
@@ -25693,6 +25683,11 @@
     "market_hash_name": "P250 | Forest Night (Battle-Scarred)",
     "currency": "USD",
     "min_price": 0.51
+  },
+  {
+    "market_hash_name": "P90 | Vent Rush (Factory New)",
+    "currency": "USD",
+    "min_price": 2.69
   },
   {
     "market_hash_name": "P250 | Forest Night (Field-Tested)",
@@ -27085,11 +27080,6 @@
     "min_price": 17.88
   },
   {
-    "market_hash_name": "P90 | Vent Rush (Factory New)",
-    "currency": "USD",
-    "min_price": 2.69
-  },
-  {
     "market_hash_name": "P90 | Teardown (Factory New)",
     "currency": "USD",
     "min_price": 0.98
@@ -27487,7 +27477,7 @@
   {
     "market_hash_name": "★ Paracord Knife | Scorched (Battle-Scarred)",
     "currency": "USD",
-    "min_price": 69.07
+    "min_price": 57.56
   },
   {
     "market_hash_name": "★ Paracord Knife | Scorched (Factory New)",
@@ -27558,6 +27548,11 @@
     "market_hash_name": "★ Paracord Knife | Ultraviolet (Field-Tested)",
     "currency": "USD",
     "min_price": 80.51
+  },
+  {
+    "market_hash_name": "Pinups Capsule",
+    "currency": "USD",
+    "min_price": 0.76
   },
   {
     "market_hash_name": "★ Paracord Knife | Ultraviolet (Minimal Wear)",
@@ -27955,11 +27950,6 @@
     "min_price": 0.51
   },
   {
-    "market_hash_name": "Pinups Capsule",
-    "currency": "USD",
-    "min_price": 0.76
-  },
-  {
     "market_hash_name": "Perfect World Graffiti Box",
     "currency": "USD",
     "min_price": null
@@ -27970,19 +27960,9 @@
     "min_price": 3.85
   },
   {
-    "market_hash_name": "Zeus x27 | Charged Up (Well-Worn)",
-    "currency": "USD",
-    "min_price": 3.8
-  },
-  {
     "market_hash_name": "Poorly Drawn Capsule",
     "currency": "USD",
     "min_price": 0.95
-  },
-  {
-    "market_hash_name": "PP-Bizon | Antique (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "PP-Bizon | Anolis (Battle-Scarred)",
@@ -28018,6 +27998,11 @@
     "market_hash_name": "PP-Bizon | Antique (Minimal Wear)",
     "currency": "USD",
     "min_price": 11.05
+  },
+  {
+    "market_hash_name": "PP-Bizon | Antique (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "PP-Bizon | Bamboo Print (Factory New)",
@@ -28620,11 +28605,6 @@
     "min_price": 1.14
   },
   {
-    "market_hash_name": "Zeus x27 | Dragon Snore (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": 22.65
-  },
-  {
     "market_hash_name": "Prof. Shahmat | Elite Crew",
     "currency": "USD",
     "min_price": 10.42
@@ -29218,11 +29198,6 @@
     "market_hash_name": "Safecracker Voltzmann | The Professionals",
     "currency": "USD",
     "min_price": 23.84
-  },
-  {
-    "market_hash_name": "SCAR-20 | Brass (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Sawed-Off | Amber Fade (Factory New)",
@@ -29922,7 +29897,7 @@
   {
     "market_hash_name": "SCAR-20 | Blueprint (Factory New)",
     "currency": "USD",
-    "min_price": 1.04
+    "min_price": 0.97
   },
   {
     "market_hash_name": "SCAR-20 | Blueprint (Field-Tested)",
@@ -29938,6 +29913,11 @@
     "market_hash_name": "SCAR-20 | Blueprint (Well-Worn)",
     "currency": "USD",
     "min_price": 0.69
+  },
+  {
+    "market_hash_name": "SCAR-20 | Brass (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "SCAR-20 | Brass (Field-Tested)",
@@ -30073,6 +30053,11 @@
     "market_hash_name": "SCAR-20 | Enforcer (Battle-Scarred)",
     "currency": "USD",
     "min_price": 0.61
+  },
+  {
+    "market_hash_name": "SCAR-20 | Enforcer (Factory New)",
+    "currency": "USD",
+    "min_price": 7.47
   },
   {
     "market_hash_name": "SCAR-20 | Enforcer (Field-Tested)",
@@ -30525,6 +30510,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "Sealed Graffiti | Guardian Dragon",
+    "currency": "USD",
+    "min_price": 1.72
+  },
+  {
     "market_hash_name": "Sealed Graffiti | Dead Now (Shark White)",
     "currency": "USD",
     "min_price": 0.6
@@ -30585,11 +30575,6 @@
     "min_price": 0.31
   },
   {
-    "market_hash_name": "Sealed Graffiti | Guardian Dragon",
-    "currency": "USD",
-    "min_price": 1.72
-  },
-  {
     "market_hash_name": "Sealed Graffiti | Happy Cat (Dust Brown)",
     "currency": "USD",
     "min_price": 0.42
@@ -30633,6 +30618,11 @@
     "market_hash_name": "Sealed Graffiti | Kiss (Cash Green)",
     "currency": "USD",
     "min_price": 0.42
+  },
+  {
+    "market_hash_name": "Sealed Graffiti | Kisses",
+    "currency": "USD",
+    "min_price": 2.81
   },
   {
     "market_hash_name": "Sealed Graffiti | Kiss (War Pig Pink)",
@@ -31705,6 +31695,11 @@
     "min_price": 0.39
   },
   {
+    "market_hash_name": "Sealed Graffiti | Shaolin",
+    "currency": "USD",
+    "min_price": 0.72
+  },
+  {
     "market_hash_name": "Sealed Graffiti | Shave Master",
     "currency": "USD",
     "min_price": 0.49
@@ -31753,6 +31748,11 @@
     "market_hash_name": "Sealed Graffiti | Uh Oh (Desert Amber)",
     "currency": "USD",
     "min_price": null
+  },
+  {
+    "market_hash_name": "Sealed Graffiti | Unicorn",
+    "currency": "USD",
+    "min_price": 1.07
   },
   {
     "market_hash_name": "Sealed Graffiti | Vega Squadron | Krakow 2017",
@@ -32277,12 +32277,12 @@
   {
     "market_hash_name": "SG 553 | Night Camo (Factory New)",
     "currency": "USD",
-    "min_price": 0.08
+    "min_price": 0.07
   },
   {
     "market_hash_name": "SG 553 | Night Camo (Field-Tested)",
     "currency": "USD",
-    "min_price": 0.02
+    "min_price": 0.04
   },
   {
     "market_hash_name": "SG 553 | Night Camo (Minimal Wear)",
@@ -32488,6 +32488,11 @@
     "market_hash_name": "SG 553 | Waves Perforated (Well-Worn)",
     "currency": "USD",
     "min_price": 0.04
+  },
+  {
+    "market_hash_name": "SG 553 | Wave Spray (Factory New)",
+    "currency": "USD",
+    "min_price": 15.93
   },
   {
     "market_hash_name": "SG 553 | Wave Spray (Field-Tested)",
@@ -32702,7 +32707,7 @@
   {
     "market_hash_name": "★ Shadow Daggers | Freehand (Factory New)",
     "currency": "USD",
-    "min_price": 93.48
+    "min_price": 83.42
   },
   {
     "market_hash_name": "★ Shadow Daggers | Freehand (Field-Tested)",
@@ -32950,11 +32955,6 @@
     "min_price": 15.89
   },
   {
-    "market_hash_name": "★ Skeleton Knife",
-    "currency": "USD",
-    "min_price": 302.57
-  },
-  {
     "market_hash_name": "Shattered Web Case",
     "currency": "USD",
     "min_price": 5.9
@@ -32967,7 +32967,7 @@
   {
     "market_hash_name": "Sir Bloody Loudmouth Darryl | The Professionals",
     "currency": "USD",
-    "min_price": 79.51
+    "min_price": 78.39
   },
   {
     "market_hash_name": "Sir Bloody Miami Darryl | The Professionals",
@@ -32983,6 +32983,11 @@
     "market_hash_name": "Sir Bloody Skullhead Darryl | The Professionals",
     "currency": "USD",
     "min_price": 45.3
+  },
+  {
+    "market_hash_name": "★ Skeleton Knife",
+    "currency": "USD",
+    "min_price": 302.57
   },
   {
     "market_hash_name": "★ Skeleton Knife | Blue Steel (Battle-Scarred)",
@@ -33112,7 +33117,7 @@
   {
     "market_hash_name": "★ Skeleton Knife | Doppler (Factory New)",
     "currency": "USD",
-    "min_price": 1945.88
+    "min_price": 1638.63
   },
   {
     "market_hash_name": "★ Skeleton Knife | Doppler (Factory New)",
@@ -33272,7 +33277,7 @@
   {
     "market_hash_name": "★ Skeleton Knife | Stained (Battle-Scarred)",
     "currency": "USD",
-    "min_price": 178.81
+    "min_price": 190.73
   },
   {
     "market_hash_name": "★ Skeleton Knife | Stained (Field-Tested)",
@@ -33342,7 +33347,7 @@
   {
     "market_hash_name": "★ Skeleton Knife | Urban Masked (Well-Worn)",
     "currency": "USD",
-    "min_price": 151.66
+    "min_price": 153.77
   },
   {
     "market_hash_name": "Skill Groups Capsule",
@@ -33487,7 +33492,7 @@
   {
     "market_hash_name": "Souvenir AUG | Carved Jade (Factory New)",
     "currency": "USD",
-    "min_price": 9.43
+    "min_price": 9.26
   },
   {
     "market_hash_name": "Souvenir AUG | Carved Jade (Field-Tested)",
@@ -33598,6 +33603,11 @@
     "market_hash_name": "Souvenir AUG | Spalted Wood (Factory New)",
     "currency": "USD",
     "min_price": 0.1
+  },
+  {
+    "market_hash_name": "Souvenir FAMAS | Styx (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Souvenir AUG | Spalted Wood (Field-Tested)",
@@ -34020,11 +34030,6 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Zeus x27 | Dragon Snore (Factory New)",
-    "currency": "USD",
-    "min_price": 166.72
-  },
-  {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Closing Out",
     "currency": "USD",
     "min_price": null
@@ -34175,6 +34180,11 @@
     "min_price": 0.1
   },
   {
+    "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Hit or Miss",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | flameZ Triple Entry",
     "currency": "USD",
     "min_price": null
@@ -34236,11 +34246,6 @@
   },
   {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Hidden Threat",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Hit or Miss",
     "currency": "USD",
     "min_price": null
   },
@@ -34415,6 +34420,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | One With The MP9",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | mzinho Triple Kill",
     "currency": "USD",
     "min_price": null
@@ -34470,17 +34480,7 @@
     "min_price": 0.37
   },
   {
-    "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Tec-9 Master",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | One Tap",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | One With The MP9",
     "currency": "USD",
     "min_price": null
   },
@@ -34550,11 +34550,6 @@
     "min_price": 0.85
   },
   {
-    "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Tec-9 Tapped",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Quad Kill Shutdown",
     "currency": "USD",
     "min_price": null
@@ -34568,6 +34563,11 @@
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Quick Double Kill",
     "currency": "USD",
     "min_price": 0.17
+  },
+  {
+    "market_hash_name": "Souvenir M4A4 | Hellish (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Quick Reactions",
@@ -34795,6 +34795,16 @@
     "min_price": null
   },
   {
+    "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Tec-9 Master",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Tec-9 Tapped",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Techno4K Closer",
     "currency": "USD",
     "min_price": 0.14
@@ -34955,11 +34965,6 @@
     "min_price": 0.46
   },
   {
-    "market_hash_name": "Souvenir CZ75-Auto | Nitro (Field-Tested)",
-    "currency": "USD",
-    "min_price": 0.66
-  },
-  {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Triple Pistol",
     "currency": "USD",
     "min_price": null
@@ -34971,6 +34976,11 @@
   },
   {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | Tunnel Vision",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "Souvenir Charm | Budapest 2025 Highlight | iM Connector burst",
     "currency": "USD",
     "min_price": null
   },
@@ -35003,6 +35013,11 @@
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | xertioN Double Kill",
     "currency": "USD",
     "min_price": null
+  },
+  {
+    "market_hash_name": "Souvenir CZ75-Auto | Copper Fiber (Field-Tested)",
+    "currency": "USD",
+    "min_price": 0.04
   },
   {
     "market_hash_name": "Souvenir Charm | Austin 2025 Highlight | YEKINDAR Double Kill",
@@ -35485,11 +35500,6 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Souvenir Charm | Budapest 2025 Highlight | iM Connector burst",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Souvenir Charm | Budapest 2025 Highlight | iM nearly 1v5",
     "currency": "USD",
     "min_price": null
@@ -35603,11 +35613,6 @@
     "market_hash_name": "Souvenir Charm | Budapest 2025 Highlight | karrigan vs Vitality on Inferno",
     "currency": "USD",
     "min_price": 0.36
-  },
-  {
-    "market_hash_name": "Souvenir Charm | Budapest 2025 Highlight | mezii vs FaZe on Nuke",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Souvenir Charm | Budapest 2025 Highlight | karrigan vs Vitality on Overpass",
@@ -35758,6 +35763,11 @@
     "market_hash_name": "Souvenir Charm | Budapest 2025 Highlight | mezii vs FaZe on Inferno",
     "currency": "USD",
     "min_price": 0.32
+  },
+  {
+    "market_hash_name": "Souvenir Charm | Budapest 2025 Highlight | mezii vs FaZe on Nuke",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Souvenir Charm | Budapest 2025 Highlight | mezii vs FaZe on Overpass",
@@ -36250,11 +36260,6 @@
     "min_price": 0.19
   },
   {
-    "market_hash_name": "Souvenir CZ75-Auto | Copper Fiber (Field-Tested)",
-    "currency": "USD",
-    "min_price": 0.04
-  },
-  {
     "market_hash_name": "Souvenir CZ75-Auto | Copper Fiber (Minimal Wear)",
     "currency": "USD",
     "min_price": 0.06
@@ -36303,6 +36308,11 @@
     "market_hash_name": "Souvenir CZ75-Auto | Midnight Palm (Minimal Wear)",
     "currency": "USD",
     "min_price": 0.05
+  },
+  {
+    "market_hash_name": "Souvenir CZ75-Auto | Nitro (Field-Tested)",
+    "currency": "USD",
+    "min_price": 0.66
   },
   {
     "market_hash_name": "Souvenir CZ75-Auto | Nitro (Minimal Wear)",
@@ -36658,11 +36668,6 @@
     "market_hash_name": "Souvenir FAMAS | Faulty Wiring (Minimal Wear)",
     "currency": "USD",
     "min_price": 0.21
-  },
-  {
-    "market_hash_name": "Souvenir FAMAS | Styx (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Souvenir FAMAS | Styx (Field-Tested)",
@@ -37561,11 +37566,6 @@
   },
   {
     "market_hash_name": "Souvenir M4A4 | Hellish (Field-Tested)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "Souvenir M4A4 | Hellish (Well-Worn)",
     "currency": "USD",
     "min_price": null
   },
@@ -39715,6 +39715,11 @@
     "min_price": 0.04
   },
   {
+    "market_hash_name": "Souvenir USP-S | Road Rash (Field-Tested)",
+    "currency": "USD",
+    "min_price": 33.06
+  },
+  {
     "market_hash_name": "Souvenir UMP-45 | Scorched (Field-Tested)",
     "currency": "USD",
     "min_price": 0.04
@@ -39833,11 +39838,6 @@
     "market_hash_name": "Souvenir USP-S | Road Rash (Factory New)",
     "currency": "USD",
     "min_price": null
-  },
-  {
-    "market_hash_name": "Souvenir USP-S | Road Rash (Field-Tested)",
-    "currency": "USD",
-    "min_price": 33.06
   },
   {
     "market_hash_name": "Souvenir USP-S | Road Rash (Minimal Wear)",
@@ -39975,11 +39975,6 @@
     "min_price": 1.93
   },
   {
-    "market_hash_name": "Souvenir XM1014 | Run Run Run (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Souvenir XM1014 | Fallout Warning (Well-Worn)",
     "currency": "USD",
     "min_price": 20.48
@@ -40038,6 +40033,11 @@
     "market_hash_name": "Souvenir XM1014 | Run Run Run (Minimal Wear)",
     "currency": "USD",
     "min_price": 1.13
+  },
+  {
+    "market_hash_name": "Souvenir XM1014 | Run Run Run (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Souvenir XM1014 | Urban Perforated (Minimal Wear)",
@@ -40867,7 +40867,7 @@
   {
     "market_hash_name": "SSG 08 | Dragonfire (Minimal Wear)",
     "currency": "USD",
-    "min_price": 368.12
+    "min_price": 356.85
   },
   {
     "market_hash_name": "SSG 08 | Dragonfire (Well-Worn)",
@@ -41420,11 +41420,6 @@
     "min_price": 0.61
   },
   {
-    "market_hash_name": "StatTrak™ AK-47 | Cartel (Field-Tested)",
-    "currency": "USD",
-    "min_price": 47.09
-  },
-  {
     "market_hash_name": "StatTrak™ AK-47 | Aquamarine Revenge (Battle-Scarred)",
     "currency": "USD",
     "min_price": 75.5
@@ -41488,6 +41483,11 @@
     "market_hash_name": "StatTrak™ AK-47 | Cartel (Battle-Scarred)",
     "currency": "USD",
     "min_price": 49.16
+  },
+  {
+    "market_hash_name": "StatTrak™ AK-47 | Cartel (Field-Tested)",
+    "currency": "USD",
+    "min_price": 47.09
   },
   {
     "market_hash_name": "StatTrak™ AK-47 | Cartel (Minimal Wear)",
@@ -41767,7 +41767,7 @@
   {
     "market_hash_name": "StatTrak™ AK-47 | Nightwish (Field-Tested)",
     "currency": "USD",
-    "min_price": 68.92
+    "min_price": 64.33
   },
   {
     "market_hash_name": "StatTrak™ AK-47 | Nightwish (Minimal Wear)",
@@ -42153,6 +42153,11 @@
     "market_hash_name": "StatTrak™ AUG | Chameleon (Field-Tested)",
     "currency": "USD",
     "min_price": 80.37
+  },
+  {
+    "market_hash_name": "StatTrak™ AUG | Chameleon (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 87.95
   },
   {
     "market_hash_name": "StatTrak™ AUG | Death by Puppy (Factory New)",
@@ -44065,11 +44070,6 @@
     "min_price": null
   },
   {
-    "market_hash_name": "StatTrak™ FAMAS | Valence (Factory New)",
-    "currency": "USD",
-    "min_price": 28.95
-  },
-  {
     "market_hash_name": "★ StatTrak™ Classic Knife | Crimson Web (Battle-Scarred)",
     "currency": "USD",
     "min_price": null
@@ -44121,6 +44121,11 @@
   },
   {
     "market_hash_name": "★ StatTrak™ Classic Knife | Safari Mesh (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "★ StatTrak™ Classic Knife | Safari Mesh (Field-Tested)",
     "currency": "USD",
     "min_price": null
   },
@@ -44500,6 +44505,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "StatTrak™ FAMAS | Valence (Factory New)",
+    "currency": "USD",
+    "min_price": 28.95
+  },
+  {
     "market_hash_name": "StatTrak™ CZ75-Auto | Yellow Jacket (Field-Tested)",
     "currency": "USD",
     "min_price": 11.36
@@ -44862,7 +44872,7 @@
   {
     "market_hash_name": "StatTrak™ Desert Eagle | Oxide Blaze (Minimal Wear)",
     "currency": "USD",
-    "min_price": 2.05
+    "min_price": 2.04
   },
   {
     "market_hash_name": "StatTrak™ Desert Eagle | Oxide Blaze (Well-Worn)",
@@ -45187,7 +45197,7 @@
   {
     "market_hash_name": "StatTrak™ Dual Berettas | Panther (Minimal Wear)",
     "currency": "USD",
-    "min_price": 8.94
+    "min_price": 7.14
   },
   {
     "market_hash_name": "StatTrak™ Dual Berettas | Panther (Well-Worn)",
@@ -45278,6 +45288,11 @@
     "market_hash_name": "StatTrak™ Dual Berettas | Ventilators (Field-Tested)",
     "currency": "USD",
     "min_price": 0.29
+  },
+  {
+    "market_hash_name": "StatTrak™ Dual Berettas | Ventilators (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 0.57
   },
   {
     "market_hash_name": "★ StatTrak™ Falchion Knife | Autotronic (Battle-Scarred)",
@@ -45670,11 +45685,6 @@
     "min_price": null
   },
   {
-    "market_hash_name": "StatTrak™ FAMAS | Meow 36 (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": 0.12
-  },
-  {
     "market_hash_name": "★ StatTrak™ Falchion Knife | Ultraviolet (Field-Tested)",
     "currency": "USD",
     "min_price": null
@@ -45810,6 +45820,11 @@
     "min_price": 4.36
   },
   {
+    "market_hash_name": "StatTrak™ FAMAS | Meow 36 (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": 0.12
+  },
+  {
     "market_hash_name": "StatTrak™ FAMAS | Eye of Athena (Battle-Scarred)",
     "currency": "USD",
     "min_price": 9.58
@@ -45887,7 +45902,7 @@
   {
     "market_hash_name": "StatTrak™ FAMAS | Meow 36 (Factory New)",
     "currency": "USD",
-    "min_price": 1.84
+    "min_price": 1.74
   },
   {
     "market_hash_name": "StatTrak™ FAMAS | Meow 36 (Field-Tested)",
@@ -46605,11 +46620,6 @@
     "min_price": 157.4
   },
   {
-    "market_hash_name": "★ StatTrak™ Flip Knife | Night (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "★ StatTrak™ Flip Knife | Forest DDPAT (Minimal Wear)",
     "currency": "USD",
     "min_price": null
@@ -46691,6 +46701,11 @@
   },
   {
     "market_hash_name": "★ StatTrak™ Flip Knife | Marble Fade (Minimal Wear)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "★ StatTrak™ Flip Knife | Night (Battle-Scarred)",
     "currency": "USD",
     "min_price": null
   },
@@ -47055,11 +47070,6 @@
     "min_price": 118.51
   },
   {
-    "market_hash_name": "★ StatTrak™ Gut Knife | Doppler (Minimal Wear)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "StatTrak™ Galil AR | Chromatic Aberration (Battle-Scarred)",
     "currency": "USD",
     "min_price": 8.33
@@ -47308,11 +47318,6 @@
     "market_hash_name": "StatTrak™ Galil AR | Stone Cold (Field-Tested)",
     "currency": "USD",
     "min_price": 5.72
-  },
-  {
-    "market_hash_name": "StatTrak™ M4A4 | Griffin (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "StatTrak™ Galil AR | Stone Cold (Minimal Wear)",
@@ -48140,6 +48145,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "★ StatTrak™ Gut Knife | Doppler (Minimal Wear)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "★ StatTrak™ Gut Knife | Fade (Factory New)",
     "currency": "USD",
     "min_price": 203.6
@@ -48350,6 +48360,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "★ StatTrak™ Karambit | Doppler (Minimal Wear)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "★ StatTrak™ Gut Knife | Tiger Tooth (Minimal Wear)",
     "currency": "USD",
     "min_price": null
@@ -48536,6 +48551,11 @@
   },
   {
     "market_hash_name": "★ StatTrak™ Huntsman Knife | Damascus Steel (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "★ StatTrak™ Karambit | Doppler (Minimal Wear)",
     "currency": "USD",
     "min_price": null
   },
@@ -48991,16 +49011,6 @@
   },
   {
     "market_hash_name": "★ StatTrak™ Karambit | Doppler (Factory New)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "★ StatTrak™ Karambit | Doppler (Minimal Wear)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "★ StatTrak™ Karambit | Doppler (Minimal Wear)",
     "currency": "USD",
     "min_price": null
   },
@@ -49797,7 +49807,7 @@
   {
     "market_hash_name": "StatTrak™ M4A1-S | Flashback (Field-Tested)",
     "currency": "USD",
-    "min_price": 4.24
+    "min_price": 4.2
   },
   {
     "market_hash_name": "StatTrak™ M4A1-S | Flashback (Minimal Wear)",
@@ -50100,11 +50110,6 @@
     "min_price": 69.15
   },
   {
-    "market_hash_name": "StatTrak™ M4A4 | Hellfire (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "StatTrak™ M4A4 | Desert-Strike (Battle-Scarred)",
     "currency": "USD",
     "min_price": null
@@ -50172,7 +50177,7 @@
   {
     "market_hash_name": "StatTrak™ M4A4 | Evil Daimyo (Factory New)",
     "currency": "USD",
-    "min_price": 22.65
+    "min_price": 22.29
   },
   {
     "market_hash_name": "StatTrak™ M4A4 | Evil Daimyo (Field-Tested)",
@@ -50233,6 +50238,16 @@
     "market_hash_name": "StatTrak™ M4A4 | Griffin (Field-Tested)",
     "currency": "USD",
     "min_price": 9.42
+  },
+  {
+    "market_hash_name": "StatTrak™ M4A4 | Griffin (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "StatTrak™ M4A4 | Hellfire (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "StatTrak™ M4A4 | Hellfire (Factory New)",
@@ -50377,7 +50392,7 @@
   {
     "market_hash_name": "StatTrak™ M4A4 | Spider Lily (Field-Tested)",
     "currency": "USD",
-    "min_price": 16.37
+    "min_price": 13.71
   },
   {
     "market_hash_name": "StatTrak™ M4A4 | Spider Lily (Minimal Wear)",
@@ -50560,6 +50575,11 @@
     "min_price": 610.58
   },
   {
+    "market_hash_name": "★ StatTrak™ M9 Bayonet | Black Laminate (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "★ StatTrak™ M9 Bayonet | Blue Steel (Battle-Scarred)",
     "currency": "USD",
     "min_price": null
@@ -50572,7 +50592,7 @@
   {
     "market_hash_name": "★ StatTrak™ M9 Bayonet | Blue Steel (Field-Tested)",
     "currency": "USD",
-    "min_price": 544.38
+    "min_price": 509.7
   },
   {
     "market_hash_name": "★ StatTrak™ M9 Bayonet | Blue Steel (Minimal Wear)",
@@ -51992,7 +52012,7 @@
   {
     "market_hash_name": "StatTrak™ MP7 | Akoben (Well-Worn)",
     "currency": "USD",
-    "min_price": null
+    "min_price": 1.16
   },
   {
     "market_hash_name": "StatTrak™ MP7 | Armor Core (Factory New)",
@@ -52267,7 +52287,7 @@
   {
     "market_hash_name": "StatTrak™ MP9 | Airlock (Minimal Wear)",
     "currency": "USD",
-    "min_price": 21.46
+    "min_price": 20.25
   },
   {
     "market_hash_name": "StatTrak™ MP9 | Airlock (Well-Worn)",
@@ -52407,7 +52427,7 @@
   {
     "market_hash_name": "StatTrak™ MP9 | Featherweight (Well-Worn)",
     "currency": "USD",
-    "min_price": 0.1
+    "min_price": 0.11
   },
   {
     "market_hash_name": "StatTrak™ MP9 | Food Chain (Battle-Scarred)",
@@ -53630,11 +53650,6 @@
     "min_price": null
   },
   {
-    "market_hash_name": "StatTrak™ Nova | Gila (Factory New)",
-    "currency": "USD",
-    "min_price": 3.27
-  },
-  {
     "market_hash_name": "★ StatTrak™ Nomad Knife | Doppler (Minimal Wear)",
     "currency": "USD",
     "min_price": null
@@ -53880,6 +53895,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "StatTrak™ Nova | Gila (Factory New)",
+    "currency": "USD",
+    "min_price": 3.27
+  },
+  {
     "market_hash_name": "StatTrak™ Nova | Graphite (Factory New)",
     "currency": "USD",
     "min_price": 21.27
@@ -54093,6 +54113,11 @@
     "market_hash_name": "StatTrak™ P2000 | Acid Etched (Minimal Wear)",
     "currency": "USD",
     "min_price": 2.22
+  },
+  {
+    "market_hash_name": "StatTrak™ P2000 | Fire Elemental (Factory New)",
+    "currency": "USD",
+    "min_price": 187.41
   },
   {
     "market_hash_name": "StatTrak™ P2000 | Fire Elemental (Field-Tested)",
@@ -54325,11 +54350,6 @@
     "min_price": 0.12
   },
   {
-    "market_hash_name": "StatTrak™ P250 | Cartel (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "StatTrak™ P2000 | Sure Grip (Field-Tested)",
     "currency": "USD",
     "min_price": 0.11
@@ -54468,6 +54488,11 @@
     "market_hash_name": "StatTrak™ P250 | Cartel (Minimal Wear)",
     "currency": "USD",
     "min_price": 33.79
+  },
+  {
+    "market_hash_name": "StatTrak™ P250 | Cartel (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "StatTrak™ P250 | Cassette (Battle-Scarred)",
@@ -55735,11 +55760,6 @@
     "min_price": 0.62
   },
   {
-    "market_hash_name": "StatTrak™ R8 Revolver | Fade (Minimal Wear)",
-    "currency": "USD",
-    "min_price": 98.41
-  },
-  {
     "market_hash_name": "StatTrak™ R8 Revolver | Bone Forged (Factory New)",
     "currency": "USD",
     "min_price": 1
@@ -55793,6 +55813,11 @@
     "market_hash_name": "StatTrak™ R8 Revolver | Crimson Web (Well-Worn)",
     "currency": "USD",
     "min_price": 0.54
+  },
+  {
+    "market_hash_name": "StatTrak™ R8 Revolver | Fade (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 98.41
   },
   {
     "market_hash_name": "StatTrak™ R8 Revolver | Fade (Well-Worn)",
@@ -56037,7 +56062,7 @@
   {
     "market_hash_name": "StatTrak™ Sawed-Off | Kiss♥Love (Battle-Scarred)",
     "currency": "USD",
-    "min_price": 4.52
+    "min_price": 4.47
   },
   {
     "market_hash_name": "StatTrak™ Sawed-Off | Kiss♥Love (Factory New)",
@@ -56518,6 +56543,11 @@
     "market_hash_name": "StatTrak™ SG 553 | Colony IV (Battle-Scarred)",
     "currency": "USD",
     "min_price": null
+  },
+  {
+    "market_hash_name": "StatTrak™ SG 553 | Colony IV (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 44.68
   },
   {
     "market_hash_name": "StatTrak™ SG 553 | Cyberforce (Battle-Scarred)",
@@ -57657,7 +57687,7 @@
   {
     "market_hash_name": "StatTrak™ SSG 08 | Parallax (Field-Tested)",
     "currency": "USD",
-    "min_price": 5.59
+    "min_price": 5.42
   },
   {
     "market_hash_name": "StatTrak™ SSG 08 | Parallax (Minimal Wear)",
@@ -58207,7 +58237,7 @@
   {
     "market_hash_name": "★ StatTrak™ Survival Knife | Stained (Field-Tested)",
     "currency": "USD",
-    "min_price": null
+    "min_price": 88.33
   },
   {
     "market_hash_name": "★ StatTrak™ Survival Knife | Stained (Well-Worn)",
@@ -58750,14 +58780,9 @@
     "min_price": 11.42
   },
   {
-    "market_hash_name": "StatTrak™ Tec-9 | Slag (Field-Tested)",
-    "currency": "USD",
-    "min_price": 0.12
-  },
-  {
     "market_hash_name": "StatTrak™ Tec-9 | Fuel Injector (Factory New)",
     "currency": "USD",
-    "min_price": 73.07
+    "min_price": 71.52
   },
   {
     "market_hash_name": "StatTrak™ Tec-9 | Fuel Injector (Field-Tested)",
@@ -58895,6 +58920,11 @@
     "min_price": 1.23
   },
   {
+    "market_hash_name": "StatTrak™ Tec-9 | Slag (Field-Tested)",
+    "currency": "USD",
+    "min_price": 0.12
+  },
+  {
     "market_hash_name": "StatTrak™ Tec-9 | Slag (Minimal Wear)",
     "currency": "USD",
     "min_price": 0.31
@@ -58997,7 +59027,7 @@
   {
     "market_hash_name": "StatTrak™ UMP-45 | Corporal (Factory New)",
     "currency": "USD",
-    "min_price": 3.05
+    "min_price": 2.73
   },
   {
     "market_hash_name": "StatTrak™ UMP-45 | Corporal (Field-Tested)",
@@ -59365,11 +59395,6 @@
     "min_price": null
   },
   {
-    "market_hash_name": "★ StatTrak™ Ursus Knife | Fade (Minimal Wear)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "★ StatTrak™ Ursus Knife | Case Hardened (Field-Tested)",
     "currency": "USD",
     "min_price": 194.37
@@ -59456,6 +59481,11 @@
   },
   {
     "market_hash_name": "★ StatTrak™ Ursus Knife | Doppler (Minimal Wear)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "★ StatTrak™ Ursus Knife | Fade (Minimal Wear)",
     "currency": "USD",
     "min_price": null
   },
@@ -60127,7 +60157,7 @@
   {
     "market_hash_name": "StatTrak™ XM1014 | Entombed (Well-Worn)",
     "currency": "USD",
-    "min_price": 5.32
+    "min_price": 5.27
   },
   {
     "market_hash_name": "StatTrak™ XM1014 | Heaven Guard (Battle-Scarred)",
@@ -60670,11 +60700,6 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Sticker Slab | Big Hugs (Holo)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Sticker | adreN | MLG Columbus 2016",
     "currency": "USD",
     "min_price": 3.27
@@ -60810,9 +60835,9 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Sticker Slab | BIG | Krakow 2017",
+    "market_hash_name": "Sticker | Alpha Legion 1",
     "currency": "USD",
-    "min_price": null
+    "min_price": 3.35
   },
   {
     "market_hash_name": "Sticker | allu | Cologne 2015",
@@ -60838,11 +60863,6 @@
     "market_hash_name": "Sticker | almazer (Gold) | Berlin 2019",
     "currency": "USD",
     "min_price": null
-  },
-  {
-    "market_hash_name": "Sticker | Alpha Legion 1",
-    "currency": "USD",
-    "min_price": 3.35
   },
   {
     "market_hash_name": "Sticker | AMKAL ESPORTS (Holo) | Copenhagen 2024",
@@ -60890,11 +60910,6 @@
     "min_price": 1.98
   },
   {
-    "market_hash_name": "Sticker Slab | Boom Detonation",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Sticker | apEX | Cluj-Napoca 2015",
     "currency": "USD",
     "min_price": 3.66
@@ -60911,11 +60926,6 @@
   },
   {
     "market_hash_name": "Sticker | apEX (Foil) | Katowice 2019",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "Sticker Slab | CS On The Mind",
     "currency": "USD",
     "min_price": null
   },
@@ -60985,14 +60995,14 @@
     "min_price": null
   },
   {
+    "market_hash_name": "Sticker Slab | Big Hugs (Holo)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Sticker | apEX (Holo, Champion) | Paris 2023",
     "currency": "USD",
     "min_price": 0.33
-  },
-  {
-    "market_hash_name": "Sticker | arT (Foil) | Austin 2025",
-    "currency": "USD",
-    "min_price": 0.39
   },
   {
     "market_hash_name": "Sticker | apEX (Holo) | Paris 2023",
@@ -61015,9 +61025,9 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Sticker Slab | CT in Banana",
+    "market_hash_name": "Sticker | arT (Foil) | Austin 2025",
     "currency": "USD",
-    "min_price": null
+    "min_price": 0.39
   },
   {
     "market_hash_name": "Sticker | arT (Gold) | Austin 2025",
@@ -61058,6 +61068,11 @@
     "market_hash_name": "Sticker | arT (Holo) | Stockholm 2021",
     "currency": "USD",
     "min_price": 1.36
+  },
+  {
+    "market_hash_name": "Sticker Slab | BIG | Krakow 2017",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Sticker | Assassin",
@@ -61138,6 +61153,11 @@
     "market_hash_name": "Sticker | Astralis (Holo) | Stockholm 2021",
     "currency": "USD",
     "min_price": 22.23
+  },
+  {
+    "market_hash_name": "Sticker Slab | Boom Detonation",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Sticker | Astralis | Krakow 2017",
@@ -61235,11 +61255,6 @@
     "min_price": 7.61
   },
   {
-    "market_hash_name": "Sticker | Ax1Le (Holo) | Rio 2022",
-    "currency": "USD",
-    "min_price": 2.5
-  },
-  {
     "market_hash_name": "Sticker | AW (Gold) | Budapest 2025",
     "currency": "USD",
     "min_price": null
@@ -61273,6 +61288,11 @@
     "market_hash_name": "Sticker | Ax1Le (Holo) | Copenhagen 2024",
     "currency": "USD",
     "min_price": 2.83
+  },
+  {
+    "market_hash_name": "Sticker | Ax1Le (Holo) | Rio 2022",
+    "currency": "USD",
+    "min_price": 2.5
   },
   {
     "market_hash_name": "Sticker | AZR (Gold) | Boston 2018",
@@ -61427,7 +61447,7 @@
   {
     "market_hash_name": "Sticker | Battle Scarred",
     "currency": "USD",
-    "min_price": 4.12
+    "min_price": 3.99
   },
   {
     "market_hash_name": "Sticker | Battle Scarred (Holo)",
@@ -61880,6 +61900,11 @@
     "min_price": 2.92
   },
   {
+    "market_hash_name": "Sticker Slab | CS On The Mind",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Sticker | broky (Holo) | Austin 2025",
     "currency": "USD",
     "min_price": 1.01
@@ -62140,11 +62165,6 @@
     "min_price": 2.72
   },
   {
-    "market_hash_name": "Sticker | Chaos Marine (Foil)",
-    "currency": "USD",
-    "min_price": 4.02
-  },
-  {
     "market_hash_name": "Sticker | chayJESUS (Gold) | Austin 2025",
     "currency": "USD",
     "min_price": null
@@ -62255,11 +62275,6 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Sticker Slab | Fade Mangos",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Sticker | Chr1zN (Gold) | Austin 2025",
     "currency": "USD",
     "min_price": 1.31
@@ -62296,11 +62311,6 @@
   },
   {
     "market_hash_name": "Sticker | chrisJ (Gold) | Boston 2018",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "Sticker Slab | Fearsome",
     "currency": "USD",
     "min_price": null
   },
@@ -62610,11 +62620,6 @@
     "min_price": 9.04
   },
   {
-    "market_hash_name": "Sticker | CT in Banana",
-    "currency": "USD",
-    "min_price": 0.98
-  },
-  {
     "market_hash_name": "Sticker | Copenhagen Flames (Holo) | Antwerp 2022",
     "currency": "USD",
     "min_price": 7.83
@@ -62693,6 +62698,11 @@
     "market_hash_name": "Sticker | CS On The Mind",
     "currency": "USD",
     "min_price": 0.92
+  },
+  {
+    "market_hash_name": "Sticker | CT in Banana",
+    "currency": "USD",
+    "min_price": 0.98
   },
   {
     "market_hash_name": "Sticker | CT Tracks (Glitter)",
@@ -63145,6 +63155,11 @@
     "min_price": 11.62
   },
   {
+    "market_hash_name": "Sticker Slab | CT in Banana",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Sticker | DreamEaters | Berlin 2019",
     "currency": "USD",
     "min_price": null
@@ -63540,6 +63555,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "Sticker Slab | Fade Mangos",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Sticker | esenthial (Holo) | Austin 2025",
     "currency": "USD",
     "min_price": null
@@ -63603,11 +63623,6 @@
     "market_hash_name": "Sticker | Eternal Fire (Glitter) | Copenhagen 2024",
     "currency": "USD",
     "min_price": 2.35
-  },
-  {
-    "market_hash_name": "Sticker Slab | Fearsome (Holo)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Sticker | Eternal Fire (Holo) | Antwerp 2022",
@@ -63710,6 +63725,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "Sticker | Extermination",
+    "currency": "USD",
+    "min_price": 0.62
+  },
+  {
     "market_hash_name": "Sticker | Ex6TenZ (Foil) | MLG Columbus 2016",
     "currency": "USD",
     "min_price": null
@@ -63740,19 +63760,9 @@
     "min_price": 0.66
   },
   {
-    "market_hash_name": "Sticker | Extermination",
-    "currency": "USD",
-    "min_price": 0.62
-  },
-  {
     "market_hash_name": "Sticker | Eye Contact (Holo)",
     "currency": "USD",
     "min_price": 0.37
-  },
-  {
-    "market_hash_name": "Sticker Slab | Gold Teef (Foil)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Sticker | Eyes In The Sky (Foil)",
@@ -64245,6 +64255,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "Sticker | flamie (Gold) | London 2018",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Sticker | flamie | Cologne 2016",
     "currency": "USD",
     "min_price": 2.41
@@ -64271,11 +64286,6 @@
   },
   {
     "market_hash_name": "Sticker | flamie (Gold) | Krakow 2017",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "Sticker | flamie (Gold) | London 2018",
     "currency": "USD",
     "min_price": null
   },
@@ -64680,7 +64690,7 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Sticker Slab | Gold Web",
+    "market_hash_name": "Sticker Slab | Fearsome",
     "currency": "USD",
     "min_price": null
   },
@@ -65087,7 +65097,7 @@
   {
     "market_hash_name": "Sticker | gla1ve | Atlanta 2017",
     "currency": "USD",
-    "min_price": 3.19
+    "min_price": 3.04
   },
   {
     "market_hash_name": "Sticker | gla1ve (Gold) | Antwerp 2022",
@@ -65148,6 +65158,11 @@
     "market_hash_name": "Sticker | gob b (Gold) | Boston 2018",
     "currency": "USD",
     "min_price": null
+  },
+  {
+    "market_hash_name": "Sticker | Go Boom (Glitter)",
+    "currency": "USD",
+    "min_price": 0.38
   },
   {
     "market_hash_name": "Sticker | God of Fortune",
@@ -65223,11 +65238,6 @@
     "market_hash_name": "Sticker | Googly Eye (Lenticular)",
     "currency": "USD",
     "min_price": 14.75
-  },
-  {
-    "market_hash_name": "Sticker Slab | Hello P90 (Gold)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Sticker | Graviti (Gold) | Austin 2025",
@@ -65705,6 +65715,11 @@
     "min_price": 4.46
   },
   {
+    "market_hash_name": "Sticker Slab | Fearsome (Holo)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Sticker | HexT (Gold) | Budapest 2025",
     "currency": "USD",
     "min_price": null
@@ -65793,6 +65808,11 @@
     "market_hash_name": "Sticker | Hobbit (Holo) | Copenhagen 2024",
     "currency": "USD",
     "min_price": 3.3
+  },
+  {
+    "market_hash_name": "Sticker Slab | Gold Teef (Foil)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Sticker | HObbit (Holo) | Stockholm 2021",
@@ -65910,6 +65930,11 @@
     "min_price": 0.49
   },
   {
+    "market_hash_name": "Sticker Slab | Gold Web",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Sticker | IEM (Holo) | Rio 2022",
     "currency": "USD",
     "min_price": 1.31
@@ -65938,6 +65963,11 @@
     "market_hash_name": "Sticker | iM (Foil) | Austin 2025",
     "currency": "USD",
     "min_price": 0.67
+  },
+  {
+    "market_hash_name": "Sticker Slab | Hello P90 (Gold)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Sticker | iM (Gold) | Austin 2025",
@@ -66100,11 +66130,6 @@
     "min_price": 8.98
   },
   {
-    "market_hash_name": "Sticker Slab | Hello UMP-45",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Sticker | INS | Shanghai 2024",
     "currency": "USD",
     "min_price": null
@@ -66256,6 +66281,11 @@
   },
   {
     "market_hash_name": "Sticker | Jame | Boston 2018",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "Sticker Slab | Hello UMP-45",
     "currency": "USD",
     "min_price": null
   },
@@ -66450,11 +66480,6 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Sticker Slab | Lefty (CT)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Sticker | jks | Boston 2018",
     "currency": "USD",
     "min_price": null
@@ -66496,11 +66521,6 @@
   },
   {
     "market_hash_name": "Sticker | jks (Holo) | Shanghai 2024",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "Sticker Slab | Lefty (T)",
     "currency": "USD",
     "min_price": null
   },
@@ -66690,17 +66710,17 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Sticker Slab | Manticore (Holo)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Sticker | k0nfig (Holo) | Paris 2023",
     "currency": "USD",
     "min_price": null
   },
   {
     "market_hash_name": "Sticker | kabal (Holo) | Rio 2022",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "Sticker | karrigan (Gold) | London 2018",
     "currency": "USD",
     "min_price": null
   },
@@ -66745,19 +66765,9 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Sticker | karrigan (Gold) | London 2018",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "Sticker | karrigan (Gold) | Paris 2023",
     "currency": "USD",
     "min_price": 9.54
-  },
-  {
-    "market_hash_name": "Sticker Slab | Pain Train (Holo)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Sticker | karrigan (Holo) | Antwerp 2022",
@@ -66808,6 +66818,11 @@
     "market_hash_name": "Sticker | kauez (Embroidered) | Budapest 2025",
     "currency": "USD",
     "min_price": null
+  },
+  {
+    "market_hash_name": "Sticker | Kimberly",
+    "currency": "USD",
+    "min_price": 2
   },
   {
     "market_hash_name": "Sticker | kauez (Gold) | Budapest 2025",
@@ -66993,11 +67008,6 @@
     "market_hash_name": "Sticker | Killjoy (Holo)",
     "currency": "USD",
     "min_price": 3.22
-  },
-  {
-    "market_hash_name": "Sticker | Kimberly",
-    "currency": "USD",
-    "min_price": 2
   },
   {
     "market_hash_name": "Sticker | Kimberly (Holo)",
@@ -67233,6 +67243,11 @@
     "market_hash_name": "Sticker | Kursy (Holo) | Budapest 2025",
     "currency": "USD",
     "min_price": 0.55
+  },
+  {
+    "market_hash_name": "Sticker | Kvem (Embroidered) | Budapest 2025",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "Sticker | Kvem (Gold) | Budapest 2025",
@@ -67795,6 +67810,11 @@
     "min_price": 5.57
   },
   {
+    "market_hash_name": "Sticker Slab | Lefty (CT)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Sticker | Magic Rush Ball (Lenticular)",
     "currency": "USD",
     "min_price": 16.82
@@ -67812,7 +67832,7 @@
   {
     "market_hash_name": "Sticker | Magisk (Gold) | Berlin 2019",
     "currency": "USD",
-    "min_price": null
+    "min_price": 11.35
   },
   {
     "market_hash_name": "Sticker | Magisk (Gold) | Budapest 2025",
@@ -67850,6 +67870,11 @@
     "min_price": 0.41
   },
   {
+    "market_hash_name": "Sticker | Mahjong Zhong",
+    "currency": "USD",
+    "min_price": 0.7
+  },
+  {
     "market_hash_name": "Sticker | magixx (Gold) | Copenhagen 2024",
     "currency": "USD",
     "min_price": 9.14
@@ -67878,11 +67903,6 @@
     "market_hash_name": "Sticker | Mahjong Rooster",
     "currency": "USD",
     "min_price": 0.72
-  },
-  {
-    "market_hash_name": "Sticker | Mahjong Zhong",
-    "currency": "USD",
-    "min_price": 0.7
   },
   {
     "market_hash_name": "Sticker | Maikelele | Cluj-Napoca 2015",
@@ -68085,7 +68105,7 @@
     "min_price": 11.82
   },
   {
-    "market_hash_name": "Sticker Slab | Snowfall (Glitter)",
+    "market_hash_name": "Sticker Slab | Lefty (T)",
     "currency": "USD",
     "min_price": null
   },
@@ -68408,11 +68428,6 @@
     "market_hash_name": "Sticker | MOUZ (Gold) | Paris 2023",
     "currency": "USD",
     "min_price": 1.98
-  },
-  {
-    "market_hash_name": "Sticker | MOUZ (Gold) | Shanghai 2024",
-    "currency": "USD",
-    "min_price": 3.1
   },
   {
     "market_hash_name": "Sticker | MOUZ (Holo) | Austin 2025",
@@ -69350,7 +69365,7 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Sticker Slab | TACO | Krakow 2017",
+    "market_hash_name": "Sticker Slab | Manticore (Holo)",
     "currency": "USD",
     "min_price": null
   },
@@ -69590,7 +69605,7 @@
     "min_price": 21.9
   },
   {
-    "market_hash_name": "Sticker Slab | Trick Or Treat",
+    "market_hash_name": "Sticker Slab | Pain Train (Holo)",
     "currency": "USD",
     "min_price": null
   },
@@ -69755,7 +69770,7 @@
     "min_price": 5.72
   },
   {
-    "market_hash_name": "Sticker Slab | T Rush (Holo)",
+    "market_hash_name": "Sticker Slab | Snowfall (Glitter)",
     "currency": "USD",
     "min_price": null
   },
@@ -70958,11 +70973,6 @@
     "market_hash_name": "Sticker | Senzu (Gold) | Budapest 2025",
     "currency": "USD",
     "min_price": 2.43
-  },
-  {
-    "market_hash_name": "Sticker | Senzu (Holo) | Budapest 2025",
-    "currency": "USD",
-    "min_price": 1.08
   },
   {
     "market_hash_name": "Sticker | sh1ro (Gold) | Antwerp 2022",
@@ -73526,6 +73536,11 @@
   },
   {
     "market_hash_name": "Sticker Slab | Cloud9 (Glitter) | Antwerp 2022",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "Sticker Slab | TACO | Krakow 2017",
     "currency": "USD",
     "min_price": null
   },
@@ -81060,6 +81075,11 @@
     "min_price": null
   },
   {
+    "market_hash_name": "Sticker Slab | Trick Or Treat",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "Sticker Slab | Natus Vincere (Holo) | Katowice 2015",
     "currency": "USD",
     "min_price": null
@@ -81471,6 +81491,11 @@
   },
   {
     "market_hash_name": "Sticker Slab | Ninjas in Pyjamas | Berlin 2019",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "Sticker Slab | T Rush (Holo)",
     "currency": "USD",
     "min_price": null
   },
@@ -90315,106 +90340,6 @@
     "min_price": 3.85
   },
   {
-    "market_hash_name": "Zeus x27 | Dragon Snore (Field-Tested)",
-    "currency": "USD",
-    "min_price": 34.57
-  },
-  {
-    "market_hash_name": "Zeus x27 | Dragon Snore (Minimal Wear)",
-    "currency": "USD",
-    "min_price": 81.05
-  },
-  {
-    "market_hash_name": "Zeus x27 | Dragon Snore (Well-Worn)",
-    "currency": "USD",
-    "min_price": 39.23
-  },
-  {
-    "market_hash_name": "Zeus x27 | Earth Mandala (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": 0.79
-  },
-  {
-    "market_hash_name": "Zeus x27 | Earth Mandala (Factory New)",
-    "currency": "USD",
-    "min_price": 3.73
-  },
-  {
-    "market_hash_name": "Zeus x27 | Earth Mandala (Field-Tested)",
-    "currency": "USD",
-    "min_price": 0.85
-  },
-  {
-    "market_hash_name": "Zeus x27 | Earth Mandala (Minimal Wear)",
-    "currency": "USD",
-    "min_price": 1.92
-  },
-  {
-    "market_hash_name": "Zeus x27 | Earth Mandala (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "Zeus x27 | Electric Blue (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": 0.05
-  },
-  {
-    "market_hash_name": "XM1014 | Zombie Offensive (Factory New)",
-    "currency": "USD",
-    "min_price": 2.18
-  },
-  {
-    "market_hash_name": "XM1014 | Zombie Offensive (Field-Tested)",
-    "currency": "USD",
-    "min_price": 0.58
-  },
-  {
-    "market_hash_name": "XM1014 | Zombie Offensive (Minimal Wear)",
-    "currency": "USD",
-    "min_price": 0.63
-  },
-  {
-    "market_hash_name": "XM1014 | Black Tie (Factory New)",
-    "currency": "USD",
-    "min_price": 4.65
-  },
-  {
-    "market_hash_name": "XM1014 | Black Tie (Field-Tested)",
-    "currency": "USD",
-    "min_price": 1.25
-  },
-  {
-    "market_hash_name": "XM1014 | Black Tie (Minimal Wear)",
-    "currency": "USD",
-    "min_price": 1.87
-  },
-  {
-    "market_hash_name": "XM1014 | Blaze Orange (Factory New)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "XM1014 | Blue Spruce (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": 0.04
-  },
-  {
-    "market_hash_name": "XM1014 | Blue Spruce (Factory New)",
-    "currency": "USD",
-    "min_price": 0.79
-  },
-  {
-    "market_hash_name": "XM1014 | Ancient Lore (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
-    "market_hash_name": "XM1014 | Black Tie (Battle-Scarred)",
-    "currency": "USD",
-    "min_price": 1.31
-  },
-  {
     "market_hash_name": "Street Soldier | Phoenix",
     "currency": "USD",
     "min_price": 22.05
@@ -90757,7 +90682,7 @@
   {
     "market_hash_name": "★ Talon Knife",
     "currency": "USD",
-    "min_price": 344.52
+    "min_price": 207.41
   },
   {
     "market_hash_name": "★ Talon Knife | Blue Steel (Battle-Scarred)",
@@ -91062,7 +90987,7 @@
   {
     "market_hash_name": "★ Talon Knife | Ultraviolet (Field-Tested)",
     "currency": "USD",
-    "min_price": 293.48
+    "min_price": 292.86
   },
   {
     "market_hash_name": "★ Talon Knife | Ultraviolet (Minimal Wear)",
@@ -91765,11 +91690,6 @@
     "min_price": 3.27
   },
   {
-    "market_hash_name": "Tec-9 | Sandstorm (Well-Worn)",
-    "currency": "USD",
-    "min_price": 0.62
-  },
-  {
     "market_hash_name": "Tec-9 | Slag (Battle-Scarred)",
     "currency": "USD",
     "min_price": 0.1
@@ -91970,11 +91890,6 @@
     "min_price": 4.05
   },
   {
-    "market_hash_name": "UMP-45 | Metal Flowers (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
-  },
-  {
     "market_hash_name": "'The Doctor' Romanov | Sabre",
     "currency": "USD",
     "min_price": 10.01
@@ -91983,16 +91898,6 @@
     "market_hash_name": "The Elite Mr. Muhlik | Elite Crew",
     "currency": "USD",
     "min_price": 13.11
-  },
-  {
-    "market_hash_name": "UMP-45 | Mudder (Factory New)",
-    "currency": "USD",
-    "min_price": 0.36
-  },
-  {
-    "market_hash_name": "UMP-45 | Warm Blooded (Well-Worn)",
-    "currency": "USD",
-    "min_price": null
   },
   {
     "market_hash_name": "Train Pin",
@@ -92355,6 +92260,11 @@
     "min_price": 6.62
   },
   {
+    "market_hash_name": "UMP-45 | Houndstooth (Field-Tested)",
+    "currency": "USD",
+    "min_price": 4.23
+  },
+  {
     "market_hash_name": "UMP-45 | Houndstooth (Minimal Wear)",
     "currency": "USD",
     "min_price": 4.77
@@ -92367,7 +92277,7 @@
   {
     "market_hash_name": "UMP-45 | Indigo (Factory New)",
     "currency": "USD",
-    "min_price": 19.17
+    "min_price": 15.15
   },
   {
     "market_hash_name": "UMP-45 | Indigo (Field-Tested)",
@@ -92475,6 +92385,11 @@
     "min_price": 8.32
   },
   {
+    "market_hash_name": "UMP-45 | Metal Flowers (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "UMP-45 | Minotaur's Labyrinth (Field-Tested)",
     "currency": "USD",
     "min_price": 194.21
@@ -92550,6 +92465,11 @@
     "min_price": 0.04
   },
   {
+    "market_hash_name": "UMP-45 | Mudder (Factory New)",
+    "currency": "USD",
+    "min_price": 0.36
+  },
+  {
     "market_hash_name": "UMP-45 | Mudder (Field-Tested)",
     "currency": "USD",
     "min_price": 0.04
@@ -92577,7 +92497,7 @@
   {
     "market_hash_name": "UMP-45 | Neo-Noir (Minimal Wear)",
     "currency": "USD",
-    "min_price": 11.92
+    "min_price": 14.3
   },
   {
     "market_hash_name": "UMP-45 | Neo-Noir (Well-Worn)",
@@ -92780,6 +92700,11 @@
     "min_price": 1.85
   },
   {
+    "market_hash_name": "UMP-45 | Warm Blooded (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
     "market_hash_name": "UMP-45 | Wild Child (Battle-Scarred)",
     "currency": "USD",
     "min_price": 3.97
@@ -92848,6 +92773,11 @@
     "market_hash_name": "★ Ursus Knife | Case Hardened (Battle-Scarred)",
     "currency": "USD",
     "min_price": 128.91
+  },
+  {
+    "market_hash_name": "USP-S | Alpine Camo (Field-Tested)",
+    "currency": "USD",
+    "min_price": 0.52
   },
   {
     "market_hash_name": "★ Ursus Knife | Case Hardened (Field-Tested)",
@@ -93057,7 +92987,7 @@
   {
     "market_hash_name": "★ Ursus Knife | Slaughter (Factory New)",
     "currency": "USD",
-    "min_price": 205.16
+    "min_price": 202.65
   },
   {
     "market_hash_name": "★ Ursus Knife | Slaughter (Field-Tested)",
@@ -93158,11 +93088,6 @@
     "market_hash_name": "USP-S | Alpine Camo (Factory New)",
     "currency": "USD",
     "min_price": 3.31
-  },
-  {
-    "market_hash_name": "USP-S | Alpine Camo (Field-Tested)",
-    "currency": "USD",
-    "min_price": 0.52
   },
   {
     "market_hash_name": "USP-S | Alpine Camo (Minimal Wear)",
@@ -93367,7 +93292,7 @@
   {
     "market_hash_name": "USP-S | Dark Water (Minimal Wear)",
     "currency": "USD",
-    "min_price": 154.49
+    "min_price": 147.31
   },
   {
     "market_hash_name": "USP-S | Desert Tactical (Battle-Scarred)",
@@ -94020,7 +93945,32 @@
     "min_price": 8.88
   },
   {
-    "market_hash_name": "XM1014 | Bone Machine (Well-Worn)",
+    "market_hash_name": "XM1014 | Ancient Lore (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "XM1014 | Black Tie (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": 1.31
+  },
+  {
+    "market_hash_name": "XM1014 | Black Tie (Factory New)",
+    "currency": "USD",
+    "min_price": 4.65
+  },
+  {
+    "market_hash_name": "XM1014 | Black Tie (Field-Tested)",
+    "currency": "USD",
+    "min_price": 1.25
+  },
+  {
+    "market_hash_name": "XM1014 | Black Tie (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 1.87
+  },
+  {
+    "market_hash_name": "XM1014 | Blaze Orange (Factory New)",
     "currency": "USD",
     "min_price": null
   },
@@ -94030,14 +93980,14 @@
     "min_price": null
   },
   {
-    "market_hash_name": "Zeus x27 | Tosai (Minimal Wear)",
+    "market_hash_name": "XM1014 | Blue Spruce (Battle-Scarred)",
     "currency": "USD",
-    "min_price": 1.04
+    "min_price": 0.04
   },
   {
-    "market_hash_name": "Zeus x27 | Tosai (Well-Worn)",
+    "market_hash_name": "XM1014 | Blue Spruce (Factory New)",
     "currency": "USD",
-    "min_price": 0.57
+    "min_price": 0.79
   },
   {
     "market_hash_name": "XM1014 | Blue Spruce (Field-Tested)",
@@ -94098,6 +94048,11 @@
     "market_hash_name": "XM1014 | Bone Machine (Minimal Wear)",
     "currency": "USD",
     "min_price": 19.07
+  },
+  {
+    "market_hash_name": "XM1014 | Bone Machine (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
   },
   {
     "market_hash_name": "XM1014 | CaliCamo (Battle-Scarred)",
@@ -94775,9 +94730,114 @@
     "min_price": 0.51
   },
   {
+    "market_hash_name": "XM1014 | Zombie Offensive (Factory New)",
+    "currency": "USD",
+    "min_price": 2.18
+  },
+  {
+    "market_hash_name": "XM1014 | Zombie Offensive (Field-Tested)",
+    "currency": "USD",
+    "min_price": 0.58
+  },
+  {
+    "market_hash_name": "XM1014 | Zombie Offensive (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 0.63
+  },
+  {
+    "market_hash_name": "XM1014 | Zombie Offensive (Well-Worn)",
+    "currency": "USD",
+    "min_price": 0.7
+  },
+  {
+    "market_hash_name": "X-Ray P250 Package",
+    "currency": "USD",
+    "min_price": 1.84
+  },
+  {
+    "market_hash_name": "Zeus x27 | Charged Up (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": 4.52
+  },
+  {
+    "market_hash_name": "Zeus x27 | Charged Up (Factory New)",
+    "currency": "USD",
+    "min_price": 38.96
+  },
+  {
+    "market_hash_name": "Zeus x27 | Charged Up (Field-Tested)",
+    "currency": "USD",
+    "min_price": 5.09
+  },
+  {
+    "market_hash_name": "Zeus x27 | Charged Up (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 14.96
+  },
+  {
+    "market_hash_name": "Zeus x27 | Charged Up (Well-Worn)",
+    "currency": "USD",
+    "min_price": 3.8
+  },
+  {
+    "market_hash_name": "Zeus x27 | Dragon Snore (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": 22.65
+  },
+  {
+    "market_hash_name": "Zeus x27 | Dragon Snore (Factory New)",
+    "currency": "USD",
+    "min_price": 166.72
+  },
+  {
+    "market_hash_name": "Zeus x27 | Dragon Snore (Field-Tested)",
+    "currency": "USD",
+    "min_price": 34.57
+  },
+  {
+    "market_hash_name": "Zeus x27 | Dragon Snore (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 81.05
+  },
+  {
+    "market_hash_name": "Zeus x27 | Dragon Snore (Well-Worn)",
+    "currency": "USD",
+    "min_price": 39.23
+  },
+  {
+    "market_hash_name": "Zeus x27 | Earth Mandala (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": 0.79
+  },
+  {
+    "market_hash_name": "Zeus x27 | Earth Mandala (Factory New)",
+    "currency": "USD",
+    "min_price": 3.73
+  },
+  {
+    "market_hash_name": "Zeus x27 | Earth Mandala (Field-Tested)",
+    "currency": "USD",
+    "min_price": 0.85
+  },
+  {
+    "market_hash_name": "Zeus x27 | Earth Mandala (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 1.92
+  },
+  {
+    "market_hash_name": "Zeus x27 | Earth Mandala (Well-Worn)",
+    "currency": "USD",
+    "min_price": null
+  },
+  {
+    "market_hash_name": "Zeus x27 | Electric Blue (Battle-Scarred)",
+    "currency": "USD",
+    "min_price": 0.05
+  },
+  {
     "market_hash_name": "Zeus x27 | Electric Blue (Factory New)",
     "currency": "USD",
-    "min_price": 0.67
+    "min_price": 0.66
   },
   {
     "market_hash_name": "Zeus x27 | Electric Blue (Field-Tested)",
@@ -94858,5 +94918,15 @@
     "market_hash_name": "Zeus x27 | Tosai (Field-Tested)",
     "currency": "USD",
     "min_price": 0.45
+  },
+  {
+    "market_hash_name": "Zeus x27 | Tosai (Minimal Wear)",
+    "currency": "USD",
+    "min_price": 1.04
+  },
+  {
+    "market_hash_name": "Zeus x27 | Tosai (Well-Worn)",
+    "currency": "USD",
+    "min_price": 0.57
   }
 ]
