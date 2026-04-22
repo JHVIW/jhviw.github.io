@@ -426,15 +426,15 @@
       </div>
 
       <div class="metrics">
-        <div class="metric"><div class="metric-value">260+</div><div class="metric-label">API endpoints</div></div>
+        <div class="metric"><div class="metric-value">15K+</div><div class="metric-label">Bezoekers / maand</div></div>
         <div class="metric"><div class="metric-value">20+</div><div class="metric-label">Markt-integraties</div></div>
         <div class="metric"><div class="metric-value">~50K</div><div class="metric-label">Items in catalog</div></div>
-        <div class="metric"><div class="metric-value">EN · RU</div><div class="metric-label">i18n productie</div></div>
+        <div class="metric"><div class="metric-value">260+</div><div class="metric-label">API endpoints</div></div>
       </div>
 
       <div class="featured-desc" style="margin-top:6px;">
         <ul style="margin-left:14px; margin-top:2px;">
-          <li><strong>Architectuur:</strong> Nuxt 3 SSR met 185 Vue componenten, 58 composables en 34 pagina's. PostgreSQL via PgBouncer met dynamische pool-sizing, prepared statements en DECIMAL-overflow detectie.</li>
+          <li><strong>Architectuur:</strong> Nuxt 3 SSR met 185 Vue componenten, 58 composables en 34 pagina's (EN + RU i18n). PostgreSQL via PgBouncer met dynamische pool-sizing, prepared statements en DECIMAL-overflow detectie.</li>
           <li><strong>Externe integraties:</strong> 20+ marktplaats-API's (Steam, CSFloat, Buff163, DMarket, Skinport, Buff, Waxpeer e.a.) via NDJSON-streaming met exponentiële backoff. Steam <strong>OpenID 2.0</strong>, Stripe webhooks (<strong>HMAC-SHA256</strong>) en AWS S3 CDN pipeline.</li>
           <li><strong>Real-time &amp; UI:</strong> Interactieve <strong>3D skin-viewer</strong> (Three.js · GLTFLoader · OrbitControls), live deals via <strong>Server-Sent Events</strong>, <strong>web-push</strong> met VAPID (RFC 8030), Chart.js prijshistorie en trade-up calculator met float-math.</li>
           <li><strong>Performance:</strong> Meertraps caching (in-memory dataset cache met versie-counter, Nitro ISR, Cloudflare edge) met geautomatiseerde CDN-purge per deploy. IP-rate limiting, batch-queries met DISTINCT ON-optimalisatie.</li>
