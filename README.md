@@ -24,7 +24,7 @@
 
 I'm a software developer and **AI Lead** based in Tilburg, specialising in **AI, cybersecurity, and software for healthcare**.
 
-At **[Bodegro](https://bodegro.nl)** I work full-time on **LabTrain**, a laboratory information system for the healthcare sector (C#/.NET, ASP.NET, Oracle/PL-SQL, HL7/FHIR), while leading the responsible introduction of AI across the organisation — running pilots, building LLM tooling, and shaping AI governance and compliance with security and privacy as hard requirements.
+At **[Bodegro](https://www.bodegro.com/)** I work full-time on **LabTrain**, a laboratory information system for the healthcare sector (C#/.NET, ASP.NET, Oracle/PL-SQL, HL7/FHIR), while leading the responsible introduction of AI across the organisation — running pilots, building LLM tooling, and shaping AI governance and compliance with security and privacy as hard requirements.
 
 On the side I'm the founder and lead developer of **[CS2Locker](https://cs2locker.com)**, an internationally used production platform with live market data, custom infrastructure, and thousands of daily visitors.
 
