@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rick van Iwaarden — Software Developer · AI Lead · Cybersecurity</title>
+<meta name="description" content="Rick van Iwaarden — Software Developer, AI Lead and Cybersecurity specialist based in Tilburg. Founder of CS2Locker, AI Lead at Bodegro.">
+<link rel="icon" href="icon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f1f3d; --ink-soft:#2c3e57; --muted:#6b7a90;
+    --line:#e3e8f0; --bg:#0b1220; --bg-soft:#111c30; --card:#16233d;
+    --accent:#3b82f6; --accent-2:#10b981; --text:#e6edf7; --text-dim:#9fb0c9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    background:radial-gradient(1200px 600px at 70% -10%,#1a2c4d 0%,var(--bg) 55%);
+    color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  section{padding:56px 0;border-top:1px solid rgba(255,255,255,.06)}
+  section:first-of-type{border-top:none}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:var(--accent);font-weight:700;margin-bottom:22px}
+
+  /* HERO */
+  header{padding:80px 0 64px}
+  .eyebrow{color:var(--accent-2);font-weight:600;letter-spacing:.04em;font-size:14px;margin-bottom:14px}
+  .name{font-size:clamp(38px,7vw,64px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+  .tagline{font-size:clamp(17px,2.6vw,22px);color:var(--text-dim);font-weight:500;margin-top:16px;max-width:640px}
+  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:600;font-size:15px;transition:transform .15s ease,background .15s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--text)}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+  .chip{font-size:13px;color:var(--text-dim);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:5px 12px;border-radius:999px}
+
+  /* ABOUT */
+  .about p{color:var(--text-dim);max-width:720px;margin-bottom:16px;font-size:16px}
+  .about strong{color:var(--text);font-weight:600}
+  .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .fact{font-size:14px;color:var(--text-dim);background:var(--bg-soft);border:1px solid rgba(255,255,255,.06);padding:8px 14px;border-radius:10px}
+
+  /* FLAGSHIP */
+  .flagship{background:linear-gradient(135deg,var(--card),#0f1a30);border:1px solid rgba(59,130,246,.25);border-radius:18px;padding:30px}
+  .flagship h3{font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .flagship .sub{color:var(--text-dim);margin:6px 0 22px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+  .stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px}
+  .stat b{display:block;font-size:22px;font-weight:800;color:#fff}
+  .stat span{font-size:12px;color:var(--text-dim)}
+  .rows{display:grid;gap:12px}
+  .row{display:grid;grid-template-columns:130px 1fr;gap:14px;font-size:14.5px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .row:last-child{border-bottom:none;padding-bottom:0}
+  .row .k{color:var(--accent);font-weight:600}
+  .row .v{color:var(--text-dim)}
+
+  /* PROJECTS */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .proj{display:block;background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:22px;transition:transform .15s ease,border-color .15s ease}
+  .proj:hover{transform:translateY(-3px);border-color:rgba(59,130,246,.4)}
+  .proj h3{font-size:18px;font-weight:700;margin-bottom:8px}
+  .proj p{color:var(--text-dim);font-size:14.5px}
+  .proj .arrow{color:var(--accent);font-size:14px;font-weight:600;margin-top:14px;display:inline-block}
+
+  /* STACK */
+  .stack{display:grid;gap:18px}
+  .stackrow{}
+  .stackrow .cat{font-weight:700;color:var(--text);margin-bottom:8px;font-size:15px}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tag{font-size:13px;color:var(--text-dim);background:var(--bg-soft);border:1px solid rgba(255,255,255,.07);padding:5px 11px;border-radius:8px}
+
+  /* CONTACT */
+  .contact{text-align:center;padding-bottom:70px}
+  .contact h2{color:var(--accent)}
+  .contact p{color:var(--text-dim);margin-bottom:24px}
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:26px 0 50px}
+
+  @media(max-width:640px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .grid{grid-template-columns:1fr}
+    .row{grid-template-columns:100px 1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Software Developer · AI Lead · Cybersecurity</div>
+    <div class="name">Rick van Iwaarden</div>
+    <p class="tagline">I build secure, production-grade software for healthcare, AI adoption, and live market platforms.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://cs2locker.com" target="_blank" rel="noopener">🔒 CS2Locker</a>
+      <a class="btn ghost" href="docs/cv.html">📄 CV</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/rickviwaarden" target="_blank" rel="noopener">💼 LinkedIn</a>
+      <a class="btn ghost" href="mailto:rickviwaarden@gmail.com">✉️ Email</a>
+    </div>
+    <div class="meta">
+      <span class="chip">📍 Tilburg, NL</span>
+      <span class="chip">🎓 HBO-ICT Software Engineering, 2026</span>
+      <span class="chip">🛡️ Specialisation: Cybersecurity</span>
+    </div>
+  </header>
+
+  <section class="about">
+    <h2>About</h2>
+    <p>I'm a software developer and <strong>AI Lead</strong> based in Tilburg, specialising in <strong>AI, cybersecurity and software for healthcare</strong>.</p>
+    <p>At <a href="https://www.bodegro.com/" target="_blank" rel="noopener"><strong>Bodegro</strong></a> I work full-time on <strong>LabTrain</strong>, a laboratory information system for the healthcare sector (C#/.NET, ASP.NET, Oracle/PL-SQL, HL7/FHIR), while leading the responsible introduction of AI across the organisation — running pilots, building LLM tooling, and shaping AI governance and compliance with security and privacy as hard requirements.</p>
+    <p>On the side I'm the founder and lead developer of <a href="https://cs2locker.com" target="_blank" rel="noopener"><strong>CS2Locker</strong></a>, an internationally used production platform with live market data, custom infrastructure and thousands of daily visitors.</p>
+    <div class="facts">
+      <span class="fact">🌍 Dutch (native) · English (C1) · German (advanced) · French (B1)</span>
+      <span class="fact">🛡️ OWASP · OSINT · CTFs · Responsible Disclosure</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Flagship — CS2Locker</h2>
+    <div class="flagship">
+      <h3>CS2Locker</h3>
+      <p class="sub">A production platform for the CS2 skin market — built and operated end-to-end.</p>
+      <div class="stats">
+        <div class="stat"><b>~5K</b><span>visitors / day</span></div>
+        <div class="stat"><b>20+</b><span>market integrations</span></div>
+        <div class="stat"><b>~50K</b><span>catalog items</span></div>
+        <div class="stat"><b>260+</b><span>API endpoints</span></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="k">Frontend</span><span class="v">Nuxt 3 SSR — 185 Vue components, 58 composables, 34 pages (EN + RU i18n)</span></div>
+        <div class="row"><span class="k">Data</span><span class="v">PostgreSQL via PgBouncer, dynamic pool sizing, prepared statements, DISTINCT ON optimisation</span></div>
+        <div class="row"><span class="k">Integrations</span><span class="v">Steam, CSFloat, Buff163, DMarket, Skinport, Waxpeer & more via NDJSON streaming + exponential backoff</span></div>
+        <div class="row"><span class="k">Real-time</span><span class="v">Live deals over Server-Sent Events, web-push (VAPID / RFC 8030), 3D skin viewer (Three.js)</span></div>
+        <div class="row"><span class="k">Security</span><span class="v">Steam OpenID 2.0, Stripe webhooks (HMAC-SHA256), signed httpOnly sessions, role-based tiers</span></div>
+        <div class="row"><span class="k">Ops</span><span class="v">Multi-tier caching (in-memory · Nitro ISR · Cloudflare edge), automated CDN purge, hourly cron pipelines</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Portfolio Projects</h2>
+    <div class="grid">
+      <a class="proj" href="osint-phishing-awareness/">
+        <h3>🕵️ OSINT & Phishing Awareness</h3>
+        <p>Full security research report (NL): OSINT investigation combined with a phishing awareness campaign — from methodology to recommendations.</p>
+        <span class="arrow">View report →</span>
+      </a>
+      <a class="proj" href="research/cve_research.html">
+        <h3>🎯 Unmasking the Cheats</h3>
+        <p>Deep-dive into Counter-Strike 2 vulnerabilities (CVE-2021-30481) and how wallhacks work, with proposed mitigations.</p>
+        <span class="arrow">Read article →</span>
+      </a>
+      <a class="proj" href="ov-vertrektijden/">
+        <h3>🚉 OV Vertrektijden</h3>
+        <p>Live Dutch public-transport departure board for trains and bus stops, with favourites and dark mode.</p>
+        <span class="arrow">Open app →</span>
+      </a>
+      <a class="proj" href="bushalte-api/">
+        <h3>🚏 Bushalte API</h3>
+        <p>Client-side search over a static dataset of Dutch bus stops — quay code, street and city.</p>
+        <span class="arrow">Try it →</span>
+      </a>
+      <a class="proj" href="MinecraftSites/ColorPaletteGenerator.html">
+        <h3>🎨 Minecraft Palette Generator</h3>
+        <p>Interactive block colour-palette & pattern designer for Minecraft builders.</p>
+        <span class="arrow">Open tool →</span>
+      </a>
+      <a class="proj" href="docs/cv.html">
+        <h3>📄 Curriculum Vitae</h3>
+        <p>My full CV — experience, skills, education and certifications.</p>
+        <span class="arrow">View CV →</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tech Stack</h2>
+    <div class="stack">
+      <div class="stackrow">
+        <div class="cat">AI & Automation</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">LLM tooling</span><span class="tag">Prompt engineering</span><span class="tag">AI governance</span></div>
+      </div>
+      <div class="stackrow">
+        <div class="cat">Backend</div>
+        <div class="tags"><span class="tag">C# / .NET</span><span class="tag">ASP.NET Web API</span><span class="tag">Node.js</span><span class="tag">TypeScript</span><span class="tag">PostgreSQL</span><span class="tag">Oracle / PL-SQL</span><span class="tag">Docker</span><span class="tag">CI/CD</span></div>
+      </div>
+      <div class="stackrow">
+        <div class="cat">Frontend</div>
+        <div class="tags"><span class="tag">Vue 3 / Nuxt</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">Razor / Blazor</span></div>
+      </div>
+      <div class="stackrow">
+        <div class="cat">Security & OSINT</div>
+        <div class="tags"><span class="tag">Secure coding</span><span class="tag">OWASP Top 10</span><span class="tag">Pentesting</span><span class="tag">CTFs</span><span class="tag">Responsible disclosure</span></div>
+      </div>
+      <div class="stackrow">
+        <div class="cat">Healthcare & Integration</div>
+        <div class="tags"><span class="tag">NEN 7510 / 7513</span><span class="tag">HL7 / FHIR</span><span class="tag">OAuth</span><span class="tag">Stripe</span><span class="tag">Cloudflare</span><span class="tag">SSE / WebSockets</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2>Get in touch</h2>
+    <p>Open to interesting projects and conversations.</p>
+    <div class="cta" style="justify-content:center">
+      <a class="btn primary" href="mailto:rickviwaarden@gmail.com">✉️ Email me</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/rickviwaarden" target="_blank" rel="noopener">💼 LinkedIn</a>
+      <a class="btn ghost" href="https://cs2locker.com" target="_blank" rel="noopener">🔒 CS2Locker</a>
+    </div>
+  </section>
+
+  <footer>© <span id="yr"></span> Rick van Iwaarden · Built and hosted on GitHub Pages</footer>
+
+</div>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>
