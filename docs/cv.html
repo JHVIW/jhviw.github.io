@@ -1,485 +1,426 @@
 <!DOCTYPE html>
-
-<!-- saved from url=(0036)https://jhviw.github.io/docs/cv.html -->
-<html lang="nl"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Rick van Iwaarden · CV</title>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rick van Iwaarden — Curriculum vitae</title>
+<meta name="description" content="Curriculum vitae van Rick van Iwaarden — Software Developer, AI Lead en Cybersecurity, Tilburg.">
+<link rel="icon" href="../icon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@400..600&display=swap">
 <style>
-  :root {
-    --ink: #0f1f3d;
-    --ink-soft: #2c3e57;
-    --muted: #6b7a90;
-    --line: #e3e8f0;
-    --bg-soft: #f4f6fb;
-    --accent: #1f5fb4;
-    --accent-soft: #e8f0fb;
-    --accent-2: #0d8a72;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { background: #eef1f6; }
-  body {
-    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-    font-size: 10px;
-    line-height: 1.4;
-    color: var(--ink);
-    -webkit-font-smoothing: antialiased;
-  }
-  .page {
-    width: 210mm;
-    min-height: 297mm;
-    margin: 16px auto;
-    background: #fff;
-    box-shadow: 0 4px 24px rgba(15, 31, 61, 0.08);
-    display: grid;
-    grid-template-columns: 36% 64%;
-    grid-template-rows: 1fr;
-    align-items: stretch;
-    overflow: hidden;
-  }
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+:root {
+  --ink: #0f0f0e;
+  --text: #2d2c29;
+  --mute: #75726b;
+  --line: #e4e2dc;
+  --rule: #0f0f0e;
+  --accent: #ff5a1f;
+  --desk: #e7e5df;
 
-  /* ---------- LEFT COLUMN ---------- */
-  aside {
-    background: var(--ink);
-    color: #d8e0ec;
-    padding: 16px 14px;
-  }
-  .name-block {
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-    padding-bottom: 10px;
-    margin-bottom: 12px;
-  }
-  .name {
-    font-size: 21px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: #fff;
-    line-height: 1.05;
-  }
-  .role {
-    font-size: 10px;
-    color: #8aa4cc;
-    font-weight: 500;
-    margin-top: 3px;
-    letter-spacing: 0.02em;
-  }
+  --sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  aside h3 {
-    font-size: 9px;
-    font-weight: 700;
-    color: #5a85bf;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    margin: 12px 0 6px;
-    padding-bottom: 3px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-  aside h3:first-of-type { margin-top: 0; }
+  --col: 31mm;   /* left column: dates, labels */
+  --gap: 6mm;
+  --expo: cubic-bezier(.16, 1, .3, 1);
+}
 
-  .contact-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 7px;
-    font-size: 9.5px;
-    margin-bottom: 5px;
-    color: #cdd6e4;
-    word-break: break-word;
-  }
-  .icon {
-    flex-shrink: 0;
-    color: #8aa4cc;
-  }
-  .contact-row a { color: #cdd6e4; text-decoration: none; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--desk); -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--sans);
+  color: var(--text);
+  font-size: 8.1pt;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'ss01' 0;
+}
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+b, strong { font-weight: 600; color: var(--ink); }
+::selection { background: var(--accent); color: var(--ink); }
 
-  .skill-cat { font-size: 9px; color: #8aa4cc; font-weight: 600; margin: 7px 0 4px; }
-  .skill-cat:first-child { margin-top: 0; }
-  .pill-row { display: flex; flex-wrap: wrap; gap: 3px; }
-  .pill {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: #d8e0ec;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 8.5px;
-    font-weight: 500;
-  }
-  .pill.solid {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
+/* ==========================================================================
+   Screen chrome
+   ========================================================================== */
+.bar {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding: 14px clamp(16px, 3vw, 32px);
+  background: color-mix(in srgb, var(--desk) 86%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  font: 500 13px/1 var(--sans); color: var(--ink);
+}
+.bar nav { display: flex; gap: 8px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px;
+  border: 1px solid rgba(15,15,14,.18); border-radius: 999px;
+  font: inherit; color: inherit; background: transparent; cursor: pointer;
+  white-space: nowrap;
+  transition: background .3s, color .3s, border-color .3s;
+}
+.btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.btn.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+.btn.primary:hover { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+.btn svg { width: 12px; height: 12px; }
+.back { display: inline-flex; align-items: center; gap: 8px; }
+.back svg { width: 12px; height: 12px; transform: rotate(180deg); }
+@media (max-width: 560px) { .btn.print { display: none; } }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-  .lang-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 9.5px;
-    margin-bottom: 3px;
-  }
-  .lang-item .level { color: #8aa4cc; font-size: 8.5px; }
+.sheets { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 12px 16px 64px; }
 
-  .info-line {
-    font-size: 9px;
-    color: #cdd6e4;
-    margin-bottom: 4px;
-    padding-left: 9px;
-    position: relative;
-    line-height: 1.4;
-  }
-  .info-line::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 6px;
-    width: 3.5px;
-    height: 3.5px;
-    background: var(--accent);
-    border-radius: 50%;
-  }
+/* ==========================================================================
+   Page
+   ========================================================================== */
+.page {
+  position: relative;
+  width: 210mm; height: 297mm;
+  padding: 12mm 15mm 9mm;
+  background: #fff;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(15,15,14,.06), 0 18px 50px -12px rgba(15,15,14,.18);
+  zoom: var(--z, 1);
+}
+@media screen and (prefers-reduced-motion: no-preference) {
+  .page { animation: enter 1s var(--expo) both; }
+  .page + .page { animation-delay: .12s; }
+  @keyframes enter { from { opacity: 0; transform: translateY(18px); } }
+}
 
-  /* ---------- RIGHT COLUMN ---------- */
-  main { padding: 16px 16px; background: #fff; }
+.mono { font-family: var(--mono); font-size: 6.8pt; line-height: 1.5; letter-spacing: .01em; color: var(--mute); }
 
-  .summary {
-    font-size: 9.5px;
-    color: var(--ink-soft);
-    line-height: 1.45;
-    text-align: justify;
-    margin-bottom: 11px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--line);
-  }
-  .summary strong { color: var(--ink); }
-  .summary-tag {
-    display: inline-block;
-    background: var(--accent-soft);
-    color: var(--accent);
-    font-size: 9px;
-    font-weight: 600;
-    padding: 3px 7px;
-    border-radius: 3px;
-    margin-top: 6px;
-  }
+/* Header ----------------------------------------------------------------- */
+.meta {
+  display: grid; grid-template-columns: var(--col) 1fr auto; column-gap: var(--gap);
+  padding-bottom: 2.4mm; border-bottom: .6pt solid var(--line);
+}
+.name {
+  margin-top: 6mm;
+  font-size: 40pt; line-height: .92; font-weight: 560; letter-spacing: -.05em; color: var(--ink);
+  margin-left: -.04em;
+}
+.role { margin-top: 2.4mm; font-size: 11pt; line-height: 1.25; font-weight: 450; letter-spacing: -.02em; color: var(--ink); }
+.contact {
+  margin-top: 6mm; padding-top: 2.4mm; border-top: .9pt solid var(--rule);
+  display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--gap);
+}
+.contact dt { margin-bottom: .6mm; }
+.contact dd { font-size: 8.2pt; color: var(--ink); font-weight: 500; letter-spacing: -.005em; white-space: nowrap; }
 
-  main h2 {
-    font-size: 10.5px;
-    color: var(--ink);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-weight: 700;
-    margin: 12px 0 7px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  main h2::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--line);
-  }
-  main h2:first-child { margin-top: 0; }
+.mini {
+  display: grid; grid-template-columns: var(--col) 1fr auto; column-gap: var(--gap); align-items: baseline;
+}
+.mini b { white-space: nowrap; font-size: 9pt; letter-spacing: -.01em; }
 
-  /* Featured project card */
-  .featured {
-    break-inside: avoid;
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--accent);
-    border-radius: 4px;
-    padding: 9px 11px;
-    margin-bottom: 9px;
-    background: linear-gradient(180deg, #fafbfd 0%, #fff 100%);
-  }
-  .featured-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 4px;
-  }
-  .featured-title {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--ink);
-  }
-  .featured-title .live-dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: var(--accent-2);
-    border-radius: 50%;
-    margin-right: 5px;
-    vertical-align: middle;
-  }
-  .featured-url {
-    font-size: 9px;
-    color: var(--accent);
-    font-weight: 600;
-  }
-  .featured-desc {
-    font-size: 9.5px;
-    color: var(--ink-soft);
-    line-height: 1.45;
-    margin-bottom: 5px;
-  }
-  .metrics {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
-    margin: 7px 0;
-  }
-  .metric {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    padding: 4px 5px;
-    text-align: center;
-  }
-  .metric-value {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1.1;
-  }
-  .metric-label {
-    font-size: 7.5px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 2px;
-  }
-  .stack-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3px;
-    margin-top: 5px;
-  }
-  .stack-pill {
-    font-size: 8px;
-    background: #f0f3f9;
-    color: var(--ink-soft);
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-weight: 500;
-  }
+/* Section heads ------------------------------------------------------------ */
+.sh {
+  display: grid; grid-template-columns: var(--col) 1fr auto; column-gap: var(--gap); align-items: baseline;
+  margin-top: 5.6mm; padding-top: 2mm; border-top: .9pt solid var(--rule);
+  margin-bottom: 3.6mm;
+}
+.sh .idx { color: var(--accent); }
+.sh h2 { font-size: 10pt; font-weight: 600; letter-spacing: -.02em; color: var(--ink); line-height: 1.2; }
 
-  .item {
-    margin-bottom: 7px;
-    break-inside: avoid;
-    padding-bottom: 7px;
-    border-bottom: 1px dashed var(--line);
-  }
-  .item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+/* Two-column rows ------------------------------------------------------------ */
+.row { display: grid; grid-template-columns: var(--col) 1fr; column-gap: var(--gap); }
+.row + .row { margin-top: 2.7mm; }
+.row.sep + .row.sep { padding-top: 2.7mm; border-top: .6pt solid var(--line); }
 
-  .item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 2px;
-    gap: 8px;
-  }
-  .item-title {
-    font-weight: 700;
-    font-size: 10px;
-    color: var(--ink);
-  }
-  .item-org {
-    font-size: 9.5px;
-    color: var(--accent);
-    font-weight: 600;
-  }
-  .item-date {
-    font-size: 8.5px;
-    color: var(--muted);
-    font-style: italic;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .item-desc {
-    font-size: 9px;
-    color: var(--ink-soft);
-    margin-top: 2px;
-    line-height: 1.45;
-  }
-  .item-desc ul { margin-left: 12px; margin-top: 1px; }
-  .item-desc li { margin-bottom: 1px; }
+.lead { font-size: 9.2pt; line-height: 1.5; color: var(--ink); letter-spacing: -.01em; }
+.facts li + li { margin-top: .4mm; }
 
-  /* ---------- PRINT ---------- */
-  @media print {
-    html, body { background: #fff; }
-    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .page { box-shadow: none; margin: 0; width: 100%; min-height: auto; }
-    @page { size: A4; margin: 0; }
-  }
+/* Entries */
+.when { padding-top: .5mm; }
+.when .now { display: inline-flex; align-items: center; gap: 1.4mm; color: var(--ink); }
+.when .now::before { content: ''; width: 1.5mm; height: 1.5mm; border-radius: 50%; background: var(--accent); }
+.when small { display: block; font-size: inherit; }
+.eh { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 2mm; }
+.eh h3 { font-size: 9pt; font-weight: 600; letter-spacing: -.015em; color: var(--ink); line-height: 1.3; }
+.eh .org { font-size: 8.2pt; color: var(--mute); }
+.eb { margin-top: .8mm; }
+.eb p + ul, .eb ul + p { margin-top: 1.2mm; }
+.dash li { position: relative; padding-left: 3.4mm; }
+.dash li + li { margin-top: .4mm; }
+.dash li::before { content: '–'; position: absolute; left: 0; color: var(--mute); }
 
-  @media screen and (max-width: 768px) {
-    .page { width: 100%; grid-template-columns: 1fr; }
-    .metrics { grid-template-columns: repeat(2, 1fr); }
-  }
+.earlier {
+  margin-top: 2mm; padding: 1.8mm 0 0; border-top: .6pt dashed var(--line);
+}
+.earlier .mono { display: block; margin-bottom: 1mm; }
+.earlier table { border-collapse: collapse; width: 100%; }
+.earlier td { padding: .15mm 0; vertical-align: baseline; }
+.earlier td:first-child { width: 29mm; font-family: var(--mono); font-size: 6.8pt; color: var(--mute); }
+.earlier p { margin-top: 1.2mm; }
 
-  /* 2026 content refresh */
-  .compact-note { font-size: 8.5px; color: var(--muted); }
-  @media print {
-    .item { break-inside: avoid; }
-    .featured { break-inside: avoid; }
-  }
+.ref { display: inline-flex; align-items: center; gap: 1.2mm; color: var(--ink); font-weight: 500; }
+.ref svg { width: 2.4mm; height: 2.4mm; }
+
+/* CS2Locker ------------------------------------------------------------------ */
+.case-h { display: flex; justify-content: space-between; align-items: baseline; }
+.case-h h3 { font-size: 20pt; line-height: 1; font-weight: 560; letter-spacing: -.045em; color: var(--ink); }
+.case-h a { font-weight: 500; color: var(--ink); display: inline-flex; align-items: center; gap: 1.2mm; }
+.case-h a svg { width: 2.4mm; height: 2.4mm; transform: rotate(-45deg); }
+.case-sub { margin-top: 1.6mm; }
+.metrics { margin-top: 4mm; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 4mm; }
+.metrics div { border-top: .6pt solid var(--line); padding-top: 1.6mm; }
+.metrics b { display: block; margin-top: 1.8mm; font-size: 19pt; line-height: 1; font-weight: 420; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.spec { margin-top: 5mm; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 6mm; row-gap: 3.4mm; }
+.spec dt { font-family: var(--mono); font-size: 6.8pt; color: var(--accent); margin-bottom: .6mm; }
+.spec dd { font-size: 7.8pt; line-height: 1.45; }
+.stack { margin-top: 3.6mm; padding-top: 1.8mm; border-top: .6pt solid var(--line); }
+.stack span:not(:last-child)::after { content: ' / '; color: var(--line); }
+
+/* Skills */
+.skills .row + .row { margin-top: 1.6mm; }
+.skills .items { color: var(--mute); }
+.skills .items b { font-weight: 560; }
+.skills .items > :not(:last-child)::after { content: ' · '; color: #b9b6ae; font-weight: 400; }
+
+/* Languages etc. */
+.langs { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 4mm; }
+.langs b { display: block; font-weight: 560; }
+.misc { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 4mm; }
+.misc .mono { margin-left: 1.5mm; }
+
+/* Footer */
+.foot {
+  margin-top: auto; padding-top: 2.4mm; border-top: .6pt solid var(--line);
+  display: grid; grid-template-columns: var(--col) 1fr auto; column-gap: var(--gap);
+}
+
+/* ==========================================================================
+   Print
+   ========================================================================== */
+@page { size: A4; margin: 0; }
+@media print {
+  html, body { background: #fff; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bar { display: none; }
+  .sheets { display: block; padding: 0; }
+  .page { box-shadow: none; zoom: 1; break-after: page; animation: none; }
+  .page:last-child { break-after: auto; }
+}
 </style>
 </head>
 <body>
-<div class="page">
-<!-- ============ LEFT COLUMN ============ -->
-<aside>
-<div class="name-block">
-<div class="name">Rick van<br/>Iwaarden</div>
-<div class="role">Software Developer · AI Lead · Cybersecurity</div>
-</div>
-<h3>Contact</h3>
-<div class="contact-row">
-<svg class="icon" fill="none" height="11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="11"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-<span>rick@saltdevelopment.nl</span>
-</div>
-<div class="contact-row">
-<svg class="icon" fill="currentColor" height="11" viewbox="0 0 24 24" width="11"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"></path></svg>
-<span>linkedin.com/in/rickviwaarden</span>
-</div>
-<div class="contact-row">
-<svg class="icon" fill="none" height="11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="11"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-<span>Tilburg, Nederland</span>
-</div>
-<div class="contact-row">
-<svg class="icon" fill="none" height="11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewbox="0 0 24 24" width="11"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-<a href="https://cs2locker.com/" target="_blank">cs2locker.com</a>
-</div>
-<h3>Vaardigheden</h3>
-<div class="skill-cat">AI &amp; Automatisering</div><div class="pill-row"><span class="pill solid">AI-adoptie</span><span class="pill solid">AI-pilots</span><span class="pill">LLM tooling</span><span class="pill">Prompt engineering</span><span class="pill">Python</span><span class="pill">AI governance</span></div><div class="skill-cat">Backend &amp; Architectuur</div>
-<div class="pill-row">
-<span class="pill solid">C# / .NET</span>
-<span class="pill solid">ASP.NET Web API</span>
-<span class="pill">Node.js</span>
-<span class="pill">Python</span>
-<span class="pill">TypeScript</span>
-<span class="pill">REST API's</span>
-<span class="pill">PostgreSQL</span>
-<span class="pill">Oracle / PL/SQL</span>
-<span class="pill">Docker</span>
-<span class="pill">CI/CD</span>
-</div>
-<div class="skill-cat">Frontend</div>
-<div class="pill-row">
-<span class="pill">JavaScript</span>
-<span class="pill">TypeScript</span>
-<span class="pill">Vue 3 / Nuxt</span>
-<span class="pill">React</span>
-<span class="pill">Tailwind</span>
-<span class="pill">Razor / Blazor</span>
-<span class="pill">WinForms</span>
-</div>
-<div class="skill-cat">Beveiliging &amp; OSINT</div>
-<div class="pill-row">
-<span class="pill solid">Secure Coding</span>
-<span class="pill">OWASP Top 10</span>
-<span class="pill">Pentesting</span>
-<span class="pill">CTF's</span>
-<span class="pill">OSINT</span>
-<span class="pill">Responsible Disclosure</span>
-<span class="pill">Logging &amp; Monitoring</span>
-</div>
-<div class="skill-cat">Domein &amp; Integratie</div>
-<div class="pill-row">
-<span class="pill solid">NEN 7510</span>
-<span class="pill solid">NEN 7513</span>
-<span class="pill">HL7 / FHIR</span>
-<span class="pill">Stripe</span>
-<span class="pill">OAuth / Steam Login</span>
-<span class="pill">Cloudflare</span>
-<span class="pill">SSE / WebSockets</span>
-</div>
-<h3>Talen</h3>
-<div class="lang-item"><span>Nederlands</span><span class="level">Moedertaal</span></div>
-<div class="lang-item"><span>Engels</span><span class="level">C1 · IELTS</span></div>
-<div class="lang-item"><span>Duits</span><span class="level">Gevorderd</span></div>
-<div class="lang-item"><span>Frans</span><span class="level">B1 · CEFR</span></div>
-<h3>Certificaten</h3>
-<div class="info-line">IELTS C1 (CEFR C1), 07/2020</div>
-<div class="info-line">Stage intensif de Français (CEFR B1), 05/2018</div>
-<h3>Praktisch</h3><div class="info-line">VOG en veiligheidsonderzoek mogelijk op verzoek</div><div class="info-line">Rijbewijs B, inzetbaar in heel Nederland</div>
+
+<header class="bar">
+  <a class="back" href="../"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>jhviw.github.io</a>
+  <nav>
+    <button class="btn print" type="button" onclick="window.print()">Afdrukken</button>
+    <a class="btn primary" href="Rick-van-Iwaarden-CV.pdf" download>Download PDF<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v14M5 11l7 7 7-7M4 21h16" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+  </nav>
+</header>
+
+<main class="sheets">
+
+  <!-- =============================== Page 1 =============================== -->
+  <article class="page" aria-label="Pagina 1">
+    <div class="meta mono"><span>Curriculum vitae</span><span>Tilburg, Nederland — 2026</span><span>jhviw.github.io</span></div>
+
+    <h1 class="name">Rick van Iwaarden</h1>
+    <p class="role">Software Developer · AI Lead · Cybersecurity</p>
+
+    <dl class="contact">
+      <div><dt class="mono">E-mail</dt><dd><a href="mailto:rick@saltdevelopment.nl">rick@saltdevelopment.nl</a></dd></div>
+      <div><dt class="mono">LinkedIn</dt><dd><a href="https://www.linkedin.com/in/rickviwaarden">linkedin.com/in/rickviwaarden</a></dd></div>
+      <div><dt class="mono">Portfolio</dt><dd><a href="https://jhviw.github.io">jhviw.github.io</a></dd></div>
+      <div><dt class="mono">Locatie</dt><dd>Tilburg, Nederland</dd></div>
+    </dl>
+
+    <section>
+      <div class="sh"><span class="idx mono">(01)</span><h2>Profiel</h2><span class="mono"></span></div>
+      <div class="row">
+        <ul class="facts mono">
+          <li>HBO-ICT Software Engineering</li>
+          <li>Specialisatie Cybersecurity</li>
+          <li>Afgestudeerd 2026</li>
+        </ul>
+        <p class="lead">Software developer en AI Lead met een specialisatie in <b>AI, cybersecurity en software voor de zorg</b>. Bij Bodegro combineer ik fulltime ontwikkeling aan LabTrain met het onderzoeken, testen en verantwoord introduceren van AI binnen de organisatie. Ik werk hands-on met C#/.NET, webtechnologie en data-integraties, met veel aandacht voor security, privacy, betrouwbaarheid en compliance. Daarnaast ben ik oprichter en hoofdontwikkelaar van <b>CS2Locker</b>, een internationaal gebruikt productieplatform met live marktdata, eigen infrastructuur en duizenden dagelijkse bezoekers.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sh"><span class="idx mono">(02)</span><h2>Werkervaring</h2><span class="mono">2023 — heden</span></div>
+
+      <div class="row sep">
+        <div class="when mono"><span class="now">jul 2026 — heden</span><small>Fulltime</small></div>
+        <div>
+          <div class="eh"><h3>Software Developer &amp; AI Lead</h3><span class="org">Bodegro · Breda</span></div>
+          <div class="eb">
+            <p>Hands-on ontwikkeling aan LabTrain, een laboratoriuminformatiesysteem voor de zorg, met <b>C#/.NET, ASP.NET, WinForms en Oracle PL/SQL</b> en koppelingen tussen zorgsystemen — gecombineerd met het leiden van de introductie van AI binnen Bodegro.</p>
+            <ul class="dash">
+              <li>Onderzoekt concrete AI-toepassingen, voert pilots uit en helpt collega’s nieuwe AI-tools praktisch te adopteren.</li>
+              <li>Werkt aan <b>AI governance, compliance en verantwoord gebruik</b>, met security en privacy als vaste randvoorwaarden.</li>
+            </ul>
+            <div class="earlier">
+              <span class="mono">Eerder bij Bodegro</span>
+              <table>
+                <tr><td>feb — jun 2026</td><td>Afstudeerstagiair</td></tr>
+                <tr><td>jul 2024 — jun 2026</td><td>Software Developer, parttime</td></tr>
+                <tr><td>sep 2024 — jan 2025</td><td>Stagiair softwareontwikkeling</td></tr>
+              </table>
+              <p>Tijdens de stages onder meer een patiëntportaal en een <b>HL7 FHIR</b>-endpoint ontworpen en gebouwd.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row sep">
+        <div class="when mono"><span class="now">okt 2025 — heden</span><small>Zelfstandig</small></div>
+        <div>
+          <div class="eh"><h3>CEO / Eigenaar</h3><span class="org">Salt Development</span></div>
+          <div class="eb"><p>Ontwikkelen, beheren en exploiteren van webapplicaties en digitale producten.</p></div>
+        </div>
+      </div>
+
+      <div class="row sep">
+        <div class="when mono"><span class="now">jan 2025 — heden</span><small>Eigen platform</small></div>
+        <div>
+          <div class="eh"><h3>Oprichter &amp; hoofdontwikkelaar</h3><span class="org">CS2Locker</span></div>
+          <div class="eb"><p>Productieplatform voor de CS2-skinmarkt met live marktdata van 20+ marktplaatsen en duizenden dagelijkse bezoekers. <span class="ref">Uitgelicht op pagina 2<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></p></div>
+        </div>
+      </div>
+
+      <div class="row sep">
+        <div class="when mono">nov 2025 — jan 2026<small>Vrijwillig</small></div>
+        <div>
+          <div class="eh"><h3>Full-stack Developer · IT-commissie</h3><span class="org">IERA – If Else Returns Always · Tilburg</span></div>
+          <div class="eb"><p>Bijdrage aan de digitale modernisering van IERA: meegebouwd aan een eigen ledenadministratiesysteem met focus op automatisering, UX en gegevensbeveiliging.</p></div>
+        </div>
+      </div>
+
+      <div class="row sep">
+        <div class="when mono">jan — mei 2024</div>
+        <div>
+          <div class="eh"><h3>Full-stack Developer</h3><span class="org">Katocraft</span></div>
+          <div class="eb"><p>Full-stack ontwikkeling met onder andere React, Node.js, SQL en C#.</p></div>
+        </div>
+      </div>
+
+      <div class="row sep">
+        <div class="when mono">dec 2023 — feb 2024</div>
+        <div>
+          <div class="eh"><h3>ICT-ondersteuningstechnicus</h3><span class="org">Bits &amp; Bytes · Goes</span></div>
+          <div class="eb"><p>ICT-ondersteuning binnen een zorg- en dagcentrum voor deelnemers met een afstand tot arbeidsmarkt en/of maatschappij.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot mono"><span>Rick van Iwaarden</span><span>rick@saltdevelopment.nl</span><span>1 / 2</span></footer>
+  </article>
+
+  <!-- =============================== Page 2 =============================== -->
+  <article class="page" aria-label="Pagina 2">
+    <div class="mini"><b>Rick van Iwaarden</b><span class="mono">Software Developer · AI Lead · Cybersecurity</span><span class="mono">Curriculum vitae</span></div>
+
+    <section>
+      <div class="sh" style="margin-top:5mm"><span class="idx mono">(03)</span><h2>Eigen platform</h2><span class="mono">jan 2025 — heden</span></div>
+      <div class="row">
+        <div class="mono">Oprichter &amp;<br>hoofdontwikkelaar</div>
+        <div>
+          <div class="case-h"><h3>CS2Locker</h3><a class="mono" href="https://cs2locker.com">cs2locker.com<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></div>
+          <p class="case-sub">Een internationaal gebruikt productieplatform voor de CS2-skinmarkt — end-to-end gebouwd en beheerd, van marktdata-ingestie tot levering via de edge.</p>
+
+          <div class="metrics">
+            <div><span class="mono">Bezoekers / dag</span><b>5K</b></div>
+            <div><span class="mono">Markt-integraties</span><b>20+</b></div>
+            <div><span class="mono">Items in catalogus</span><b>~50K</b></div>
+            <div><span class="mono">API-endpoints</span><b>260+</b></div>
+          </div>
 
 
+        </div>
+      </div>
+      <dl class="spec">
+        <div><dt>Architectuur</dt><dd>Nuxt 3 SSR met 185 Vue-componenten, 58 composables en 34 pagina’s (EN + RU i18n). PostgreSQL via PgBouncer met dynamische pool-sizing, prepared statements en DECIMAL-overflowdetectie.</dd></div>
+        <div><dt>Externe integraties</dt><dd>20+ marktplaats-API’s (Steam, CSFloat, Buff163, DMarket, Skinport, Waxpeer e.a.) via NDJSON-streaming met exponentiële backoff. Steam OpenID 2.0, Stripe-webhooks (HMAC-SHA256) en een AWS S3 CDN-pipeline.</dd></div>
+        <div><dt>Real-time &amp; UI</dt><dd>Interactieve 3D skin-viewer (Three.js), live deals via Server-Sent Events, web-push met VAPID (RFC 8030), prijshistorie in Chart.js en een trade-up calculator met float-math.</dd></div>
+        <div><dt>Performance</dt><dd>Meertraps caching (in-memory dataset-cache met versiecounter, Nitro ISR, Cloudflare edge) met geautomatiseerde CDN-purge per deploy. IP-rate limiting en batch-queries met DISTINCT ON-optimalisatie.</dd></div>
+        <div><dt>Automation</dt><dd>8 zelfgeschreven content-bots (Satori › Resvg › Sharp voor dynamische OG-images), hourly cron jobs voor dataset-regeneratie en child processes voor zware trade-up berekeningen. Python voor data-pipelines en analyse.</dd></div>
+        <div><dt>Security</dt><dd>HMAC-SHA256 session-signing met httpOnly secure cookies (30 dagen TTL, single-session enforcement), role-based access (Pro, Elite, Admin) en een volledige SEO-stack (sitemaps, JSON-LD, hreflang).</dd></div>
+      </dl>
 
-</aside>
-<!-- ============ RIGHT COLUMN ============ -->
-<main>
-<div class="summary">Software developer en AI Lead met een specialisatie in <strong>AI, cybersecurity en software voor de zorg</strong>. Bij Bodegro combineer ik fulltime ontwikkeling aan LabTrain met het onderzoeken, testen en verantwoord introduceren van AI binnen de organisatie. Ik werk hands-on met C#/.NET, webtechnologie en data-integraties, met veel aandacht voor security, privacy, betrouwbaarheid en compliance. Daarnaast ben ik oprichter en hoofdontwikkelaar van <strong>CS2Locker</strong>, een internationaal gebruikt productieplatform met live marktdata, eigen infrastructuur en duizenden dagelijkse bezoekers.<div class="summary-tag">HBO-ICT Software Engineering · Specialisatie Cybersecurity · Afgestudeerd 2026</div></div>
-<h2>Eigen platform · CS2Locker</h2>
-<div class="featured">
-<div class="featured-header">
-<div>
-<div class="featured-title">CS2Locker</div>
-<div style="font-size:9px; color:var(--muted); font-weight:500; margin-top:1px;">Oprichter &amp; Ontwikkelaar · jan 2025 – heden</div>
-</div>
-<div class="featured-url">cs2locker.com</div>
-</div>
-<div class="metrics">
-<div class="metric"><div class="metric-value">5K</div><div class="metric-label">Bezoekers / dag</div></div>
-<div class="metric"><div class="metric-value">20+</div><div class="metric-label">Markt-integraties</div></div>
-<div class="metric"><div class="metric-value">~50K</div><div class="metric-label">Items in catalog</div></div>
-<div class="metric"><div class="metric-value">260+</div><div class="metric-label">API endpoints</div></div>
-</div>
-<div class="featured-desc" style="margin-top:6px;">
-<ul style="margin-left:14px; margin-top:2px;">
-<li><strong>Architectuur:</strong> Nuxt 3 SSR met 185 Vue componenten, 58 composables en 34 pagina's (EN + RU i18n). PostgreSQL via PgBouncer met dynamische pool-sizing, prepared statements en DECIMAL-overflow detectie.</li>
-<li><strong>Externe integraties:</strong> 20+ marktplaats-API's (Steam, CSFloat, Buff163, DMarket, Skinport, Buff, Waxpeer e.a.) via NDJSON-streaming met exponentiële backoff. Steam <strong>OpenID 2.0</strong>, Stripe webhooks (<strong>HMAC-SHA256</strong>) en AWS S3 CDN pipeline.</li>
-<li><strong>Real-time &amp; UI:</strong> Interactieve <strong>3D skin-viewer</strong> (Three.js · GLTFLoader · OrbitControls), live deals via <strong>Server-Sent Events</strong>, <strong>web-push</strong> met VAPID (RFC 8030), Chart.js prijshistorie en trade-up calculator met float-math.</li>
-<li><strong>Performance:</strong> Meertraps caching (in-memory dataset cache met versie-counter, Nitro ISR, Cloudflare edge) met geautomatiseerde CDN-purge per deploy. IP-rate limiting, batch-queries met DISTINCT ON-optimalisatie.</li>
-<li><strong>Automation:</strong> 8 zelfgeschreven content-bots (Satori → Resvg → Sharp pipeline voor dynamische OG/social images), hourly cron jobs voor dataset-regeneratie, child-process spawning voor compute-zware trade-up berekeningen. Python-scripts voor data-pipelines en analyse.</li>
-<li><strong>Security:</strong> HMAC-SHA256 session-signing met httpOnly secure cookies (30 dagen TTL, single-session enforcement), role-based access (Pro/Elite/Admin tiers), volledige SEO-stack (sitemaps, JSON-LD, hreflang).</li>
-</ul>
-</div>
-<div class="stack-row" style="margin-top:8px;">
-<span class="stack-pill">Nuxt 3</span>
-<span class="stack-pill">Vue 3</span>
-<span class="stack-pill">TypeScript</span>
-<span class="stack-pill">JavaScript</span>
-<span class="stack-pill">Node.js</span>
-<span class="stack-pill">Python</span>
-<span class="stack-pill">PostgreSQL</span>
-<span class="stack-pill">PgBouncer</span>
-<span class="stack-pill">Three.js</span>
-<span class="stack-pill">Chart.js</span>
-<span class="stack-pill">Tailwind</span>
-<span class="stack-pill">Stripe</span>
-<span class="stack-pill">AWS S3</span>
-<span class="stack-pill">Cloudflare</span>
-<span class="stack-pill">Docker</span>
-<span class="stack-pill">Coolify</span>
-<span class="stack-pill">Satori</span>
-<span class="stack-pill">Web Push</span>
-<span class="stack-pill">SSE</span>
-</div>
-</div>
-<h2>Werkervaring</h2>
+      <p class="stack mono"><span>Nuxt 3</span><span>Vue 3</span><span>TypeScript</span><span>Node.js</span><span>Python</span><span>PostgreSQL</span><span>PgBouncer</span><span>Three.js</span><span>Chart.js</span><span>Tailwind</span><span>Stripe</span><span>AWS S3</span><span>Cloudflare</span><span>Docker</span><span>Coolify</span><span>Satori</span><span>Web Push</span><span>SSE</span></p>
+    </section>
 
+    <section>
+      <div class="sh"><span class="idx mono">(04)</span><h2>Opleiding</h2><span class="mono"></span></div>
+      <div class="row sep">
+        <div class="when mono">2022 — 2026</div>
+        <div>
+          <div class="eh"><h3>HBO-ICT · Software Engineering</h3><span class="org">Fontys Hogeschool · Tilburg</span></div>
+          <div class="eb"><p>Specialisatie Cybersecurity. Afgestudeerd in 2026.</p></div>
+        </div>
+      </div>
+      <div class="row sep">
+        <div class="when mono">tot 2022</div>
+        <div>
+          <div class="eh"><h3>VWO · Voortgezet onderwijs</h3><span class="org">Isaac Beeckman Academie · VAVO</span></div>
+          <div class="eb"><p>Alle vakken op VWO-niveau behaald (wiskunde via VAVO op HAVO-niveau afgerond).</p></div>
+        </div>
+      </div>
+    </section>
 
+    <section class="skills">
+      <div class="sh"><span class="idx mono">(05)</span><h2>Vaardigheden</h2><span class="mono">Vet = kern</span></div>
+      <div class="row"><span class="mono">AI &amp; automatisering</span><p class="items"><b>AI-adoptie</b><b>AI-pilots</b><span>LLM tooling</span><span>Prompt engineering</span><span>Python</span><span>AI governance</span></p></div>
+      <div class="row"><span class="mono">Backend &amp; architectuur</span><p class="items"><b>C# / .NET</b><b>ASP.NET Web API</b><span>Node.js</span><span>Python</span><span>TypeScript</span><span>REST API’s</span><span>PostgreSQL</span><span>Oracle PL/SQL</span><span>Docker</span><span>CI/CD</span></p></div>
+      <div class="row"><span class="mono">Frontend</span><p class="items"><span>JavaScript</span><span>TypeScript</span><span>Vue 3 / Nuxt</span><span>React</span><span>Tailwind</span><span>Razor / Blazor</span><span>WinForms</span></p></div>
+      <div class="row"><span class="mono">Beveiliging &amp; OSINT</span><p class="items"><b>Secure coding</b><span>OWASP Top 10</span><span>Pentesting</span><span>CTF’s</span><span>OSINT</span><span>Responsible disclosure</span><span>Logging &amp; monitoring</span></p></div>
+      <div class="row"><span class="mono">Domein &amp; integratie</span><p class="items"><b>NEN 7510</b><b>NEN 7513</b><span>HL7 / FHIR</span><span>Stripe</span><span>OAuth / Steam login</span><span>Cloudflare</span><span>SSE / WebSockets</span></p></div>
+    </section>
 
+    <section>
+      <div class="sh"><span class="idx mono">(06)</span><h2>Talen &amp; overig</h2><span class="mono"></span></div>
+      <div class="row">
+        <span class="mono">Talen</span>
+        <div class="langs">
+          <div><b>Nederlands</b><span class="mono">Moedertaal</span></div>
+          <div><b>Engels</b><span class="mono">C1 · IELTS</span></div>
+          <div><b>Duits</b><span class="mono">Gevorderd</span></div>
+          <div><b>Frans</b><span class="mono">B1 · CEFR</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <span class="mono">Certificaten</span>
+        <ul class="misc">
+          <li>IELTS C1 (CEFR C1)<span class="mono">07/2020</span></li>
+          <li>Stage intensif de Français (CEFR B1)<span class="mono">05/2018</span></li>
+        </ul>
+      </div>
+      <div class="row">
+        <span class="mono">Praktisch</span>
+        <ul class="misc">
+          <li>VOG en veiligheidsonderzoek mogelijk op verzoek</li>
+          <li>Rijbewijs B, inzetbaar in heel Nederland</li>
+        </ul>
+      </div>
+    </section>
 
-<div class="item"><div class="item-header"><div><div class="item-title">Software Developer &amp; AI Lead</div><div class="item-org">Bodegro · Breda · Fulltime</div></div><div class="item-date">jul 2026 – heden</div></div><div class="item-desc">Ontwikkeling aan LabTrain, een laboratoriuminformatiesysteem voor de zorg, gecombineerd met het leiden van de introductie van AI binnen Bodegro.<ul><li>Onderzoekt concrete AI-toepassingen, voert pilots uit en helpt collega's nieuwe AI-tools praktisch te adopteren.</li><li>Werkt aan <strong>AI governance, compliance en verantwoord gebruik</strong>, met security en privacy als vaste randvoorwaarden.</li><li>Fulltime hands-on ontwikkeling aan LabTrain met <strong>C#/.NET, ASP.NET, WinForms, Oracle / PL/SQL</strong> en koppelingen tussen zorgsystemen.</li><li><strong>Eerdere rollen bij Bodegro:</strong> afstudeerstagiair (feb–jun 2026), Software Developer parttime (jul 2024–jun 2026) en stagiair softwareontwikkeling (sep 2024–jan 2025). Tijdens de stages o.a. een patiëntportaal en een <strong>HL7 FHIR</strong>-endpoint ontworpen en gebouwd.</li></ul></div></div><div class="item"><div class="item-header"><div><div class="item-title">CEO / Eigenaar</div><div class="item-org">Salt Development · Zelfstandig</div></div><div class="item-date">okt 2025 – heden</div></div><div class="item-desc">Ontwikkelen, beheren en exploiteren van webapplicaties en digitale producten.</div></div><div class="item"><div class="item-header"><div><div class="item-title">Full-stack Developer · IT-commissie</div><div class="item-org">IERA – If Else Returns Always · Tilburg</div></div><div class="item-date">nov 2025 – jan 2026</div></div><div class="item-desc">Vrijwillige bijdrage aan de digitale modernisering van IERA.<ul><li>Meegebouwd aan een eigen ledenadministratiesysteem met focus op automatisering, UX en gegevensbeveiliging.</li></ul></div></div><div class="item"><div class="item-header"><div><div class="item-title">Full-stack Developer</div><div class="item-org">Katocraft</div></div><div class="item-date">jan 2024 – mei 2024</div></div><div class="item-desc">Full-stack ontwikkeling met onder andere React, Node.js, SQL en C#.</div></div><div class="item"><div class="item-header"><div><div class="item-title">ICT-ondersteuningstechnicus</div><div class="item-org">Bits &amp; Bytes · Goes</div></div><div class="item-date">dec 2023 – feb 2024</div></div><div class="item-desc">ICT-ondersteuning binnen een zorg- en dagcentrum voor deelnemers met een afstand tot arbeidsmarkt en/of maatschappij.</div></div><h2>Opleiding</h2>
-<div class="item">
-<div class="item-header">
-<div>
-<div class="item-title">HBO-ICT · Software Engineering (specialisatie Cybersecurity)</div>
-<div class="item-org">Fontys Hogeschool · Tilburg</div>
-</div>
-<div class="item-date">2022 – 2026</div>
-</div>
-</div>
-<div class="item">
-<div class="item-header">
-<div>
-<div class="item-title">VWO · Voortgezet Onderwijs</div>
-<div class="item-org">Isaac Beeckman Academie · VAVO</div>
-<div class="item-desc">Alle vakken op VWO-niveau behaald (wiskunde via VAVO op HAVO-niveau afgerond).</div>
-</div>
-<div class="item-date">tot 2022</div>
-</div>
-</div>
+    <footer class="foot mono"><span>Rick van Iwaarden</span><span>rick@saltdevelopment.nl</span><span>2 / 2</span></footer>
+  </article>
+
 </main>
-</div>
-</body></html>
+
+<script>
+  // Scale the A4 sheets down to fit narrow screens (print is unaffected).
+  (function () {
+    var fit = function () {
+      var w = document.documentElement.clientWidth - 32;
+      var a4 = 210 * 96 / 25.4;
+      document.documentElement.style.setProperty('--z', Math.min(1, w / a4).toFixed(3));
+    };
+    fit();
+    addEventListener('resize', fit);
+  })();
+</script>
+</body>
+</html>
